@@ -37,6 +37,8 @@ public class JosephCircleImp {
      * 0 1 2  ... n-m-1 ... m'-1 m' ... n-2 (重新编号)
      * f(x,m) 表示问题规模为 x 时的下标编号：f(x,m) = (f(x-1) + m) mod x
      * 且  f(1,m) 为最终的下标序列，只有 1 个结果且为 0
+     *
+     * 循环实现：时间复杂度 O(n)
      * @param n 问题规模
      * @param m m > 0
      * @return 胜利者index
@@ -55,7 +57,8 @@ public class JosephCircleImp {
 
 
     /**
-     * 递归实现
+     * 递归实现: f(x,m) = (f(x-1) + m) mod x
+     * 时间复杂度： O(n)，可以使用递归树方法判断
      */
     public static int josephCircleByRecursion(int n, int m){
         if(m < 1) return -1;
