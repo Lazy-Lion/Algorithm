@@ -23,5 +23,7 @@ public class Main {
         System.out.println(DecodeString.decodeAtIndex("leet2code3", 10));
         System.out.println(DecodeString.decodeAtIndex("ha22", 5));
         System.out.println(DecodeString.decodeAtIndex("a2345678999999999999999", 1));
+        System.out.println(DecodeString.decodeAtIndex("y959q969u3hb22odq595", 222280369));
+
     }
 }
