@@ -6,6 +6,7 @@ package linkedlist;
  * 3) 两个有序的链表合并
  * 4) 删除链表倒数第n个结点
  * 5) 求链表的中间结点
+ * 6) 单链表判断是否回文
  */
 
 /**
@@ -192,5 +193,85 @@ public class LinkedListAlgo {
             node = node.next;
         }
         System.out.println();
+    }
+
+    /**
+     * 判断单链表是否回文
+     * @param list
+     * @return palindrome true, if not false
+     */
+    public static boolean palindrome(Node list){
+        if(list == null) return false;
+        if(list.next == null) return true;
+
+        Node middle = findMiddleNode(list); // 中间节点
+
+        Node rightHead = inverse(middle);
+        Node right = rightHead;
+        Node left = list;
+
+        while(right != null){  // 判断条件，适应奇偶个数
+            if(left.getData() != right.getData()) {
+                revert(middle, rightHead);  // 先恢复链表，再返回
+                return false;
+            }
+
+            left = left.next;
+            right = right.next;
+        }
+
+        revert(middle, rightHead);
+
+        return true;
+
+    }
+
+    /**
+     * 反转当前节点后的节点
+     */
+    private static Node inverse(Node node){
+        Node head = null;
+
+        if(node == null || node.next == null) return null;
+
+        Node first = node.next;
+        node.next = null;
+        node = first;
+        while(node != null){
+            Node next = node.next;
+            if(head == null){
+                head = node;
+                node.next = null;
+            }else{
+                node.next = head;
+                head = node;
+            }
+            node = next;
+        }
+
+        return head;
+    }
+
+    /**
+     * 恢复链表
+     * @param prev
+     * @param node
+     */
+    private static void revert(Node prev, Node node){
+        if(prev == null) return;
+        prev.next = null;
+
+        while(node != null){
+            Node next = node.next;
+
+            if(prev.next == null){
+                prev.next = node;
+                node.next = null;
+            }else {
+                node.next = prev.next;
+                prev.next = node;
+            }
+            node = next;
+        }
     }
 }

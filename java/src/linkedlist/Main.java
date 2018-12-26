@@ -52,6 +52,17 @@ public class Main {
         list = LinkedListAlgo.createLinkedList(new int[]{1,2});
         System.out.println(LinkedListAlgo.findMiddleNode(list).getData());
 
+
+        // 判读是否回文
+        System.out.println("判读是否回文");
+        list = LinkedListAlgo.createLinkedList(new int[]{1,2,3,4,3,2,1});
+        System.out.println(LinkedListAlgo.palindrome(list));
+        LinkedListAlgo.printAll(list);
+
+        list = LinkedListAlgo.createLinkedList(new int[]{1,2,4,3,2,1});
+        System.out.println(LinkedListAlgo.palindrome(list));
+        LinkedListAlgo.printAll(list);
+
         System.out.println("-----------------------------");
 
 
