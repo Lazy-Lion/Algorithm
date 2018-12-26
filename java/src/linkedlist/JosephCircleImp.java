@@ -14,7 +14,7 @@ public class JosephCircleImp {
      * @param m 跳过的数字
      * @return 胜利者编号
      */
-    public int simulate(int n, int m){
+    public static int simulate(int n, int m){
         Node starter = createJosephCircle(n);
 
         for(int i = 0; i < n - 1; i ++){ // 执行次数，胜者只有一个
@@ -32,12 +32,36 @@ public class JosephCircleImp {
 
     /**
      * 数学方法
-     * @param n
-     * @param m
-     * @return
+     * 0 1 2 3 ... m-1 m ... n-1    (n阶序列，m-1出列)
+     * m m+1 ...  n-1 0  ... m-2  (新的 n-1 序列)
+     * 0 1 2  ... n-m-1 ... m'-1 m' ... n-2 (重新编号)
+     * f(x,m) 表示问题规模为 x 时的下标编号：f(x,m) = (f(x-1) + m) mod x
+     * 且  f(1,m) 为最终的下标序列，只有 1 个结果且为 0
+     * @param n 问题规模
+     * @param m m > 0
+     * @return 胜利者index
      */
-    public int josephCircle(int n, int m){
-        return 0;
+    public static int josephCircle(int n, int m){
+
+        if(m <= 0) return -1;
+
+        int result = 0;
+        for(int i = 2; i <= n; i ++){
+            result = (result + m) % i;
+        }
+
+        return result;
+    }
+
+
+    /**
+     * 递归实现
+     */
+    public static int josephCircleByRecursion(int n, int m){
+        if(m < 1) return -1;
+        if(n == 1) return 0;
+
+        return (josephCircleByRecursion(n - 1, m) + m) % n;
     }
 
     /**
@@ -45,7 +69,7 @@ public class JosephCircleImp {
      * @param n
      * @return
      */
-    private Node createJosephCircle(int n){
+    private static Node createJosephCircle(int n){
 
         if( n <= 0 ) return null;
 
