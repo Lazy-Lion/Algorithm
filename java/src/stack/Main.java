@@ -25,5 +25,22 @@ public class Main {
         System.out.println(DecodeString.decodeAtIndex("a2345678999999999999999", 1));
         System.out.println(DecodeString.decodeAtIndex("y959q969u3hb22odq595", 222280369));
 
+
+        System.out.println("BasicCalculator:");
+        System.out.println(String.valueOf(BasicCalculator.calculate(" 0")));
+        System.out.println(String.valueOf(BasicCalculator.calculate("(1+(4+5+2)-3)+(6+8)")));
+        System.out.println(String.valueOf(BasicCalculator.calculate("(-1+(-4+5+2)-3)+(6+8)")));
+        System.out.println(String.valueOf(BasicCalculator.calculate("(1+(4*5+1)/3)+(6+8)")));
+        System.out.println(String.valueOf(BasicCalculator.calculate("(1+(-4*5+1)/3)+(6+8)")));
+        System.out.println(String.valueOf(BasicCalculator.calculate(" 2-1 + 2 ")));
+        System.out.println(String.valueOf(BasicCalculator.calculate(" 21-1 + 2 ")));
+        System.out.println(String.valueOf(BasicCalculator.calculate("1 * 2 - 3 / 1")));
+
+
+        System.out.println(String.valueOf(BasicCalculator.calculateSubAndPlus(" 0")));
+        System.out.println(String.valueOf(BasicCalculator.calculateSubAndPlus("(1+(4+5+2)-3)+(6+8)")));
+        System.out.println(String.valueOf(BasicCalculator.calculateSubAndPlus(" 2-1 + 2 ")));
+        System.out.println(String.valueOf(BasicCalculator.calculateSubAndPlus(" 21-1 + 2 ")));
+
     }
 }
