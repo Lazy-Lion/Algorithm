@@ -188,7 +188,7 @@ public class BasicCalculator {
 
     /**
      * 只支持 + -, 支持负数
-     * 由于加减运算符级别一致，只需要使用一个栈特殊处理()中的高优先级运算
+     * 由于加减运算符级别一致，只需要使用一个栈保存()外的结果和运算符
      */
     public static int calculateSubAndPlus(String s){
         int result = 0;
@@ -216,7 +216,7 @@ public class BasicCalculator {
                 result = 0;
                 sign = 1;
             }else if(ch == ')'){
-                result = result + stack.pop() * stack.pop();
+                result = result * stack.pop() + stack.pop();
             }
         }
         return result;
