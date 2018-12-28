@@ -44,5 +44,14 @@ public class Main {
         System.out.println(lQueue.dequeue());
 //        System.out.println(lQueue.dequeue());
 
+
+        System.out.println("ShortestSubarray:");
+        ShortestSubarray subarray = new ShortestSubarray();
+
+        System.out.println(subarray.shortestSubarray(new int[]{1}, 1));
+        System.out.println(subarray.shortestSubarray(new int[]{1,2}, 4));
+        System.out.println(subarray.shortestSubarray(new int[]{2,-1,2}, 3));
+        System.out.println(subarray.shortestSubarray(new int[]{17,85,93,-45,-21}, 150));
+
     }
 }
