@@ -4,6 +4,7 @@ public class BinarySearchImp {
 
     /**
      * 二分查找
+     * 时间复杂度： O(logn)
      * @param array  sorted array
      * @param keyword value to find
      * @return index of the value, if not found return -1
