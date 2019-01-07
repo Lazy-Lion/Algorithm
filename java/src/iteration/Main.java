@@ -1,7 +1,5 @@
 package iteration;
 
-import java.util.Arrays;
-
 /**
  * test
  */
