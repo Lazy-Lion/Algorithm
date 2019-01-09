@@ -7,7 +7,8 @@ package sort;
  *
  * 时间复杂度：最好、最坏、平均情况都是O(nlogn)，与待排数组有序程度无关   (使用递归树求解: 递推公式T(n) = 2(T(n/2) + n ))
  *
- * 空间复杂度：O(n) : 尽管每次合并操作都需要申请额外的内存空间，但合并完成之后，临时开辟的内存空间就被释放掉了，在任意时刻，cpu
+ * 空间复杂度：O(n) :  递归代码的空间复杂度不能像时间复杂度那样累加。
+ *                   尽管每次合并操作都需要申请额外的内存空间，但合并完成之后，临时开辟的内存空间就被释放掉了，在任意时刻，cpu
  *                   只会有一个函数在执行，也就是只会有一个临时的内存空间在使用，临时内存空间最大不会超过 n
  */
 public class MergeSort {
@@ -38,7 +39,7 @@ public class MergeSort {
     }
 
     private void merge(int[] a, int left, int middle, int right){
-        int[] temp = new int[right - left];
+        int[] temp = new int[right - left];  // 合并操作使用了额外内存
 
         int i = left;
         int j = middle;

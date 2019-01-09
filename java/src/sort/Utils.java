@@ -20,4 +20,21 @@ public class Utils {
         a[index1] = a[index2];
         a[index2] = temp;
     }
+
+
+    /**
+     * 生成指定长度随机整数数组
+     * @param len
+     * @return
+     */
+    public static int[] generateArray(int len){
+
+        int[] result = new int[len];
+
+        for(int i = 0; i < len; i ++){
+            result[i] = (int) ( Math.random() * len );  // 0 - 300 随机整数
+        }
+
+        return result;
+    }
 }

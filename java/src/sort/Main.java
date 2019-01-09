@@ -41,7 +41,7 @@ public class Main {
             List<Object> list = new LinkedList<>();
 
             for(int i = 0; i < 10000; i ++){
-                int[] a = generateArray(300);
+                int[] a = Utils.generateArray(300);
                 list.add(a);
             }
 
@@ -58,7 +58,7 @@ public class Main {
             list = new LinkedList<>();
 
             for (int i = 0; i < 10000; i++) {
-                int[] a = generateArray(300);
+                int[] a = Utils.generateArray(300);
                 list.add(a);
             }
 
@@ -76,14 +76,14 @@ public class Main {
         System.out.println("比较插入排序和希尔排序性能: ");
 
         for(int i = 0; i < 5; i ++){
-            array = generateArray(100000);
+            array = Utils.generateArray(100000);
 
             long startTime = System.currentTimeMillis();
             insertionSort.insertionSort(array, array.length);
             System.out.println("插入排序时间：" + (System.currentTimeMillis() - startTime) + "ms");
 
 
-            array = generateArray(100000);  // 数据量达到百万级别，插入排序已无法短时间完成
+            array = Utils.generateArray(100000);  // 数据量达到百万级别，插入排序已无法短时间完成
 
             startTime = System.currentTimeMillis();
             shellSort.shellSort(array, array.length);
@@ -93,17 +93,4 @@ public class Main {
 
 
     }
-
-
-    public static int[] generateArray(int len){
-
-        int[] result = new int[len];
-
-        for(int i = 0; i < len; i ++){
-            result[i] = (int) ( Math.random() * len );  // 0 - 300 随机整数
-        }
-
-        return result;
-    }
-
 }
