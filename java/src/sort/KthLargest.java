@@ -62,6 +62,8 @@ public class KthLargest {
     }
 
     private int partition(int[] nums, int left, int right){
+        Utils.swap(nums, median3(nums, left, right - 1), right - 1);
+
         int pivot = nums[right - 1];
 
         int i = left;
@@ -75,6 +77,26 @@ public class KthLargest {
         Utils.swap(nums, i, j);
 
         return i;
+    }
+
+    /**
+     * 优化pivot的选择
+     * median3: 三数中值法，使得nums[left], nums[right], nums[middle] 按照大小顺序排列
+     * @param nums
+     * @param left
+     * @param right
+     * @return
+     */
+    private int median3(int[] nums, int left, int right){
+        int middle = left + (right - left) / 2;
+
+        if(nums[right] < nums[left]) Utils.swap(nums,left,right);
+
+        if(nums[middle] < nums[left]) Utils.swap(nums,left,right);
+
+        if(nums[right] < nums[middle]) Utils.swap(nums,middle,right);
+
+        return middle;
     }
 
     /**
