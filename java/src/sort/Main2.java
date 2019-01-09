@@ -10,6 +10,7 @@ public class Main2 {
         MergeSort mergeSort = new MergeSort();
         QuickSort quickSort = new QuickSort();
         ShellSort shellSort = new ShellSort();
+        KthLargest kthLargest = new KthLargest();
 
         // 归并排序
         int[] array = new int[]{6,5,4,7,4,3,2,1};
@@ -41,5 +42,12 @@ public class Main2 {
             System.out.println();
 
         }
+
+        // kthLargest
+        array = new int[]{3,2,1,5,6,4};
+        System.out.println(kthLargest.findKthLargest(array,2));
+
+        System.out.println(kthLargest.findKthLargest_heap(array,2));
+
     }
 }
