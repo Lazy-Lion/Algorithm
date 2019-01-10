@@ -11,6 +11,7 @@ public class Main2 {
         QuickSort quickSort = new QuickSort();
         ShellSort shellSort = new ShellSort();
         KthLargest kthLargest = new KthLargest();
+        BucketSort bucketSort = new BucketSort();
 
         // 归并排序
         int[] array = new int[]{6,5,4,7,4,3,2,1};
@@ -22,7 +23,18 @@ public class Main2 {
         quickSort.quickSort(array, array.length);
         System.out.println(Arrays.toString(array));
 
-        System.out.println("归并排序、快速排序、希尔排序排序性能比较：");
+        //桶排序
+        System.out.println("桶排序：");
+        array = new int[]{6,5,4,7,4,3,2,1};
+        bucketSort.bucketSort(array, array.length);
+        System.out.println(Arrays.toString(array));
+
+        array = Utils.generateArray(20);
+        System.out.println("原数组: " + Arrays.toString(array));
+        bucketSort.bucketSort(array, array.length);
+        System.out.println("排序后: " + Arrays.toString(array));
+
+        System.out.println("归并排序、快速排序、希尔排序、桶排序性能比较：");
 
         for(int i = 0; i < 3; i ++){
             array = Utils.generateArray(1000000);
@@ -39,6 +51,11 @@ public class Main2 {
             startTime = System.currentTimeMillis();
             shellSort.shellSort(array, array.length);
             System.out.println("希尔排序：" + (System.currentTimeMillis() - startTime) + "ms");
+
+            array = Utils.generateArray(1000000);
+            startTime = System.currentTimeMillis();
+            bucketSort.bucketSort(array, array.length);
+            System.out.println("桶排序：  " + (System.currentTimeMillis() - startTime) + "ms");
             System.out.println();
 
         }

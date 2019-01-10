@@ -25,7 +25,7 @@ public class QuickSort {
     public void quickSort(int[] a, int n){
         if(n <= 1) return;
 
-        quickSort_recursion(a, 0, a.length);
+        quickSort_recursion(a, 0, n);
     }
 
     private void quickSort_recursion(int[] a, int left, int right){
