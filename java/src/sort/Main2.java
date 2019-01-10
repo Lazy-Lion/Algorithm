@@ -12,6 +12,7 @@ public class Main2 {
         ShellSort shellSort = new ShellSort();
         KthLargest kthLargest = new KthLargest();
         BucketSort bucketSort = new BucketSort();
+        CountingSort countingSort = new CountingSort();
 
         // 归并排序
         int[] array = new int[]{6,5,4,7,4,3,2,1};
@@ -32,6 +33,13 @@ public class Main2 {
         array = Utils.generateArray(20);
         System.out.println("原数组: " + Arrays.toString(array));
         bucketSort.bucketSort(array, array.length);
+        System.out.println("排序后: " + Arrays.toString(array));
+
+        // 计数排序
+        System.out.println("计数排序");
+        array = Utils.generateArray(20,5);
+        System.out.println("原数组: " + Arrays.toString(array));
+        countingSort.countingSort(array, array.length);
         System.out.println("排序后: " + Arrays.toString(array));
 
         System.out.println("归并排序、快速排序、希尔排序、桶排序性能比较：");
@@ -65,6 +73,7 @@ public class Main2 {
         System.out.println(kthLargest.findKthLargest(array,2));
 
         System.out.println(kthLargest.findKthLargest_heap(array,2));
+
 
     }
 }
