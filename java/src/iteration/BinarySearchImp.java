@@ -1,10 +1,20 @@
 package iteration;
 
+/**
+ * 二分查找：
+ *   局限性：
+ *     1. 二分查找针对的是有序集合；
+ *     2. 二分查找依赖顺序表结构(数组)，由于数组需要连续的空间分配，所以当数据量太大时，需要分配连续的空间就比较吃力，此时
+ *          二分查找就不适用了；
+ *     3. 数据量太小时，二分查找的优势就不明显。
+ *
+ * 时间复杂度： O(logn)
+ *
+ */
 public class BinarySearchImp {
 
     /**
      * 二分查找
-     * 时间复杂度： O(logn)
      * @param array  sorted array
      * @param keyword value to find
      * @return index of the value, if not found return -1

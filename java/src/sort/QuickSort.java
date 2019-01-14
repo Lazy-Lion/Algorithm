@@ -14,6 +14,11 @@ package sort;
  *      平均情况: O(nlogn)
  *
  * 空间复杂度： O(1) ,  归并排序空间复杂度为O(n), 所以快排更为常用
+ *
+ *
+ * JDK 8 中排序的实现: Arrays.sort() :
+ *                      插入排序改进 => pair insertion sort
+ *                      快速排序改进 => 双轴快排(pivot1, pivot2 =>  < pivot1, pivot1 <= && <= pivot2, >= pivot2)
  */
 public class QuickSort {
 
