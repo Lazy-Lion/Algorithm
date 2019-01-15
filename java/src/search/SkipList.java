@@ -15,8 +15,9 @@ import java.util.Random;
  *                   ↓       ↓       ↓          ↓           ↓
  *          一级索引  1 → 3 → 5 → 7 → 9 →  11 →  13 →  15 →  17 →  19
  *                   ↓   ↓   ↓   ↓   ↓    ↓     ↓     ↓     ↓     ↓
- *          数据     1→2→3→4→5→6→7→8→9→10→11→12→13→14→15→16→17→18→19→20
- *
+ *          原数据   1→2→3→4→5→6→7→8→9→10→11→12→13→14→15→16→17→18→19→20
+ *               ↗
+ *            head  (代码实现中定义的头节点，实际指向第一列)
  *
  * 时间复杂度: 查找时间复杂度：索引层级和数据高度：logn; 每层遍历次数：如每隔一个数据建立一层索引，到下一层时遍历次数不超过3次；
  *                    ==> T(n) = O(logn)
@@ -34,8 +35,9 @@ public class SkipList {
 
     private static final int MAX_LEVEL = 16;
 
-    private int levelCount = 1;             // 目前表内最大层数
-    private SkipNode head = new SkipNode();
+    private int levelCount = 1;             // max level of levels in the list
+    private SkipNode head = new SkipNode();   // first node,哨兵节点，降低代码复杂度
+    private int size = 0;      // number of data elements in list
     private Random r = new Random();
 
     public SkipNode find(int value){
@@ -53,11 +55,12 @@ public class SkipList {
         return null;
     }
 
-    public void insert(int value){
+    // skip list 插入数据效率较低
+    public void insert(int value){     // assume: 不存在重复数据
         int level = randomLevel();
         SkipNode newNode = new SkipNode();
         newNode.data = value;
-        newNode.maxLevel = level;
+        newNode.maxLevel = level - 1;
 
         SkipNode[] update = new SkipNode[level];
 
@@ -65,13 +68,12 @@ public class SkipList {
             update[i] = head;
         }
 
-        //寻找value插入的位置
         SkipNode p = head;
-        for(int i = level - 1; i >= 0; i --){
+        for(int i = level - 1; i >= 0; i --){               // find insert position
             while(p.forwards[i] != null && p.forwards[i].data < value){
                 p = p.forwards[i];
             }
-            update[i] = p;
+            update[i] = p;   // track end at level i
         }
 
         for(int i = 0; i < level; i ++){
@@ -80,14 +82,54 @@ public class SkipList {
         }
 
         if(levelCount < level) levelCount = level;
+        size ++;
     }
 
-    public void delete(int value){
+    public boolean delete(int value){
+        SkipNode p = head;
 
+        SkipNode[] prev = new SkipNode[levelCount];
+
+        for(int i = levelCount - 1; i >= 0; i --){
+            if(p.forwards[i] != null && p.forwards[i].data < value){
+                p = p.forwards[i];
+            }
+
+            if(p.forwards[i]!= null && p.forwards[i].data == value)
+                prev[i] = p;
+        }
+
+        if(p.forwards[0] == null || p.forwards[0].data > value)
+            return false;      // value not found
+
+        for(int i = levelCount - 1; i >= 0; i --){
+            if(prev[i] != null) {
+                SkipNode deleteNode = prev[i].forwards[i];
+                prev[i].forwards[i] = deleteNode.forwards[i];
+                deleteNode.forwards[i] = null;
+            }
+        }
+        size --;
+        return true;
+    }
+
+    public int getSize(){
+        return size;
+    }
+
+    public void printAll(){
+        SkipNode p = head;
+
+        while(p.forwards[0] != null){
+            System.out.print(p.forwards[0].data + " ");
+            p = p.forwards[0];
+        }
+
+        System.out.println();
     }
 
 
-    // 随机生成节点的层数
+    // 随机生成节点的层数 [1,16]
     private int randomLevel(){
         int level = 1;
 
@@ -105,7 +147,15 @@ public class SkipList {
      */
     class SkipNode{
         private int data = -1;
+
+        /**
+         *    p.forwards[i] : 存储 p 指向的节点q第i层级的对应, 实际上forwards数组存储的引用只有两种: q or null
+         */
         private SkipNode[] forwards = new SkipNode[MAX_LEVEL];
-        private int maxLevel = 0;
+        private int maxLevel = 0;   // 层级从0开始编号，第0层对应上述分析的原数据
+
+        public int getData(){
+            return data;
+        }
     }
 }

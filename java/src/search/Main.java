@@ -1,8 +1,7 @@
 package search;
 
-import sort.InsertionSort;
-
 import java.util.Arrays;
+import java.util.LinkedList;
 
 /**
  * test
@@ -10,7 +9,6 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args){
         BinarySearch binarySearch = new BinarySearch();
-        InsertionSort insertionSort = new InsertionSort();
 
         int[] array = new int[]{0, 1, 2, 2, 3, 3, 4, 5, 6, 6, 6, 7, 9, 9, 9, 10, 14, 15, 16, 18};
         System.out.println("数组：" + Arrays.toString(array));
@@ -39,5 +37,44 @@ public class Main {
         array = new int[]{5,1,2,3,4};
         System.out.println(rotatedSortedArray.search(array,1));
 
+
+        //skip list
+        System.out.println("跳表(skip list):");
+        SkipList skipList = new SkipList();
+
+        for(int i = 0; i < 10; i ++){
+            skipList.insert(i);
+        }
+        System.out.println(skipList.getSize());
+        skipList.printAll();
+        System.out.println(skipList.delete(1));
+        System.out.println(skipList.delete(9));
+        System.out.println(skipList.delete(12));
+        System.out.println(skipList.getSize());
+        skipList.printAll();
+        System.out.println(skipList.find(3).getData());
+        System.out.println(skipList.find(1));
+
+
+        skipList = new SkipList();
+
+        for(int i = 0; i < 10000; i ++){
+            skipList.insert(i);
+        }
+        long startTime = System.currentTimeMillis();
+        for(int i = 0; i < 5000; i ++){
+            skipList.find((int)(Math.random() * 10000));
+        }
+        System.out.println("skip list search: " + (System.currentTimeMillis() - startTime) + "ms");
+
+        LinkedList<Integer> list = new LinkedList<>();
+        for(int i = 0; i < 10000; i ++){
+            list.add(i);
+        }
+        startTime = System.currentTimeMillis();
+        for(int i = 0; i < 5000; i ++){
+            list.get((int)(Math.random() * 10000));
+        }
+        System.out.println("linked list search: " + (System.currentTimeMillis() - startTime) + "ms");
     }
 }
