@@ -39,6 +39,14 @@ public class Main2 {
             System.out.println(s + " " + rbTree.get(s));
         System.out.println();
 
+        System.out.println("After deleting one key");
+        System.out.println("--------------------------------");
+        rbTree.delete("R");
+
+        for (String s : rbTree.keys())
+            System.out.println(s + " " + rbTree.get(s));
+        System.out.println();
+
         System.out.println("After deleting the remaining keys");
         System.out.println("--------------------------------");
         for (String s : rbTree.keys())

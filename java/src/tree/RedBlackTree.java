@@ -374,11 +374,14 @@ public class RedBlackTree<K extends Comparable<K>, V> {
             }
             r.left = delete(r.left, key);
         }else{
-            if(isRed(r.left))
+            if(isRed(r.left))                                // push red right
                 r = rotateRight(r);
-            if(key.compareTo(r.key) == 0 && r.right == null)  // equal and at bottom => delete node
+            if(key.compareTo(r.key) == 0 && r.right == null)  // equal and at bottom (if left is red then put it right,
+                                                              // r.right != null; if left != null && left is black,
+                                                              // r.right != null)
+                                                              // => delete node
                 return null;
-            if(!isRed(r.right) && isRed(r.right.left))
+            if(!isRed(r.right) && !isRed(r.right.left))
                 r = moveRedRight(r);
             if(key.compareTo(r.key) == 0){                   // equal and not at bottom => replace current node with
                                                              // successor key,value, then delete successor
