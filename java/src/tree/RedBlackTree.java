@@ -376,11 +376,12 @@ public class RedBlackTree<K extends Comparable<K>, V> {
         }else{
             if(isRed(r.left))
                 r = rotateRight(r);
-            if(key.compareTo(r.key) == 0 && r.right == null)
+            if(key.compareTo(r.key) == 0 && r.right == null)  // equal and at bottom => delete node
                 return null;
             if(!isRed(r.right) && isRed(r.right.left))
                 r = moveRedRight(r);
-            if(key.compareTo(r.key) == 0){
+            if(key.compareTo(r.key) == 0){                   // equal and not at bottom => replace current node with
+                                                             // successor key,value, then delete successor
                 Node p = min(r.right);
                 r.key = p.key;
                 r.value = p.value;
@@ -390,7 +391,7 @@ public class RedBlackTree<K extends Comparable<K>, V> {
                 r.right = delete(r.right, key);
             }
         }
-        return fixUp(r);
+        return fixUp(r);                 // make balance
     }
 
     /**
