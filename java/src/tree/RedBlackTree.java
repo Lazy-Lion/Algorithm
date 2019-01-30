@@ -83,7 +83,7 @@ import java.util.NoSuchElementException;
  *       https://github.com/Lazy-Lion/Graphic/blob/master/dataStructure/color-flip.png
  *
  *       左旋、右旋实际上是旋转 red link
- *       发色实际上是分解 4-nodes
+ *       反色实际上是分解 4-nodes
  *       )
  *
  *
