@@ -330,6 +330,7 @@ public class RedBlackTree<K extends Comparable<K>, V> {
     }
 
     private Node moveRedLeft(Node r){
+
         flipColor(r);
 
         if(isRed(r.right.left)){
