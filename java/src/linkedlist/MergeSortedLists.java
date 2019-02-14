@@ -1,7 +1,5 @@
 package linkedlist;
 
-import sort.MergeSort;
-
 /**
  * leetcode 23 : Merge k Sorted Lists
  *
