@@ -3,6 +3,7 @@ package heap;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * 堆 (heap): 一种特殊的树
@@ -44,47 +45,53 @@ public class Heap<K> implements Iterable<K>{
     }
 
     public Heap(K[] keys){
-
         int len = keys.length;
+        Object[] array = Arrays.copyOf(keys, len, Object[].class);
+        this.queue = array;
+        this.size = len;
+
         if(len > 1) {
             int k = (len - 1) >>> 1;
             for (int i = k; i >= 0; i--) {
                 sink(i);
             }
         }
-        this.queue = Arrays.copyOf(keys, len, Object[].class);
-        this.size = len;
+    }
+
+    /**
+     * @return the number of keys on this heap
+     */
+    public int size(){
+        return size;
+    }
+
+    /**
+     * @return true if heap is empty
+     */
+    public boolean isEmpty(){
+        return size == 0;
+    }
+
+    /**
+     * add a new key to this heap
+     * @param key
+     */
+    public void add(K key){
+        if(size == queue.length)
+            grow();
+
+        queue[size++] = key;
+        swim(size - 1);
     }
 
     private void swim(int index){
         if(size <= 1) return;
 
-        if(comparator != null){
-            swimComparator(index);
-        }else{
-            swimComparable(index);
-        }
-    }
-
-    private void swimComparator(int index){
-        K key = (K)queue[index];
-
-        while(index > 0){
-            int parent = (index - 1) >>> 1; // 无符号右移
-            if(comparator.compare((K) queue[parent], key) <= 0)
-                break;
-            queue[index] = queue[parent];
-            index = parent;
-        }
-        queue[index] = key;
-    }
-
-    private void swimComparable(int index){
         K key = (K)queue[index];
 
         while(index > 0){
             int parent = (index - 1) >>> 1;
-            if(((Comparable<K>)queue[parent]).compareTo(key) <= 0)
+            if(compare((K)queue[parent], key) <= 0)
                 break;
             queue[index] = queue[parent];
             index = parent;
@@ -95,25 +102,17 @@ public class Heap<K> implements Iterable<K>{
     private void sink(int index){
         if(size <= 1) return;
 
-        if(comparator != null){
-            sinkComparator(index);
-        }else{
-            sinkComparable(index);
-        }
-    }
-
-    private void sinkComparator(int index){
         K key = (K)queue[index];
-        int c = (size - 1) >>> 1;
+        int c = (size - 1 - 1) >>> 1;  // the last index is size - 1, so parent index is (size - 2) / 2
 
         while(index <= c){
             int l = 2 * index + 1;
             int r = 2 * (index + 1);
 
-            int cmp = r >= size ? -1 : comparator.compare( (K)queue[l], (K)queue[r]);
+            int cmp = r >= size ? -1 : compare((K)queue[l], (K)queue[r]);
             int min = cmp < 0 ? l : r;
 
-            if(comparator.compare( (K)queue[index], (K)queue[min]) <= 0)
+            if(compare(key, (K)queue[min]) <= 0)
                 break;
 
             queue[index] = queue[min];
@@ -122,38 +121,17 @@ public class Heap<K> implements Iterable<K>{
         queue[index] = key;
     }
 
-    private void sinkComparable(int index){
-        Comparable<K> key = (Comparable<K>)queue[index];
-        int c = (size - 1) >>> 1;
-
-        while(index <= c){
-            int l = 2 * index + 1;
-            int r = 2 * (index + 1);
-
-            int cmp = r >= size ? -1 : ((Comparable<K>)queue[l]).compareTo((K)queue[r]);
-            int min = cmp < 0 ? l : r;
-
-            if(key.compareTo((K)queue[min]) <= 0)
-                break;
-
-            queue[index] = queue[min];
-            index = min;
+    private int compare(K k1, K k2){
+        if(comparator != null){
+            return comparator.compare(k1, k2);
+        }else{
+            return ((Comparable<K>)k1).compareTo(k2);
         }
-        queue[index] = key;
     }
 
-    public boolean isEmpty(){
-        return size == 0;
-    }
-
-    public void insert(K key){
-        if(size == queue.length - 1)
-            grow();
-        size ++;
-        swim(size - 1);
-    }
-
-    //数组扩容
+    /**
+     * double the length of the heap array
+     */
     private void grow(){
         int oldCapacity = queue.length;
 
@@ -169,9 +147,11 @@ public class Heap<K> implements Iterable<K>{
         queue = Arrays.copyOf(queue, newCapacity);
     }
 
-    public K delete(){
-        if(isEmpty())
-            return null;
+    /**
+     * remove and return the top element on this heap
+     */
+    public K poll(){
+        if(isEmpty()) return null;
 
         Object v = queue[0];
         queue[0] = queue[--size];
@@ -180,10 +160,57 @@ public class Heap<K> implements Iterable<K>{
         return (K)v;
     }
 
-    //TODO
+
     @Override
     public Iterator<K> iterator() {
-        return null;
+        return new Iter();
+    }
+
+    private class Iter implements Iterator<K>{
+
+        private Heap<K> copy;
+
+        public Iter(){
+            if(comparator == null)
+                copy = new Heap<>(size());
+            else
+                copy = new Heap<>(size(), comparator);
+
+            //不要使用foreach方式,会访问到queue中未被使用的位置，导致ArrayIndexOutOfBoundsException
+            for(int i = 0; i < size(); i ++){
+                copy.add((K)queue[i]);
+            }
+        }
+
+        @Override
+        public boolean hasNext() {
+            return !copy.isEmpty();
+        }
+
+        @Override
+        public K next() {
+            if(!hasNext()) throw new NoSuchElementException();
+            return copy.poll();
+        }
+    }
+
+    public static void main(String[] args){
+        Heap<Integer> h = new Heap<>(new Integer[]{8,6,21,3,2,1});
+        h.add(10);
+        h.add(-1);
+        h.add(1);
+
+        System.out.println(h.isEmpty());
+        System.out.println(h.size);
+        System.out.println(h.poll());
+        System.out.println(h.poll());
+        System.out.println(h.poll());
+        System.out.println(h.size);
+
+        for(Integer i : h){
+            System.out.print(i + " ");
+        }
+        System.out.println();
     }
 
 }
