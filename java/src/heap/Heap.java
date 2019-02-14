@@ -50,8 +50,9 @@ public class Heap<K> implements Iterable<K>{
         this.queue = array;
         this.size = len;
 
-        if(len > 1) {
-            int k = (len - 1) >>> 1;
+        if(len > 1) {   // heapify: Time cost < O(n*logn), in fact T = O(n)
+                        // 当前节点的比较次数与节点所在高度有关，最大高度为logn
+            int k = (len - 2) >>> 1;
             for (int i = k; i >= 0; i--) {
                 sink(i);
             }
@@ -84,6 +85,11 @@ public class Heap<K> implements Iterable<K>{
         swim(size - 1);
     }
 
+    /**
+     * heapify from bottom to top
+     * for insert
+     * @param index
+     */
     private void swim(int index){
         if(size <= 1) return;
 
@@ -99,6 +105,11 @@ public class Heap<K> implements Iterable<K>{
         queue[index] = key;
     }
 
+    /**
+     * heapify from top to bottom
+     * for delete
+     * @param index
+     */
     private void sink(int index){
         if(size <= 1) return;
 
