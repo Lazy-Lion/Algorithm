@@ -1,7 +1,9 @@
 package graph;
 
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.NoSuchElementException;
+import java.util.Queue;
 
 /**
  * 一、图 (graph): 无向图 (Undirected Graphs, 边没有方向), 有向图 (Directed Graphs, 边有方向),带权图 (Weighted Graphs, 每条
@@ -223,6 +225,67 @@ public class Graph {
         return graph;
     }
 
+    /**
+     * Breadth First Search (BFS, 广度优先搜索)
+     *   shortest paths from source vertex s to destination vertex t
+     *  时间复杂度：O(e + v)  // e = edge(), v = vertex()
+     *  空间复杂度：O(v)      // e = edge()
+     */
+    public int bfs(int s, int t){
+
+        validateVertex(s);
+        validateVertex(t);
+
+        if(s == t) return 0;
+
+        int[] path = new int[this.v];    // 记录搜索路径 (最短路径)
+        for(int i = 0; i < this.v; i ++)
+            path[i] = -1;
+
+        boolean[] visited = new boolean[this.v];    // 标记顶点是否已被访问
+        Queue<Integer> queue = new LinkedList<>();  // 存储已被访问、但邻接顶点还没有被访问的顶点
+        queue.add(s);
+        visited[s] = true;
+
+        while(!queue.isEmpty()){
+            int v = queue.poll();
+            if(table[v] == null) continue;
+            for(Integer i : table[v]){
+                if(visited[i]) continue;
+                path[i] = v;
+                if(i == t){
+                    return getPath(path, s, t);
+                }
+                queue.add(i);
+                visited[i] = true;
+            }
+        }
+
+        return -1;
+    }
+
+    /**
+     * print path and return path length
+     * assert path exists
+     */
+    private int getPath(int[] path, int s,int t){
+        if(s == t){
+            return 0;
+        }
+
+        int c = 0;
+        c = getPath(path, s, path[t]) + 1;
+        System.out.print(path[t] + " → " + t + "; ");
+        return c;
+    }
+
+    /**
+     * Depth First Search (DFS, 深度优先搜索)
+     */
+    public void dfs(int s, int t){
+
+    }
+
     @Override
     public String toString(){
         StringBuilder s = new StringBuilder();
@@ -259,6 +322,22 @@ public class Graph {
         System.out.println(reverse.toString());
         System.out.println(reverse.indegree(0));
         System.out.println(reverse.outdegree(0));
+
+        System.out.println(g.bfs(0,3));
+
+
+        g = new Graph(5);
+        g.addEdge(0,1);
+        g.addEdge(1,2);
+        g.addEdge(2,3);
+        g.addEdge(2,4);
+        g.addEdge(3,4);
+        g.addEdge(3,0);
+        g.addEdge(4,0);
+
+        System.out.println(g.bfs(0,4));
+        System.out.println(g.bfs(3,1));
+
     }
 }
 
