@@ -73,6 +73,7 @@ public class Graph {
     private final int v; //numbers of vertices in this digraph, from 0 to v-1
     private int e;   // numbers of edges in this digraph
     private Node<Integer>[] table;   // table[v] is adjacency list of vertex v
+    // private LinkedList<Integer>[] table;  // simple implementation of java
     private int[] indegree;   // indegree[v] is the indegree of vertex v, get outdegree by traversing table[v]
 
     private final String LINE_SEPARATOR = System.getProperty("line.separator");
