@@ -1,5 +1,8 @@
 package graph;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 /**
  * 一、图 (graph): 无向图 (Undirected Graphs, 边没有方向), 有向图 (Directed Graphs, 边有方向),带权图 (Weighted Graphs, 每条
  *    边有一个权重)
@@ -63,7 +66,198 @@ package graph;
  *          节省空间，但是使用起来较为麻烦
  *    3. 将图持久化到数据库表中
  *
+ *
+ * Graph 类基于邻接表方式实现有向图
  */
 public class Graph {
+    private final int v; //numbers of vertices in this digraph, from 0 to v-1
+    private int e;   // numbers of edges in this digraph
+    private Node<Integer>[] table;   // table[v] is adjacency list of vertex v
+    private int[] indegree;   // indegree[v] is the indegree of vertex v, get outdegree by traversing table[v]
+
+    private final String LINE_SEPARATOR = System.getProperty("line.separator");
+
+    public Graph(int v){
+        this.v = v;
+        e = 0;
+        table = (Node<Integer>[])new Node[v];
+        indegree = new int[v];
+    }
+
+    /**
+     * 邻接表 链表节点
+     * @param <K>
+     */
+    private static class Node<K> implements Iterable<K> {
+        private K item;
+        private Node<K> next;
+
+        public Node(K item){
+            this.item = item;
+            this.next = null;
+        }
+
+        @Override
+        public Iterator<K> iterator() {
+            return new Iter(item, next);
+        }
+
+        private static class Iter<K> implements Iterator<K>{
+            private Node<K> current;
+            private Node<K> n;
+
+            private Iter(K item, Node<K> next){
+                this.current = new Node<>(item);
+                this.current.next = next;
+                n = next;
+            }
+
+            @Override
+            public boolean hasNext() {
+                return current != null;
+            }
+
+            @Override
+            public K next() {
+                if(!hasNext())
+                    throw new NoSuchElementException();
+
+                K r = current.item;
+                current = n;
+                n = current == null ? null : current.next;
+                return r;
+            }
+        }
+    }
+
+    /**
+     * @return the number of vertices in this digraph
+     */
+    public int vertex(){
+        return this.v;
+    }
+
+    /**
+     * @return the number of edges in this digraph
+     */
+    public int edge(){
+        return this.e;
+    }
+
+    /**
+     * @param v
+     * @return the indegree of vertex v
+     */
+    public int indegree(int v){
+        validateVertex(v);
+        return indegree[v];
+    }
+
+    /**
+     * @param v
+     * @return the outdegree of vertex v
+     */
+    public int outdegree(int v){
+
+        int c = 0;
+        Node<Integer> l = table[v];
+        while(l != null){
+            c ++;
+            l = l.next;
+        }
+        return c;
+    }
+
+    public void addEdge(int v, int w){
+        validateVertex(v);
+        validateVertex(w);
+
+        Node<Integer> l = table[v];
+        boolean hasEdge = false;
+
+        if(l == null)
+            table[v] = new Node<>(w);
+        else {
+            if(l.item == w) return; // note: 1.java中Integer与int的比较:先将Integer转换成int，再进行值比较
+                                    //       2.Integer类中 -128~127 有cache
+
+            while (l.next != null) {
+                if (l.next.item == w) {
+                    hasEdge = true;
+                    break;
+                }
+                l = l.next;
+            }
+        }
+
+        if(!hasEdge) {
+            if(l != null) l.next = new Node<>(w);
+            e++;
+            indegree[w]++;
+        }
+    }
+
+    /**
+     * throw an IllegalArgumentException unless 0 <= v < this.v
+     * @param v
+     */
+    private void validateVertex(int v){
+        if(v < 0 || v >= this.v)
+            throw new IllegalArgumentException("vertex " + v + " is not exists");
+    }
+
+    /**
+     * reverse the digraph
+     * @return
+     */
+    public Graph reverse(){
+        Graph graph = new Graph(this.v);
+        for(int i = 0; i < this.v; i ++){
+            if(table[i] == null) continue;
+
+            for(Integer w : table[i]){
+                graph.addEdge(w, i);
+            }
+        }
+        return graph;
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder s = new StringBuilder();
+        s.append(v + " vertices, " + e + " edges " + LINE_SEPARATOR);
+
+        for(int i = 0; i < this.v; i ++){
+            if(this.table[i] == null) continue;
+
+            for(Integer w : this.table[i]){
+                s.append(i + " → " + w + LINE_SEPARATOR);
+            }
+        }
+        return s.toString();
+    }
+
+    public static void main(String[] args){
+        Graph g = new Graph(5);
+        g.addEdge(0,1);
+        g.addEdge(0,1);
+        g.addEdge(0,2);
+        g.addEdge(0,3);
+        g.addEdge(0,4);
+        g.addEdge(1,3);
+        g.addEdge(1,0);
+        g.addEdge(3,0);
+        g.addEdge(3,2);
+        g.addEdge(4,0);
+
+        System.out.println(g.toString());
+        System.out.println(g.indegree(0));
+        System.out.println(g.outdegree(0));
+
+        Graph reverse = g.reverse();
+        System.out.println(reverse.toString());
+        System.out.println(reverse.indegree(0));
+        System.out.println(reverse.outdegree(0));
+    }
 }
 
