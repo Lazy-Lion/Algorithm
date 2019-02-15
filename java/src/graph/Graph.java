@@ -227,7 +227,7 @@ public class Graph {
 
     /**
      * Breadth First Search (BFS, 广度优先搜索)
-     *   shortest paths from source vertex s to destination vertex t
+     *   shortest path from source vertex s to destination vertex t
      *  时间复杂度：O(e + v)  // e = edge(), v = vertex()
      *  空间复杂度：O(v)      // e = edge()
      */
