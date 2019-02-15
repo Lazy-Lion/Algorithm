@@ -1,3 +1,5 @@
+package graph;
+
 /**
  * 一、图 (graph): 无向图 (Undirected Graphs, 边没有方向), 有向图 (Directed Graphs, 边有方向),带权图 (Weighted Graphs, 每条
  *    边有一个权重)
@@ -59,7 +61,9 @@
  *                 如图 (引用自 https://algs4.cs.princeton.edu/41graph/ )：
  *               https://github.com/Lazy-Lion/Graphic/blob/master/dataStructure/adjacency-lists.png
  *          节省空间，但是使用起来较为麻烦
+ *    3. 将图持久化到数据库表中
  *
  */
-public class graph {
+public class Graph {
 }
+
