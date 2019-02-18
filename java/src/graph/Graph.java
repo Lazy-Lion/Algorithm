@@ -205,7 +205,7 @@ public class Graph {
      */
     private void validateVertex(int v){
         if(v < 0 || v >= this.v)
-            throw new IllegalArgumentException("vertex " + v + " is not exists");
+            throw new IllegalArgumentException("vertex " + v + " does not exist");
     }
 
     /**
