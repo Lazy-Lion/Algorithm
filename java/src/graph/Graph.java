@@ -1,9 +1,6 @@
 package graph;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.NoSuchElementException;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * 一、图 (graph): 无向图 (Undirected Graphs, 边没有方向), 有向图 (Directed Graphs, 边有方向),带权图 (Weighted Graphs, 每条
@@ -79,6 +76,8 @@ public class Graph {
     private int[] indegree;   // indegree[v] is the indegree of vertex v, get outdegree by traversing table[v]
 
     private final String LINE_SEPARATOR = System.getProperty("line.separator");
+
+    private boolean found = false;   // for dfs
 
     public Graph(int v){
         this.v = v;
@@ -228,6 +227,7 @@ public class Graph {
     /**
      * Breadth First Search (BFS, 广度优先搜索)
      *   shortest path from source vertex s to destination vertex t
+     *  assert graph is connected
      *  时间复杂度：O(e + v)  // e = edge(), v = vertex()
      *  空间复杂度：O(v)      // e = edge()
      */
@@ -281,9 +281,81 @@ public class Graph {
 
     /**
      * Depth First Search (DFS, 深度优先搜索)
+     * assert graph is connected
+     * 时间复杂度： O(e)   - e = edge(),每条边最多访问两次，一次遍历，一次回溯
+     * 空间复杂度: O(v)   - v = vertex()
+     *
+     * Application of DFS:
+     *   1. check connectivity of the graph (if not connected, find number of connected components)
+     *   2. check a cyclicity of the graph
      */
     public void dfs(int s, int t){
+        if(s == t) return;
+        validateVertex(s);
+        validateVertex(t);
 
+        boolean[] visited = new boolean[this.v];
+        found = false;   // 全局变量，用于标记已找到终点，防止多余执行的递归和回溯
+        int[] prev = new int[this.v];  // 记录搜索路径 (非最短路径)
+        dfs(visited, s, t, prev);
+        getPath(prev, s, t);
+    }
+
+    private void dfs(boolean[] visited, int s, int t, int[] prev){
+        if(found) return;
+
+        if(!visited[s]) {
+            visited[s] = true;
+        }
+
+        if(s == t)
+        {
+            found = true; return;
+        }
+
+        if(table[s] == null) return;
+        for(Integer i : table[s]){
+            if(found) return;
+            if(!visited[i]) {
+                prev[i] = s;
+                dfs(visited, i, t, prev);
+            }
+        }
+
+    }
+
+    /**
+     * BFS,迭代方式：使用栈
+     */
+    public void dfsIteration(int s, int t){
+        if(s == t) return;
+        validateVertex(s);
+        validateVertex(t);
+
+        Stack<Integer> stack = new Stack<>();
+        boolean[] visited = new boolean[this.v];
+        int[] prev = new int[this.v];
+
+        stack.push(s);
+        while(!stack.isEmpty()){
+            int v = stack.pop();
+
+            if(!visited[v]){
+                visited[v] = true;
+                if(v == t){
+                    getPath(prev, s, t);
+                    return;
+                }
+            }
+
+            if(table[v] == null) continue;
+            for(Integer i : table[v]){
+                if(!visited[i]) {
+                    prev[i] = v;
+                    stack.push(i);
+                }
+            }
+        }
     }
 
     @Override
@@ -323,8 +395,8 @@ public class Graph {
         System.out.println(reverse.indegree(0));
         System.out.println(reverse.outdegree(0));
 
+        System.out.println("Breadth-First Search:");
         System.out.println(g.bfs(0,3));
-
 
         g = new Graph(5);
         g.addEdge(0,1);
@@ -338,6 +410,25 @@ public class Graph {
         System.out.println(g.bfs(0,4));
         System.out.println(g.bfs(3,1));
 
+        System.out.println("Depth-First Search:");
+        g.dfs(0,4);
+        System.out.println();
+        g.dfs(3,0);
+        System.out.println();
+
+        g.dfsIteration(0,4);
+        System.out.println();
+        g.dfsIteration(3,0);
+        System.out.println();
+
+        g = new Graph(5);
+        g.addEdge(0,1);
+        g.addEdge(0,2);
+        g.addEdge(1,3);
+        g.addEdge(1,4);
+        g.dfs(0,4);
+        System.out.println();
+        g.dfsIteration(0,4);
     }
 }
 
