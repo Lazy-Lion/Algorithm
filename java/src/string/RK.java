@@ -14,8 +14,8 @@ package string;
  *
  *     hash(i)   = hash(c1 .. cm)     = c1*a^(m-1) + c2*a^(m-2) + ... + cm*a^0
  *     hash(i+1) = hash(c2 .. c(m+1)) =              c2*a^(m-1) + ... + cm*a^1 + c(m+1)*a^0
- *     a*hash(i) =                      c1*a^m     + c2*a^(m-1) + ... + cm*a^1 + c(m+1)*a^1
- *     hash(i+1) = a*(hash(i) - c1*a^(m-1)) - (a-1)*c(m+1)
+ *     a*hash(i) =                      c1*a^m     + c2*a^(m-1) + ... + cm*a^1
+ *     hash(i+1) = a*(hash(i) - c1*a^(m-1)) + c(m+1)
  *
  * 时间复杂度：
  *    预处理：O(m) - step 1
@@ -69,9 +69,9 @@ public class RK {
 
         int hash = 0;
         for(int i = start; i < start + m - 1; i ++){
-            hash += (text.charAt(i) - 'a') * alphNumber;
+            hash = (hash + (text.charAt(i) - 'a')) * alphNumber;
         }
-        hash += (text.charAt(start + m - 1));
+        hash += (text.charAt(start + m - 1) - 'a');
         return hash;
     }
 
@@ -80,7 +80,7 @@ public class RK {
         assert text.length() >= oldStart + m;
         int hash;
         hash = this.alphNumber * (oldHash - (text.charAt(oldStart) - 'a')*this.pow)
-                - (this.alphNumber - 1) *( text.charAt(oldStart + m) - 'a');
+                + ( text.charAt(oldStart + m) - 'a');
         return hash;
 
     }
