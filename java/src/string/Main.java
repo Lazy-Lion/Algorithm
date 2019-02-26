@@ -15,6 +15,11 @@ public class Main {
         System.out.println(m.match("abcdemfjgk","mfj"));
         System.out.println(m.match("aaaaaaaaaaaaaaaa","baaa"));
 
+        KMP k = new KMP();
+        System.out.println(k.match("abcdemfjgk","mfj"));
+        System.out.println(k.match("aaaaaaaaaaaaaaaa","baaa"));
+        System.out.println(k.match("abadfeababacdadf","ababacd"));
+
         System.out.println(get());  // 0
         System.out.println(get(""));  // 1
 
