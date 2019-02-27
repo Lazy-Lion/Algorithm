@@ -26,6 +26,32 @@ public class KMP {
 
 		int[] next = getNext(pattern, m);
 
+		// matching 实现：不回溯主串下标i，只改变模式串下标j
+		int j = 0;
+		for(int i = 0; i < n; i ++){
+			while(j > 0 && pattern.charAt(j) != text.charAt(i)){
+				j = next[j - 1]	+ 1;
+			}
+			if(pattern.charAt(j) == text.charAt(i)){
+				j ++;
+			}
+			if(j == m){
+				return i - m + 1;
+			}
+		}
+		return -1;
+	}
+
+	public int match2(String text, String pattern){
+		int n = text.length();
+		int m = pattern.length();
+
+		if(n < 0 || m < 0 || n < m) return -1;
+		if(m == 0) return 0;
+
+		int[] next = getNext(pattern, m);
+
+		// matching 实现：类似Boyer-Moore算法，滑动窗口方式，相较于match(text,pattern)存在多于的比较
 		for(int i = 0; i < n - m + 1;){
 			int j = 0;
 			for(; j < m; j ++){
@@ -63,6 +89,13 @@ public class KMP {
 	 *    abab                   3                   1                           next[3] = 1
 	 *    ababa                  4                   2                           next[4] = 2
 	 *    ababac                 5                   -1                          next[5] = -1
+	 *
+	 *
+	 *    next[i] 通过next[i - 1]计算得到：v = next[i-1]
+	 *      1. 假设 p[i] == p[v + 1]: next[i] = next[i - 1] + 1
+	 *      2. 假设 p[i] != p[v + 1]: 计算 p[0,i-1]的后缀字符串次长匹配的好前缀结尾下标 u, 如果p[i] == p[u + 1]，则
+	 *         next[i] = u + 1, 否则再计算 p[0,i-1]的更短的好前缀结尾下标 u'，直到 p[i] == p[u' + 1], 或 u' = -1 (表示不存在)
+	 *      3. 对于上述步骤2，求次长匹配的好前缀结尾下标 u，u肯定是 v的子串，所以可以转换成求好前缀 p[0, v]的最长匹配，即 next[v]
 	 */
 	private int[] getNext(String pattern, int m){
 		int[] next = new int[m - 1];
