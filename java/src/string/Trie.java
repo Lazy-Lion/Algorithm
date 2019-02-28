@@ -78,18 +78,25 @@ public class Trie {
 		delete(root, text, 0);
 	}
 
+	/**
+	 * 递归方式从Trie树中删除输入字符串
+	 * @param node 当前待处理字符在Trie树中的前驱节点
+	 * @param text 待删字符数组
+	 * @param m 正在处理的字符：0表示未处理 (root节点)，1表示正在处理 text[0], i 表示正在处理 text[i-1]
+	 * @return
+	 */
 	private TrieNode delete(TrieNode node, char[] text, int m){
 		if(node == null) return null;
 
-		if(m == text.length){
-			if(node.isEnd) n --;
+		if(m == text.length){  // 处理最后一个字符，不直接删除，设置isEnd=false, 后续根据是否有后续节点判断是否删除
+			if(node.isEnd) n --;   // 表示Trie树存在输入字符串
 			node.isEnd = false;
 		}else{
 			int index = (int)text[m];
 			node.next[index] = delete(node.next[index], text, m + 1);
 		}
 
-		// 如果
+		// 如果 node不是其他字符串的结尾，且没有后继节点，返回 null (删除)；否则返回 node (保留)
 		if(node.isEnd) return node;
 		for(int i = 0; i < R; i ++){
 			if(node.next[i] != null)
