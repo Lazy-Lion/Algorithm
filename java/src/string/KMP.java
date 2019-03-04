@@ -74,6 +74,7 @@ public class KMP {
 	}
 
 	/**
+	 * 失效函数
 	 * @param pattern 模式串
 	 * @param m 模式串长度
 	 * @return int[] next, 描述好前缀中后缀子串和模式串前缀子串之间的关系

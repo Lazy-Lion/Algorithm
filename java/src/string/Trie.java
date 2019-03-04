@@ -12,13 +12,13 @@ import java.util.Queue;
  *                 ○       ○                ○
  *                    a↙ d↓ ↘n         n↙
  *                   ○    ○    ○        ○
- *      如上例：数据不是直接保存在节点上，是由节点在树上的位置确定的；
+ *      如上例：数据不是直接保存在节点上，是由节点在树上的位置确定的；结尾字符不一定都是叶子节点，如下实现通过 isEnd标记。
  */
 public class Trie {
 	private static final int R = 256;  // extended ascii
 
 	private TrieNode root;  // 根节点，无实际意义
-	private int n;
+	private int n;   // Trie树中存储的字符串个数
 
 	public Trie(){
 		root = new TrieNode();
@@ -82,13 +82,13 @@ public class Trie {
 	 * 递归方式从Trie树中删除输入字符串
 	 * @param node 当前待处理字符在Trie树中的前驱节点
 	 * @param text 待删字符数组
-	 * @param m 正在处理的字符：0表示未处理 (root节点)，1表示正在处理 text[0], i 表示正在处理 text[i-1]
+	 * @param m 正在处理的字符：0表示正在处理 text[0], i 表示正在处理 text[i]
 	 * @return
 	 */
 	private TrieNode delete(TrieNode node, char[] text, int m){
 		if(node == null) return null;
 
-		if(m == text.length){  // 处理最后一个字符，不直接删除，设置isEnd=false, 后续根据是否有后续节点判断是否删除
+		if(m == text.length){  // 已处理完最后一个字符，不直接删除，设置isEnd=false, 后续根据是否有后续节点判断是否删除
 			if(node.isEnd) n --;   // 表示Trie树存在输入字符串
 			node.isEnd = false;
 		}else{
@@ -145,6 +145,7 @@ public class Trie {
 	private static class TrieNode{   // Trie 节点
 //		private char data; // 存储节点字符; 实际上并不需要，可以通过next[]判断
 		private boolean isEnd = false;  // true if the node represents end of a string
-		private TrieNode[] next = new TrieNode[R];    // 子节点, 下标对应字符的ascii值
+		private TrieNode[] next = new TrieNode[R]; // 子节点数组, 下标对应字符的ascii值，如果字符集很大，这部分会比较消耗内存，
+		                                           // 可以使用其他数据结构，以损失部分性能为代价，降低内存消耗
 	}
 }
