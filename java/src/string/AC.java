@@ -1,6 +1,8 @@
 package string;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 /**
@@ -18,12 +20,79 @@ public class AC {
 	private ACNode root;
 	private int n;
 
-	public AC(){
+	/**
+	 * 构造方法
+	 * @param pattern 模式串数组
+	 */
+	public AC(String[] pattern){
 		root = new ACNode();
+		buildTrie(pattern);
+		buildFailurePointer();
 	}
 
-	public int match(){
-		return -1;
+	/**
+	 * @param text 主串
+	 * @return  List<String>: String is two-tuples like (a,b), a refer to the first index of matching substring,
+	 *                       b refer to the length of matching substring
+	 */
+	public List<String> match(String text){
+		int n = text.length();
+		ACNode p = root;
+
+		List<String> result = new ArrayList<>();
+
+		for(int i = 0; i < n; i ++){
+			char c = text.charAt(i);
+
+			if(p.children[(int)c] == null && p != root){
+				p = p.fail;
+			}
+
+			p = p.children[(int)c];
+			if(p == null) p = root;
+			ACNode temp = p;
+			while(temp != root){
+				if(temp.isEnd){
+					int pos = i - temp.length + 1;
+					result.add("(" + pos + "," + temp.length + ")");
+				}
+				temp = temp.fail;
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * 使用模式串构造 Trie树
+	 * @param pattern
+	 */
+	private void buildTrie(String[] pattern){
+		for(int i = 0; i < pattern.length; i ++){
+			String str = pattern[i];
+			appendString(str.toCharArray());
+		}
+	}
+
+	private void appendString(char[] str){
+		int n = str.length;
+		if( n <= 0) return;
+
+		ACNode p = root;
+		for(int i = 0; i < n; i ++){
+			int c = (int)str[i];
+
+			ACNode cn = p.children[c];
+			if(cn == null){
+				cn = new ACNode();
+			}
+
+			if(i == n - 1){
+				cn.isEnd = true;
+				cn.length = n;
+			}
+			p.children[c] = cn;
+			p = cn;
+		}
 	}
 
 	/**

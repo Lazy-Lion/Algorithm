@@ -1,5 +1,7 @@
 package string;
 
+import java.util.List;
+
 /**
  * test
  */
@@ -58,6 +60,15 @@ public class Main {
         }
         System.out.println();
 
+
+        // AC自动机
+        System.out.println("AC自动机");
+        AC ac = new AC(new String[]{"to", "tea", "ted", "ten", "a", "inn","aa"});
+        List<String> result = ac.match("tesdedtesinntestenteaa");
+        for(String s : result){
+            System.out.print(s + " ");
+        }
+        System.out.println();
     }
 
     public static int get(String... array){    // java把可变参数当做数组处理, 只能有一个可变参数并位于参数列表最后
