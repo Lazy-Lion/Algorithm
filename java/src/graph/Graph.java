@@ -61,7 +61,7 @@ import java.util.*;
  *          较为浪费空间 (特别对于稀疏图 (Sparse Matrix)), 但是计算方便
  *    2. 邻接表 (Adjacency list): 类似散列表, 数组 + 链表实现；
  *                 如图 (引用自 https://algs4.cs.princeton.edu/41graph/ )：
- *               https://github.com/Lazy-Lion/Graphic/blob/master/dataStructure/adjacency-lists.png
+ *               https://github.com/Lazy-Lion/images/blob/master/dataStructure/adjacency-lists.png
  *          节省空间，但是使用起来较为麻烦
  *    3. 将图持久化到数据库表中
  *

@@ -37,7 +37,7 @@ import java.util.NoSuchElementException;
  *    2. All leaves are at the same level.
  *    3. All data is kept in sorted order.
  *
- *   2-3 树插入数据保持特性，参考图片 https://github.com/Lazy-Lion/Graphic/blob/master/dataStructure/2-3_insertion.svg
+ *   2-3 树插入数据保持特性，参考图片 https://github.com/Lazy-Lion/images/blob/master/dataStructure/2-3_insertion.svg
  *
  * 红黑树(Red-Black Tree):
  *   wikipedia定义：
@@ -57,7 +57,7 @@ import java.util.NoSuchElementException;
  *     5. Every path from a given node to any of its descendant NIL nodes contains the same number of black nodes.
  *
  *   红黑树实例图片(引用自wikipedia)：
- *        https://github.com/Lazy-Lion/Graphic/blob/master/dataStructure/Red-black_tree_example.svg
+ *        https://github.com/Lazy-Lion/images/blob/master/dataStructure/Red-black_tree_example.svg
  *
  *   使用红黑树实现2-3树：
  *     1.red links : 连接两个 2-nodes 来表示一个 3-nodes (为了实现的方便，
@@ -78,9 +78,9 @@ import java.util.NoSuchElementException;
  *     4.新插入的节点默认是 red节点, 且都放在叶子节点上
  *     5.红黑树的插入相当于在二叉查找树插入的基础上，为了维持红黑树的性质，进行修复操作(三个重要操作左旋，右旋，反色; 具体操作
  *       参考图片(引用自 https://algs4.cs.princeton.edu/33balanced/ )：
- *       https://github.com/Lazy-Lion/Graphic/blob/master/dataStructure/redblack-left-rotate.png
- *       https://github.com/Lazy-Lion/Graphic/blob/master/dataStructure/redblack-right-rotate.png
- *       https://github.com/Lazy-Lion/Graphic/blob/master/dataStructure/color-flip.png
+ *       https://github.com/Lazy-Lion/images/blob/master/dataStructure/redblack-left-rotate.png
+ *       https://github.com/Lazy-Lion/images/blob/master/dataStructure/redblack-right-rotate.png
+ *       https://github.com/Lazy-Lion/images/blob/master/dataStructure/color-flip.png
  *
  *       左旋、右旋实际上是旋转 red link
  *       反色实际上是分解 4-nodes

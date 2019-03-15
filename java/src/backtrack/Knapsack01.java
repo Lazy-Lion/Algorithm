@@ -13,6 +13,7 @@ public class Knapsack01 {
 
 	/**
 	 * 0/1背包 回溯法求解
+	 * 时间复杂度 : O(2^n)  -- 每个item有两种状态(放入，不放入), 共 2^n种情况
 	 * @param i 处理 item的 index, [0,n)
 	 * @param cw 当前背包的总负重
 	 * @param items
