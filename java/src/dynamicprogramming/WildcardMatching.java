@@ -5,7 +5,7 @@ package dynamicprogramming;
  *   通过对回溯法分析，可以看出会进行很多重复计算 (可自行画出递归树分析)
  *   以下通过动态规划实现
  *
- *   转态方程： f(i,j) - i表示 pattern string的第 i个字符, j表示 input string的第 j个字符, f(i,j)表示当前是否匹配
+ *   状态方程： f(i,j) - i表示 pattern string的第 i个字符, j表示 input string的第 j个字符, f(i,j)表示当前是否匹配
  *
  *                f(i - 1, j - 1)    if p[i] == s[j] or p[i] == '?'
  *   f(i, j) =
