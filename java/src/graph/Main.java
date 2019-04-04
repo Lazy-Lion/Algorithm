@@ -20,16 +20,16 @@ public class Main {
 
 		System.out.println("Dijkstra Algorithm");
 		Dijkstra d = new Dijkstra(7);
-		d.addEdeg(0,1,6);
-		d.addEdeg(0,3,1);
-		d.addEdeg(1,4,1);
-		d.addEdeg(2,0,2);
-		d.addEdeg(2,3,3);
-		d.addEdeg(3,4,4);
-		d.addEdeg(5,4,2);
-		d.addEdeg(6,5,6);
-		d.addEdeg(6,2,2);
-		d.addEdeg(6,0,3);
+		d.addEdge(0,1,6);
+		d.addEdge(0,3,1);
+		d.addEdge(1,4,1);
+		d.addEdge(2,0,2);
+		d.addEdge(2,3,3);
+		d.addEdge(3,4,4);
+		d.addEdge(5,4,2);
+		d.addEdge(6,5,6);
+		d.addEdge(6,2,2);
+		d.addEdge(6,0,3);
 		System.out.println(d.dijkstra(6,4));
 	}
 }

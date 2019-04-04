@@ -19,7 +19,7 @@ public class Dijkstra {
 	/**
 	 * 向外部提供添加有向边的方法
 	 */
-	public void addEdeg(int s, int t, int w){
+	public void addEdge(int s, int t, int w){
 		g.addEdge(s, t, w);
 	}
 
