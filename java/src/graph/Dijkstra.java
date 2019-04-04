@@ -32,6 +32,13 @@ public class Dijkstra {
 	 *      3) predecessor: 表示路径长度为distance时，当前顶点的前驱顶点。默认-1表示没有前驱。用于回溯具体路径。
 	 *      4) visited: 判断顶点是否被访问过 (访问过指的是已遍历顶点的邻接顶点)
 	 *   2. 定义优先队列 (最小堆)
+	 * 时间复杂度： 边数 E, 顶点数 V
+	 *      time = O(E * logV)
+	 *      分析代码： 1.外层while循环 O(V); 2. 遍历顶点的边,每次不同：分别为 E1,E2,...
+	 *        => 这两层循环的总时间复杂度为 O(E);
+	 *                3.优先队列操作，执行remove,add操作，时间复杂度为 O(logV)
+	 *        => 总的时间复杂度为 O(E*logV)
+	 *
 	 * @param s 开始顶点
 	 * @param t 目标顶点
 	 * @return s → t 的最短路径长度
