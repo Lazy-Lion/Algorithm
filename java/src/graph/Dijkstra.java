@@ -55,6 +55,7 @@ public class Dijkstra {
 
 		while(!queue.isEmpty()){
 			Graph.Vertex vertex = queue.poll();   // 访问distance最小的顶点
+			// 由于使用visited对循环进行裁剪，所以每次通过最小distance的顶点计算是必要条件
 
 			if(vertex.visited) continue;
 
