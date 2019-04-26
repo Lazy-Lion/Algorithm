@@ -8,6 +8,8 @@ import java.util.PriorityQueue;
  *    Single-Source shortest path algorithm: 单源最短路径算法
  *      find shortest paths from a source vertex v to all other vertices in the graph
  * 该算法可以处理连通的 有向图或无向图，图中各边必须有非负权重。
+ *
+ * 如果图比较大，Dijkstra算法会比较耗时。A*搜索算法是对Dijkstra的优化，求出的路径不一定是最优解，但是比较高效。
  */
 public class Dijkstra {
 	private Graph g;
