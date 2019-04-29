@@ -14,16 +14,18 @@ public class Main {
 
 
         BF b = new BF();
-        System.out.println(b.match("abcdemfjgk","mfj"));
+        System.out.println("BF: " + b.match("abcdemfjgk","mfj"));
 
         RK r = new RK();
-        System.out.println(r.match("abcdemfjgk","mfj"));
+        System.out.println("RK: " + r.match("abcdemfjgk","mfj"));
 
         BM m = new BM();
+        System.out.println("BM: " );
         System.out.println(m.match("abcdemfjgk","mfj"));
         System.out.println(m.match("aaaaaaaaaaaaaaaa","baaa"));
 
         KMP k = new KMP();
+        System.out.println("KMP: ");
         System.out.println(k.match("abcdemfjgk","mfj"));
         System.out.println(k.match("aaaaaaaaaaaaaaaa","baaa"));
         System.out.println(k.match("abadfeababacdadf","ababacd"));
