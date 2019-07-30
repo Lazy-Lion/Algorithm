@@ -36,11 +36,11 @@ import java.util.*;
  */
 public class WordLadderII126 {
 	private static final String WILDCARD = "*";
-	private static final String PREVIOUS = "/";
 	private static final String LADDER = "LADDER";
 
 	/**
 	 * 思路类似 WordLadder127，并记录轨迹
+	 * note: 可能存在多个最短轨迹，所以访问到 endWord 时不立刻终止计算，直到需要访问下一层级才终止
 	 */
 	public static List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
 		List<List<String>> result = new ArrayList<>();
@@ -156,6 +156,9 @@ public class WordLadderII126 {
 
 	public static void main(String[] args) {
 		List<List<String>> result = findLadders("hit", "cog", Arrays.asList("hot","dot","dog","lot","log","cog"));
+		System.out.println(result);
+
+		result = findLadders("hit", "cog", Arrays.asList("hot","dot","dog","lot","log"));
 		System.out.println(result);
 	}
 }
