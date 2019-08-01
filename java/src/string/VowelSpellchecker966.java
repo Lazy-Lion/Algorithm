@@ -1,4 +1,4 @@
-package sort;
+package string;
 
 import javafx.util.Pair;
 
