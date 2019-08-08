@@ -1,4 +1,4 @@
-package array;
+package queue;
 
 import java.util.*;
 
@@ -25,14 +25,16 @@ import java.util.*;
  */
 public class SurroundedRegions130 {
 	/**
-	 * 以边界的'O'为起点，深度优先遍历
+	 * way1: solve(),以边界的'O'为起点，广度优先遍历(BFS)
+	 *   solve_Optimize()针对该版本做了代码优化
+	 *
+	 * way2: 以边界的'O'为起点，深度优先遍历(DFS)，未实现
 	 */
 	public static void solve(char[][] board) {
 		int n = board.length;
 		if(n <= 0) return;
 		int m = board[0].length;
-		char[][] result = new char[n][m];
-		List<Location> visited = new ArrayList<>();
+		Set<Location> visited = new HashSet<>();
 
 		Queue<Location> queue = new LinkedList<>();
 		for(int i = 0; i < n; i ++) {  // 第一列和最后一列
@@ -48,7 +50,7 @@ public class SurroundedRegions130 {
 		Location lct1, lct2;
 		while(!queue.isEmpty()) {
 			lct1 = queue.poll();
-			result[lct1.x][lct1.y] = 'O';
+			board[lct1.x][lct1.y] = '1';
 
 			// up
 			if(lct1.x >= 1) {
@@ -85,12 +87,12 @@ public class SurroundedRegions130 {
 
 		for(int i = 0; i < n; i ++) {
 			for(int j = 0; j < m; j ++) {
-				board[i][j] = result[i][j] == 'O' ? 'O' : 'X';
+				board[i][j] = board[i][j] == '1' ? 'O' : 'X';
 			}
 		}
 	}
 
-	private static void addLocation(int x, int y, Queue<Location> queue, List<Location> visited) {
+	private static void addLocation(int x, int y, Queue<Location> queue, Set<Location> visited) {
 		Location lct = new Location(x, y);
 		queue.offer(lct);
 		visited.add(lct);
@@ -110,9 +112,68 @@ public class SurroundedRegions130 {
 		}
 
 		@Override
-		public int hashCode() {  // 使用HashSet判重，每个Location对象的Hash Code都需要相同，退化成list
+		public int hashCode() {  // 使用HashSet判重，每个Location对象的Hash Code都需要相同，退化成链表或红黑树
 			return 1;
 		}
+	}
+
+	/**
+	 * 针对slove()进行代码优化：
+	 *   通过改变加入队列位置的字符来避免重复添加
+	 */
+	public static void solve_Optimize(char[][] board) {
+		int n = board.length;
+		if(n <= 0) return;
+		int m = board[0].length;
+
+		Queue<Location> queue = new LinkedList<>();
+		for(int i = 0; i < n; i ++) {  // 第一列和最后一列
+			if(board[i][0] == 'O') addLocation_Optimize(i, 0, queue, board);
+			if(board[i][m - 1] == 'O') addLocation_Optimize(i, m - 1, queue, board);
+		}
+
+		for(int j = 1; j < m - 1; j ++) {  // 第一行和最后一行除四个角
+			if(board[0][j] == 'O') addLocation_Optimize(0, j, queue, board);
+			if(board[n - 1][j] == 'O') addLocation_Optimize(n - 1, j, queue, board);
+		}
+
+		Location lct1;
+		while(!queue.isEmpty()) {
+			lct1 = queue.poll();
+			board[lct1.x][lct1.y] = '1';
+
+			// up
+			if(lct1.x >= 1 && board[lct1.x - 1][lct1.y] == 'O') {
+				addLocation_Optimize(lct1.x - 1, lct1.y, queue, board);
+			}
+
+			// down
+			if(lct1.x < n - 1 && board[lct1.x + 1][lct1.y] == 'O') {
+				addLocation_Optimize(lct1.x + 1, lct1.y, queue, board);
+			}
+
+			// left
+			if(lct1.y >= 1 && board[lct1.x][lct1.y - 1] == 'O') {
+				addLocation_Optimize(lct1.x, lct1.y - 1, queue, board);
+			}
+
+			// right
+			if(lct1.y < m - 1 && board[lct1.x][lct1.y + 1] == 'O') {
+				addLocation_Optimize(lct1.x, lct1.y + 1, queue, board);
+			}
+		}
+
+		for(int i = 0; i < n; i ++) {
+			for(int j = 0; j < m; j ++) {
+				board[i][j] = board[i][j] == '1' ? 'O' : 'X';
+			}
+		}
+	}
+
+	private static void addLocation_Optimize(int x, int y, Queue<Location> queue, char[][] board) {
+		Location lct = new Location(x, y);
+		queue.offer(lct);
+		board[x][y] = '2';
 	}
 
 	public static void main(String[] args) {
@@ -130,7 +191,8 @@ public class SurroundedRegions130 {
 				{'X','X','O','X','O'}
 		};
 
-		solve(board);
+//		solve(board);
+		solve_Optimize(board);
 		for(int i = 0; i < board.length; i ++) {
 			System.out.println(Arrays.toString(board[i]));
 		}
