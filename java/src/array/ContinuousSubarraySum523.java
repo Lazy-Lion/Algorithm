@@ -37,6 +37,8 @@ public class ContinuousSubarraySum523 {
 		return false;
 	}
 
+	//TODO: 优化复杂度
+
 	public static void main(String[] args) {
 		System.out.println(checkSubarraySum(new int[]{23, 2, 4, 6, 7}, 6));
 		System.out.println(checkSubarraySum(new int[]{23, 2, 6, 4, 7}, 6));
