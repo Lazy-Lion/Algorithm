@@ -1,5 +1,8 @@
 package array;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * leetcode 523. Continuous Subarray Sum
  *   Given a list of non-negative numbers and a target integer k, write a function to check if the array has a continuous
@@ -19,7 +22,7 @@ package array;
  */
 public class ContinuousSubarraySum523 {
 	/**
-	 * 同 SubarraySumEqualsK560  way1
+	 * way1: 同 SubarraySumEqualsK560  way1
 	 * 时间复杂度：O(n^2)
 	 */
 	public static boolean checkSubarraySum(int[] nums, int k) {
@@ -37,10 +40,42 @@ public class ContinuousSubarraySum523 {
 		return false;
 	}
 
-	//TODO: 优化复杂度
+	/**
+	 * way2 :
+	 *  Theorem: if c != 0 and a % c == b % c => (a - b) % c == 0
+	 *
+	 *  prove:
+	 *     a % c == b % c == k
+	 *     =>  a = n1 * c + k,  b = n2 * c + k
+	 *     =>  a - b = (n1 - n2) * c
+	 *     =>  (a - b) % c == 0
+	 *
+	 *  so just like SubarraySumEqualsK560's  way2
+	 *  Time Complexity: O(n)
+	 */
+	public static boolean checkSubarraySum_2(int[] nums, int k) {
+		int n = nums.length;
+		if(n <= 1) return false;
+
+		Set<Integer> set = new HashSet<>();
+		int sum = nums[0];
+		int mod;
+
+		// TODO: 子数组元素个数大于1
+		for(int i = 1; i < n; i ++) {
+			sum += nums[i];
+			mod = k == 0 ? sum : sum % k;
+			if(mod == 0 || set.contains(mod)) return true;
+			set.add(mod);
+		}
+		return false;
+	}
 
 	public static void main(String[] args) {
-		System.out.println(checkSubarraySum(new int[]{23, 2, 4, 6, 7}, 6));
-		System.out.println(checkSubarraySum(new int[]{23, 2, 6, 4, 7}, 6));
+//		System.out.println(checkSubarraySum(new int[]{23, 2, 4, 6, 7}, 6));
+//		System.out.println(checkSubarraySum(new int[]{23, 2, 6, 4, 7}, 6));
+//		System.out.println(checkSubarraySum_2(new int[]{23, 2, 4, 6, 7}, 6));
+//		System.out.println(checkSubarraySum_2(new int[]{23, 2, 6, 4, 7}, 6));
+		System.out.println(checkSubarraySum_2(new int[]{0, 1, 0}, 0));
 	}
 }
