@@ -56,26 +56,40 @@ public class ContinuousSubarraySum523 {
 	public static boolean checkSubarraySum_2(int[] nums, int k) {
 		int n = nums.length;
 		if(n <= 1) return false;
+		int sum;
+		if(n == 2) {
+			sum = nums[0] + nums[1];
+			return k == 0 && sum == 0
+					|| k != 0 && sum % k == 0;
+		}
 
 		Set<Integer> set = new HashSet<>();
-		int sum = nums[0];
+		sum = 0;
 		int mod;
+		Integer prev = null;
 
-		// TODO: 子数组元素个数大于1
-		for(int i = 1; i < n; i ++) {
+		// 要求子数组元素个数大于1
+		// prev变量的目的是在i处理完成之后再将i-1处理结果添加至set集合
+		// 该循环无法判断只有两个元素的情况
+		for(int i = 0; i < n; i ++) {
 			sum += nums[i];
 			mod = k == 0 ? sum : sum % k;
-			if(mod == 0 || set.contains(mod)) return true;
-			set.add(mod);
+			if(set.contains(mod) || (k != 0 && mod == 0 && i > 0)) return true;
+
+			if(prev != null) set.add(prev);
+			prev = mod;
 		}
 		return false;
 	}
 
 	public static void main(String[] args) {
-//		System.out.println(checkSubarraySum(new int[]{23, 2, 4, 6, 7}, 6));
-//		System.out.println(checkSubarraySum(new int[]{23, 2, 6, 4, 7}, 6));
-//		System.out.println(checkSubarraySum_2(new int[]{23, 2, 4, 6, 7}, 6));
-//		System.out.println(checkSubarraySum_2(new int[]{23, 2, 6, 4, 7}, 6));
+		System.out.println(checkSubarraySum(new int[]{23, 2, 4, 6, 7}, 6));
+		System.out.println(checkSubarraySum(new int[]{23, 2, 6, 4, 7}, 6));
+		System.out.println(checkSubarraySum_2(new int[]{23, 2, 4, 6, 7}, 6));
+		System.out.println(checkSubarraySum_2(new int[]{23, 2, 6, 4, 7}, 6));
 		System.out.println(checkSubarraySum_2(new int[]{0, 1, 0}, 0));
+		System.out.println(checkSubarraySum_2(new int[]{5, 0, 0}, 0));
+		System.out.println(checkSubarraySum_2(new int[]{0, 0}, 0));
+		System.out.println(checkSubarraySum_2(new int[]{1, 2, 3}, 6));
 	}
 }
