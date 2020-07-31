@@ -1,6 +1,8 @@
 package leetcode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * leetcode 15 : 3Sum
@@ -22,48 +24,54 @@ import java.util.*;
 public class ThreeSum {
 
     /**
-     * time complexity： O(n^2)
+     * ignore sorting:
+     *   time complexity: O(n^2)
+     *   space complexity: @(1)
      */
-    public List<List<Integer>> threeSum(int[] nums) {
+    public static List<List<Integer>> threeSum(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
 
-        Arrays.sort(nums);
+        if (nums.length < 3) {
+            return result;
+        }
 
-        Set<Integer> set1 = new HashSet<>();
+        Arrays.sort(nums); // for duplicate removal
 
-        int value;
-        for(int i = 0; i < nums.length - 2; i ++){
-            if(set1.contains(value = nums[i]))  // HashSet的contains()方法调用对象的equals()方法进行判断，Integer类的
-                                                // equals()方法比较对象的int值
+        int len = nums.length;
+        for (int i = 0; i < len - 2; i++) {
+            if (i > 0 && nums[i - 1] == nums[i]) { // for duplicate removal
                 continue;
-            set1.add(value);
-
-            value = 0 - value;
-            int j = i + 1;
-            int k = nums.length - 1;
-            while(j < k){
-                if(nums[j] + nums[k] < value)
-                    j ++;
-                else if(nums[j] + nums[k] > value)
-                    k --;
-                else {
-                    result.add(Arrays.asList(nums[i], nums[j ++], nums[k --]));
-                    while( j < k && nums[j - 1] == nums[j])
-                        j ++;
-                    while( j < k && nums[k] == nums[k + 1])
-                        k --;
-                }
             }
 
+            int remaining = -nums[i];
+
+            /**
+             * compare to {@link TwoSum}
+             * sorted or unsorted
+             */
+            int left = i + 1;
+            int right = len - 1;
+            while (left < right) {
+                int sum = nums[left] + nums[right];
+                if (sum < remaining) {
+                    left++;
+                } else if (sum > remaining) {
+                    right--;
+                } else {
+                    result.add(Arrays.asList(nums[i], nums[left], nums[right]));
+
+                    // for duplicate removal
+                    while (left < right && nums[left++] == nums[left]) ;
+                    while (right > left && nums[right--] == nums[right]) ;
+                }
+            }
         }
         return result;
     }
 
-    public static void main(String[] args){
-        ThreeSum c = new ThreeSum();
-        System.out.println(c.threeSum(new int[]{-1,0,1,2,-1,-4}));
-        System.out.println(c.threeSum(new int[]{0,0,0,0}));
-        System.out.println(c.threeSum(new int[]{-2,0,1,1,2}));
-
+    public static void main(String[] args) {
+        System.out.println(threeSum(new int[]{-1, 0, 1, 2, -1, -4}));
+        System.out.println(threeSum(new int[]{0, 0, 0, 0}));
+        System.out.println(threeSum(new int[]{-2, 0, 1, 1, 2}));
     }
 }

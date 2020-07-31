@@ -24,40 +24,42 @@ import java.util.List;
 public class FourSum {
 
     /**
-     * time complexity： O(n^3)
+     * @see ThreeSum
+     *
+     * ignore sorting:
+     *   time complexity: O(n^3)
+     *   space complexity: O(1)
      */
-    public List<List<Integer>> fourSum(int[] nums, int target) {
+    public static List<List<Integer>> fourSum(int[] nums, int target) {
         int len = nums.length;
 
         List<List<Integer>> result = new ArrayList<>();
-        if(len < 4)
+        if (len < 4)
             return result;
 
         Arrays.sort(nums);
-        for(int i = 0; i < len -3; i ++){
-            if(i > 0 && nums[i] == nums[i - 1])
+        for (int i = 0; i < len - 3; i++) {
+            if (i > 0 && nums[i] == nums[i - 1])
                 continue;
 
-            for(int j = i + 1; j < len - 2; j ++){
-                if(j > i + 1 && nums[j] == nums[j - 1])
+            for (int j = i + 1; j < len - 2; j++) {
+                if (j > i + 1 && nums[j] == nums[j - 1])
                     continue;
 
                 int value = target - nums[i] - nums[j];
                 int left = j + 1;
                 int right = len - 1;
-                while(left < right){
+                while (left < right) {
                     int sum = nums[left] + nums[right];
-                    if(value == sum) {
-                        result.add(Arrays.asList(nums[i], nums[j], nums[left++], nums[right--]));
-                        while(left < right && nums[left] == nums[left - 1])
-                            left ++;
-                        while(left < right && nums[right] == nums[right + 1])
-                            right --;
+                    if (value == sum) {
+                        result.add(Arrays.asList(nums[i], nums[j], nums[left], nums[right]));
+                        while (left < right && nums[left++] == nums[left]) ;
+                        while (left < right && nums[right--] == nums[right]) ;
+                    } else if (value > sum) {
+                        left++;
+                    } else {
+                        right--;
                     }
-                    else if(value > sum)
-                        left ++;
-                    else
-                        right --;
                 }
             }
         }
@@ -65,8 +67,7 @@ public class FourSum {
     }
 
 
-    public static void main(String[] args){
-        FourSum f = new FourSum();
-        System.out.println(f.fourSum(new int[]{1, 0, -1, 0, -2, 2}, 0));
+    public static void main(String[] args) {
+        System.out.println(fourSum(new int[]{1, 0, -1, 0, -2, 2}, 0));
     }
 }

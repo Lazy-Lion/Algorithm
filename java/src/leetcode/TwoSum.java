@@ -20,28 +20,32 @@ import java.util.Map;
 public class TwoSum {
 
     /**
-     * hashmap + one pass
-     * time complexity O(n)
+     * hash map + one pass: unsorted array
+     *
+     * time complexity: O(n)
+     * space complexity: O(n)
      */
-    public int[] twoSum(int[] nums, int target) {
-        Map<Integer, Integer> map = new HashMap<>();
-        for(int i = 0; i < nums.length; i ++){
-            int value = nums[i];
-            Integer index;
-            if((index = map.get(target - value)) != null){
-                int[] result = new int[2];
-                result[0] = Math.min(index,i);
-                result[1] = Math.max(index,i);
-                return result;
-            }else{
-                map.put(value, i);
-            }
+    public static int[] twoSum(int[] nums, int target) {
+        if (nums.length < 2) {
+            return new int[0];
         }
+
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(nums[0], 0);
+
+        int diff;
+        for (int i = 1; i < nums.length; i++) {
+            diff = target - nums[i];
+            if (map.containsKey(diff)) {
+                return new int[]{map.get(diff), i};
+            }
+            map.put(nums[i], i);
+        }
+
         return new int[0];
     }
 
-    public static void main(String[] args){
-        TwoSum t = new TwoSum();
-        System.out.println(Arrays.toString(t.twoSum(new int[]{2, 7, 11, 15}, 9)));
+    public static void main(String[] args) {
+        System.out.println(Arrays.toString(twoSum(new int[]{2, 7, 11, 15}, 9)));
     }
 }
