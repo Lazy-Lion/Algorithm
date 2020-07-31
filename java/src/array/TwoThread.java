@@ -26,11 +26,9 @@ import java.util.stream.Stream;
 
 /**
  * 两个线程交替打印 1 ~100
- *
- *
+ * todo: remove from current project
  */
 public class TwoThread {
-	// TODO: 不放入此项目中
 	// 相关： 多线程、java8 stream、String format、BigInteger
 	private static int num = 1;  // 下一个要打印的数
 
