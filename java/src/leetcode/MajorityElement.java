@@ -1,5 +1,9 @@
-package array;
+package leetcode;
 
+import util.Utils;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,26 +17,25 @@ import java.util.Map;
 public class MajorityElement {
 
     /**
-     * 时间复杂度： O(n)
-     * @param nums
-     * @return
+     * time complexity： O(n)
+     * space complexity: O(n)
      */
-    public int majorityElement(int[] nums) {
+    public static int majorityElement(int[] nums) {
         if (nums.length < 1) return -1;
 
-        int count = nums.length / 2;
+        int count = nums.length >>> 1;
 
-        Map<Integer,Integer> map = new HashMap<>();
+        Map<Integer, Integer> map = new HashMap<>();
 
-        for(int i = 0; i < nums.length;i ++){
-            if(map.containsKey(nums[i]))
+        for (int i = 0; i < nums.length; i++) {
+            if (map.containsKey(nums[i]))
                 map.put(nums[i], map.get(nums[i]) + 1);
             else
                 map.put(nums[i], 1);
         }
 
-        for(Map.Entry<Integer,Integer> entry : map.entrySet()){
-            if(entry.getValue() > count)
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            if (entry.getValue() > count)
                 return entry.getKey();
         }
         return -1;
@@ -56,43 +59,40 @@ public class MajorityElement {
      *    2) else if m == x,the assign i = i + 1
      *    3) else assign i = i - 1
      *  3.return m
-     *
-     * @param nums
-     * @return
      */
-    public int majorityElement2(int[] nums){
-        int len = nums.length;
+    public static int marjorityElement_MooreVoting(int[] nums) {
+        if (nums.length < 1) return -1;
 
-        if(len == 0) return -1;
-        int result = nums[0];
-        int c = 1;
-        for(int i = 1; i < nums.length; i ++){
-            if(c == 0){
-                c = 1;
-                result = nums[i];
-            }else if(nums[i] == result) {
-                c++;
-            }else{
-                c --;
+        int major = nums[0];
+        int counter = 1;
+        for (int i = 1; i < nums.length; i++) {
+            if (counter == 0) {
+                major = nums[i];
+                counter = 1;
+            } else if (nums[i] == major) {
+                counter++;
+            } else {
+                counter--;
             }
         }
 
-        c = 0;
-        for(int v : nums){
-            if(v == result)
-                c ++;
+        counter = 0;
+        for (int val : nums) {
+            if (val == major) {
+                counter++;
+            }
         }
 
-        if(c > len / 2)
-            return result;
+        if (counter > (nums.length >>> 2)) {
+            return major;
+        }
         return -1;
     }
 
-    public static void main(String[] args){
-        MajorityElement m = new MajorityElement();
-        System.out.println(m.majorityElement(new int[]{3,2,3}));
-        System.out.println(m.majorityElement(new int[]{2,2,1,1,1,2,2}));
-        System.out.println(m.majorityElement2(new int[]{3,2,3}));
-        System.out.println(m.majorityElement2(new int[]{2,2,1,1,1,2,2}));
+    public static void main(String[] args) throws InvocationTargetException, IllegalAccessException {
+        Utils.testStaticMethod(MajorityElement.class, Arrays.asList(
+                Arrays.asList(new int[]{3, 2, 3}),
+                Arrays.asList(new int[]{2, 2, 1, 1, 1, 2, 2})
+        ));
     }
 }

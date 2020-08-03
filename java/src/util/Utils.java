@@ -1,5 +1,9 @@
 package util;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.List;
+
 /**
  * {@link sort.Utils}存在重复实现，后续用该类替代
  * 工具类
@@ -19,5 +23,21 @@ public class Utils {
         int temp = a[index1];
         a[index1] = a[index2];
         a[index2] = temp;
+    }
+
+    public static void testStaticMethod(Class<?> clazz, List<List<Object>> argsList) throws InvocationTargetException, IllegalAccessException {
+        assert !argsList.isEmpty();
+
+        for (Method method : clazz.getDeclaredMethods()) {
+            if (method.getName().equals("main")) {
+                continue;
+            }
+
+            System.out.println("------" + method.getName() + " ------");
+
+            for (List<Object> args : argsList) {
+                System.out.println(method.invoke(null, args == null ? null : args.toArray()));
+            }
+        }
     }
 }
