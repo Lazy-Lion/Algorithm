@@ -82,49 +82,25 @@ public class SubarraySumEqualsK {
 
     /**
      * optimize code : {@link SubarraySumEqualsK#subarraySum_2(int[], int)}
+     *
+     * time complexity: O(n)
+     * space complexity: O(n)
      */
     public static int subarraySum_3(int[] nums, int k) {
-        int n = nums.length, count = 0;
-        Map<Integer, Integer> map = new HashMap<>();  // key: sum; value: key == sum的个数
-        map.put(0, 1);
-
-        int sum = 0;
-        for (int i = 0; i < n; i++) {
-            sum += nums[i];
-            if (map.containsKey(sum - k)) count += map.get(sum - k);
-            map.put(sum, map.getOrDefault(sum, 0) + 1);
-
-        }
-        return count;
-    }
-
-    // todo: optimize
-    public static int subarraySum_4(int[] nums, int k) {
-
         int length = nums.length;
         int count = 0;
-        int[] sum = new int[length];  // construct sum[]
-        sum[0] = nums[0];
-        for (int i = 1; i < length; i++) {
-            sum[i] = sum[i - 1] + nums[i];
-        }
-
         Map<Integer, Integer> map = new HashMap<>(); // key - sum[i], value - number of sum[i]
 
-        for (int i = length - 1; i >= 0; i--) { // from right to left
-            map.put(sum[i], map.getOrDefault(sum[i], 0) + 1);  // avoid duplicate counter
+        int sum = 0;
+        map.put(sum, 1); // for sum[i] == k
+        for (int i = 0; i < length; i++) {
+            sum += nums[i];
 
-            if (sum[i] == k) {
-                count++;
+            if (map.containsKey(sum - k)) {
+                count += map.get(sum - k);
             }
 
-            if (map.containsKey(sum[i] + k)) {
-                if (k == 0) {
-                    count += map.get(sum[i]) - 1; // remove itself
-                } else {
-                    count += map.get(sum[i] + k);
-                }
-            }
+            map.put(sum, map.getOrDefault(sum, 0) + 1);
         }
 
         return count;

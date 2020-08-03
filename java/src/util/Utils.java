@@ -2,6 +2,8 @@ package util;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -28,7 +30,12 @@ public class Utils {
     public static void testStaticMethod(Class<?> clazz, List<List<Object>> argsList) throws InvocationTargetException, IllegalAccessException {
         assert !argsList.isEmpty();
 
-        for (Method method : clazz.getDeclaredMethods()) {
+        Method[] methods = clazz.getDeclaredMethods();
+
+        assert methods.length > 0;
+
+        Arrays.sort(methods, Comparator.comparing(Method::getName)); // order by name
+        for (Method method : methods) {
             if (method.getName().equals("main")) {
                 continue;
             }

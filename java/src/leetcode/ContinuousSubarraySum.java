@@ -106,21 +106,16 @@ public class ContinuousSubarraySum {
      *
      *  so just like {@link SubarraySumEqualsK#subarraySum_3(int[], int)}
      *  Time Complexity: O(n)
+     *  space complexity: O(n)
      */
     public static boolean checkSubarraySum_3(int[] nums, int k) {
         int n = nums.length;
-        if (n <= 1) return false;
-        int sum;
-        if (n == 2) {
-            sum = nums[0] + nums[1];
-            return k == 0 && sum == 0
-                    || k != 0 && sum % k == 0;
-        }
+        if (n < 2) return false;
+        int sum = 0;
 
         Set<Integer> set = new HashSet<>();
-        sum = 0;
         int mod;
-        Integer prev = null;
+        int prev = 0;
 
         // 要求子数组元素个数大于1
         // prev变量的目的是在i处理完成之后再将i-1处理结果添加至set集合
@@ -128,9 +123,10 @@ public class ContinuousSubarraySum {
         for (int i = 0; i < n; i++) {
             sum += nums[i];
             mod = k == 0 ? sum : sum % k;
-            if (set.contains(mod) || (k != 0 && mod == 0 && i > 0)) return true;
+            if (set.contains(mod))
+                return true;
 
-            if (prev != null) set.add(prev);
+            set.add(prev);
             prev = mod;
         }
         return false;
@@ -143,7 +139,9 @@ public class ContinuousSubarraySum {
                 Arrays.asList(new int[]{0, 1, 0}, 0),
                 Arrays.asList(new int[]{5, 0, 0}, 0),
                 Arrays.asList(new int[]{0, 0}, 0),
-                Arrays.asList(new int[]{1, 2, 3}, 6)
+                Arrays.asList(new int[]{1, 2, 3}, 6),
+                Arrays.asList(new int[]{1, 0}, 2),
+                Arrays.asList(new int[]{23, 2, 4, 0, 0}, 0)
         ));
     }
 }
