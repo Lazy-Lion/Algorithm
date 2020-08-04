@@ -78,6 +78,8 @@ public class FirstMissingPositive {
 
     /**
      * 思路2：like {@link FirstMissingPositive#firstMissingPositive(int[])}，just mark, do not exchange actual data
+     * time complexity: O(n)
+     * space complexity: O(1)
      */
     public static int firstMissingPositive_3(int[] nums) {
         if (nums.length < 1)

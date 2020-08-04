@@ -118,8 +118,7 @@ public class ContinuousSubarraySum {
         int prev = 0;
 
         // 要求子数组元素个数大于1
-        // prev变量的目的是在i处理完成之后再将i-1处理结果添加至set集合
-        // 该循环无法判断只有两个元素的情况
+        // prev变量的目的是在i处理完成之后再将i-1的处理结果添加至set集合
         for (int i = 0; i < n; i++) {
             sum += nums[i];
             mod = k == 0 ? sum : sum % k;

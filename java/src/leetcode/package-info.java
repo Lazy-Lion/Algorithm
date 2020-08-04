@@ -28,5 +28,21 @@
  * `` Subarray Sum Equals K **
  * @see <a href="https://leetcode.com/problems/subarray-sum-equals-k/"></a>
  * {@link leetcode.SubarraySumEqualsK}
+ *
+ * `` K-diff Pairs in an Array *
+ * @see <a href="https://leetcode.com/problems/k-diff-pairs-in-an-array/"></a>
+ * {@link leetcode.KDPIAA}
+ *
+ * `` Battleships in a Board **
+ * @see  <a href="https://leetcode.com/problems/battleships-in-a-board/"></>
+ * {@link leetcode.BattleshipsInABoard}
+ *
+ * `` Spiral Matrix **
+ * @see <a href="https://leetcode.com/problems/spiral-matrix/"></a>
+ * {@link leetcode.SpiralMatrix}
+ *
+ * `` Valid Sudoku **
+ * @see <a href="https://leetcode.com/problems/valid-sudoku/"></a>
+ * {@link leetcode.ValidSudoku}
  */
 package leetcode;

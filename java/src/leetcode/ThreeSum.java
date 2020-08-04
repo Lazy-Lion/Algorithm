@@ -26,7 +26,7 @@ public class ThreeSum {
     /**
      * ignore sorting:
      *   time complexity: O(n^2)
-     *   space complexity: @(1)
+     *   space complexity: O(1)
      */
     public static List<List<Integer>> threeSum(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
