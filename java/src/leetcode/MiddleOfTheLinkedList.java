@@ -24,8 +24,24 @@ import leetcode.definition.ListNode;
  *   The number of nodes in the given list will be between 1 and 100.
  */
 public class MiddleOfTheLinkedList {
-    // todo
-    public ListNode middleNode(ListNode head) {
-        return null;
+
+    /**
+     * speed pointer: slow pointer, fast pointer
+     *
+     * time complexity: O(n)
+     * space complexity: O(1)
+     */
+    public static ListNode middleNode(ListNode head) {
+        assert head != null;
+
+        ListNode slow, fast;
+        slow = fast = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        return slow;  // odd - middle node, even - second middle node
     }
 }

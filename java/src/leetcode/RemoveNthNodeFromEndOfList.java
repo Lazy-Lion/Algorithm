@@ -18,8 +18,36 @@ import leetcode.definition.ListNode;
  *   Could you do this in one pass?
  */
 public class RemoveNthNodeFromEndOfList {
-    // todo
-    public ListNode removeNthFromEnd(ListNode head, int n) {
-        return null;
+    /**
+     * two pointers:
+     *    the first pointer leads the second pointer by k+1
+     *
+     * time complexity: O(n + k) - n: list's length; k - remove kth node from end of list
+     * space complexity: O(1)
+     */
+    public static ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode node = head;
+        head = new ListNode();
+        head.next = node;  // add sentinel to simplify operations
+
+        ListNode first = head;
+        int count = 0;
+        while (first != null && count <= n) {
+            first = first.next;
+            count++;
+        }
+
+        ListNode second = head;
+        while (first != null) {
+            first = first.next;
+            second = second.next;
+        }
+
+        // delete second.next node
+        ListNode temp = second.next;
+        second.next = second.next.next;
+        temp.next = null;
+
+        return head.next;
     }
 }

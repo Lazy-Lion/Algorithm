@@ -1,5 +1,7 @@
 package leetcode;
 
+import leetcode.definition.ListNode;
+
 /**
  * leetcode 142: Linked List Cycle II
  *
@@ -8,51 +10,64 @@ package leetcode;
  * Note: Do not modify the linked list.
  */
 public class LinkedListCycleII {
-   // todo
     /**
-     * two points : 快慢指针
+     * speed pointer : fast and slow pointer
      *
      * 1 → 2 → 3
      *     ↖  ↓
      *        4
-     * 如上链表： 假设 快慢指针速度分别为 2v,v; 1->2 距离为 x, 3 为两个指针相遇的位置，2->3距离为 y, 2->3->4->2 环的长度为 c
-     *    => 2*(x + y) = n*c + x + y  (慢指针必然没有跑完一圈) => x = n*c - y
-     * 所以当到达交点时，两个指针以同样的速度分别从交点和 head 出发，相交的位置即为环的起点
-     * @param head
-     * @return
+     * assume: the speed of the fast and slow pointers are 2v, v;
+     *         the distance between 1 and 2 is x,
+     *         the location of first meeting is 3
+     *         the distance between 2 and 3 is y
+     *         the length of ring (2->3->4->2) is c
+     *    => S1 = x + y + k1*c
+     *       S2 = x + y + k2*c  (k1 - slow, k2 - fast; k1 < k2)
+     *       S2 = 2*S1
+     *    => S1 = S2 - S1 = (k2 - k1) * c
+     *       x = S1 - k1*c - y = (k2 - 2k1) * c - y
+     *       assert x > 0 and y > 0
+     *    => k2 - 2k1 > 0
+     *    => x = (k - 1)*c + (c - y)  k > 0
+     *
+     * 所以当到达交点时，两个指针再以同样的速度 v分别从交点和 head 出发，相交的位置即为环的起点
+     *
+     * since k2 - 2k1 > 0 => k2 >= 2k1 + 1
+     *    => k1 = 0, k2 >= 1
+     *       k1 = 1, k2 >= 3
+     *       ...
+     *    => k1 increases by 1, k2 increases by 2 or more
+     *    => consider the actual situation: k1 can only be 0, and k2 >= 1
+     *
+     *    => time complexity: O(2x + y) → O(x + y)
+     *
+     * time complexity: if there is a ring: O(x + y), otherwise: O(n)
+     * space complexity: O(1)
      */
-    public ListNode detectCycle(ListNode head) {
-        if(head == null || head.next == null)
-            return null;
+    public static ListNode detectCycle(ListNode head) {
+        ListNode slow, fast;
+        slow = fast = head;
 
-        ListNode slow = head.next;
-        ListNode fast = head.next.next;
-        ListNode intersect = null;
+        boolean hasCyclce = false;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
 
-        while(fast != null){
-            if(slow == fast) {
-                intersect = slow; break;
+            if (slow == fast) {
+                hasCyclce = true;
+                break;
             }
-            slow = slow.next;
-            fast = fast.next == null ? null : fast.next.next;
         }
 
-        if(intersect == null) return null;
+        if (!hasCyclce) {
+            return null;
+        }
 
-        fast = head;
-        while(fast != slow){
+        slow = head;
+        while (slow != fast) {
+            slow = slow.next;
             fast = fast.next;
-            slow = slow.next;
         }
-        return fast;
-    }
-
-    private static class ListNode {
-        int val;
-        ListNode next;
-        ListNode(int x) {
-            val = x;
-            next = null;
-        }
+        return slow;
     }
 }
