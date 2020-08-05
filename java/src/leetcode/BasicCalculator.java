@@ -1,11 +1,11 @@
-package stack;
+package leetcode;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
 /**
- * 问题描述：leetcode 224
+ * leetcode 224: Basic Calculator
  *
  * Implement a basic calculator to evaluate a simple expression string.
  *
@@ -23,6 +23,7 @@ import java.util.Stack;
  * Output: 23
  */
 public class BasicCalculator {
+    // todo
 
     // 运算符优先级
     private static final Map<Character,Integer> priority = new HashMap<Character,Integer>(){
@@ -52,8 +53,6 @@ public class BasicCalculator {
      *               当前符号的优先级大于栈顶,当前符号入栈
      *               当前符号的优先级小于等于栈顶符号(同级从左到右)，出栈，直到当前符号优先级大于栈顶符号或栈顶为'('，当前符号入栈
      *
-     * @param s
-     * @return
      */
     public static int calculate(String s){
 

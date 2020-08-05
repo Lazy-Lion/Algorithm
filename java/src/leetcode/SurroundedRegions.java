@@ -1,9 +1,9 @@
-package queue;
+package leetcode;
 
 import java.util.*;
 
 /**
- * 130. Surrounded Regions
+ * leetcode 130. Surrounded Regions
  * Given a 2D board containing 'X' and 'O' (the letter O), capture all regions surrounded by 'X'.
  *
  * A region is captured by flipping all 'O's into 'X's in that surrounded region.
@@ -23,7 +23,9 @@ import java.util.*;
  * to 'X'. Any 'O' that is not on the border and it is not connected to an 'O' on the border will be flipped to 'X'.
  * Two cells are connected if they are adjacent cells connected horizontally or vertically.
  */
-public class SurroundedRegions130 {
+public class SurroundedRegions {
+
+	// todo
 	/**
 	 * way1: solve(),以边界的'O'为起点，广度优先遍历(BFS)
 	 *   solve_Optimize()针对该版本做了代码优化

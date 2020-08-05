@@ -15,39 +15,39 @@ public class QueueBaseOnLinkedList {
     private Node head = null;  // 队列头
     private Node tail = null;  // 队列尾
 
-    public QueueBaseOnLinkedList(){ }
+    public QueueBaseOnLinkedList() {
+    }
 
     // 入队
-    public boolean enqueue(int item){
+    public boolean enqueue(int item) {
         Node node = new Node(item, null);
 
-        if(head == null) head = node;
+        if (head == null) head = node;
 
-        if(tail == null) {
+        if (tail == null) {
             tail = head;
-        }else{
+        } else {
             tail.setNext(node);
             tail = node;
         }
-
 
 
         return true;
     }
 
     // 出队
-    public int dequeue(){
-        if(head == null) throw new NoSuchElementException();
+    public int dequeue() {
+        if (head == null) throw new NoSuchElementException();
 
         int element = head.getData();
         head = head.getNext();
         return element;
     }
 
-    public void printAll(){
+    public void printAll() {
         Node p = head;
 
-        while( p != null ){
+        while (p != null) {
             System.out.print(p.getData() + " ");
             p = p.getNext();
         }

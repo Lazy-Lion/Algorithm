@@ -1,9 +1,9 @@
-package stack;
+package leetcode;
 
 import java.util.Stack;
 
 /**
- * 946. Validate Stack Sequences
+ * leetcode 946: Validate Stack Sequences
  *   Given two sequences pushed and popped with distinct values, return true if and only if this could have been the
  * result of a sequence of push and pop operations on an initially empty stack.
  *
@@ -24,7 +24,8 @@ import java.util.Stack;
  *   pushed is a permutation of popped.
  *   pushed and popped have distinct values.
  */
-public class ValidateStackSequences946 {
+public class ValidateStackSequences {
+	// todo
 	/**
 	 * 时间复杂度： O(n)
 	 * 空间复杂度： O(n)

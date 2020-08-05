@@ -1,5 +1,7 @@
 package queue;
 
+import leetcode.ShortestSubarrayWithSumAtLeastK;
+
 /**
  * test
  */
@@ -45,8 +47,8 @@ public class Main {
 //        System.out.println(lQueue.dequeue());
 
 
-        System.out.println("ShortestSubarray:");
-        ShortestSubarray subarray = new ShortestSubarray();
+        System.out.println("ShortestSubarrayWithSumAtLeastK:");
+        ShortestSubarrayWithSumAtLeastK subarray = new ShortestSubarrayWithSumAtLeastK();
 
         System.out.println(subarray.shortestSubarray(new int[]{1}, 1));
         System.out.println(subarray.shortestSubarray(new int[]{1,2}, 4));

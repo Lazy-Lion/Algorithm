@@ -1,7 +1,5 @@
 package stack;
 
-import java.util.Stack;
-
 /**
  * 数组实现栈：顺序栈
  */
@@ -12,15 +10,15 @@ public class ArrayStack {
     private int count = 0;      // 栈中元素个数
     private int capacity;  // 栈大小
 
-    public ArrayStack(){
+    public ArrayStack() {
         items = new String[DEFAULT_CAPACITY];
         this.capacity = DEFAULT_CAPACITY;
     }
 
-    public ArrayStack(int capacity){
+    public ArrayStack(int capacity) {
 
-        if(capacity <= 0 ){
-            throw new IllegalArgumentException("Illegal Capacity: "+
+        if (capacity <= 0) {
+            throw new IllegalArgumentException("Illegal Capacity: " +
                     capacity);
         }
 
@@ -30,24 +28,22 @@ public class ArrayStack {
 
     /**
      * 入栈操作
-     * @return
      */
-    public boolean push(String item){
-        if(count >= capacity){
+    public boolean push(String item) {
+        if (count >= capacity) {
             return false;
         }
 
         items[count] = item;
-        count ++;
+        count++;
         return true;
     }
 
     /**
      * 出栈操作
-     * @return
      */
-    public String pop(){
-        if(count == 0){
+    public String pop() {
+        if (count == 0) {
             return null;
         }
 

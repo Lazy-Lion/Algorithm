@@ -1,11 +1,11 @@
-package stack;
+package leetcode;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
 /**
- * 问题描述：leetcode 20
+ * leetcode 20: Valid Parentheses
  * Given a string containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
  *
  * An input string is valid if:
@@ -30,6 +30,7 @@ import java.util.Stack;
  * Output: true
  */
 public class ValidParentheses {
+    // todo
     public static boolean isValid(String s){
         if(s == null) return false;
         if(s.length() % 2 != 0) return false;

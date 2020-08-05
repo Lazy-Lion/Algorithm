@@ -1,12 +1,11 @@
-package queue;
+package leetcode;
 
 import java.util.Deque;
 import java.util.LinkedList;
 
 /**
- * leetcode 862
+ * leetcode 862: Shortest Subarray with Sum at Least K
  *
- * 问题描述：
  * Return the length of the shortest, non-empty, contiguous subarray of A with sum at least K.
  * If there is no non-empty subarray with sum at least K, return -1.
  *
@@ -24,8 +23,8 @@ import java.util.LinkedList;
  * 2.-10 ^ 5 <= A[i] <= 10 ^ 5
  * 3.1 <= K <= 10 ^ 9
  */
-public class ShortestSubarray {
-
+public class ShortestSubarrayWithSumAtLeastK {
+    // todo
     // Time Limit Exceeded: O(n^2)
     public int shortestSubarray1(int[] A, int K) {
 

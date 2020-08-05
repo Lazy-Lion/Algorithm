@@ -1,6 +1,7 @@
 /**
  * problem list ( easy - * , medium - **, hard - *** ):
  *
+ * ----------------------------------------------------------- array
  * `` Two Sum *
  * @see <a href="https://leetcode.com/problems/two-sum/"></a>
  * {@link leetcode.TwoSum}
@@ -79,6 +80,47 @@
  * @see <a href="https://leetcode.com/problems/merge-k-sorted-lists/"></a>
  * {@link leetcode.MergeKSortedLists}
  *
- * ``
+ *
+ * ----------------------------------------------------------- stack, queue, recursion
+ * `` Valid Parentheses *
+ * @see <a href="https://leetcode.com/problems/valid-parentheses/"></a>
+ * {@link leetcode.ValidParentheses}
+ *
+ * `` Next Greater Element I *
+ * @see <a href="https://leetcode.com/problems/next-greater-element-i/"></a>
+ * {@link leetcode.NextGreaterElementI}
+ *
+ * `` Baseball Game *
+ * @see <a href="https://leetcode.com/problems/baseball-game/"></a>
+ * {@link leetcode.BaseballGame}
+ *
+ * `` Backspace String Compare *
+ * @see <a href="https://leetcode.com/problems/backspace-string-compare/"></a>
+ * {@link leetcode.BackspaceStringCompare}
+ *
+ * `` Min Stack *
+ * @see <a href="https://leetcode.com/problems/min-stack/"></a>
+ * {@link leetcode.MinStack}
+ *
+ * `` Implement Queue using Stacks *
+ * @see <a href="https://leetcode.com/problems/implement-queue-using-stacks/"></a>
+ * {@link leetcode.ImplementQueueUsingStacks}
+ *
+ * `` Validate Stack Sequences **
+ * @see <a href="https://leetcode.com/problems/validate-stack-sequences/"></a>
+ * {@link leetcode.ValidateStackSequences}
+ *
+ * `` Surrounded Regions **
+ * @see <a href="https://leetcode.com/problems/surrounded-regions/"></a>
+ * {@link leetcode.SurroundedRegions}
+ *
+ * `` Basic Calculator ***
+ * @see <a href="https://leetcode.com/problems/basic-calculator/"></a>
+ * {@link leetcode.BasicCalculator}
+ *
+ * `` Shortest Subarray with Sum at Least K ***
+ * @see <a href="https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/"></a>
+ * {@link leetcode.ShortestSubarrayWithSumAtLeastK}
+ *
  */
 package leetcode;
