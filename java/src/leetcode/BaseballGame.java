@@ -1,5 +1,12 @@
 package leetcode;
 
+import util.Utils;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
+
 /**
  * leetcode 682: Baseball Game
  *
@@ -33,8 +40,66 @@ package leetcode;
  *     Operation 1: The round 3's data is invalid. The sum is: 3.
  */
 public class BaseballGame {
-    //todo
-    public int calPoints(String[] ops) {
-        return 0;
+    private static final String CANCEL = "C";
+    private static final String DOUBLE = "D";
+    private static final String PLUS = "+";
+
+    /**
+     * stack
+     * time complexity: O(n)
+     * space complexity: O(n)
+     */
+    public static int calPoints(String[] ops) {
+        int length = ops.length;
+
+        if (length == 0) return 0;
+        Stack<Integer> stack = new Stack<>();
+
+        int sum = 0;
+        int val;
+        for (int i = 0; i < ops.length; i++) {
+            if (CANCEL.equals(ops[i])) {
+                if (stack.isEmpty()) {
+                    return 0; // invalid input
+                }
+                sum -= stack.pop();
+            } else if (DOUBLE.equals(ops[i])) {
+                if (stack.isEmpty()) {
+                    return 0; // invalid input
+                }
+                val = stack.peek() << 1;
+                sum += val;
+                stack.push(val);
+            } else if (PLUS.equals(ops[i])) {
+                if (stack.isEmpty() || stack.size() <= 1) {
+                    return 0; // invalid input
+                }
+                int top = stack.pop();
+                val = top + stack.peek();
+                stack.push(top);
+                stack.push(val);
+                sum += val;
+            } else {
+                val = Integer.valueOf(ops[i]);
+                stack.push(val);
+                sum += val;
+            }
+        }
+
+        return sum;
+    }
+
+    public static void main(String[] args) throws InvocationTargetException, IllegalAccessException {
+        List<List<Object>> params = new ArrayList<>();
+
+        List<Object> param = new ArrayList<>();
+        param.add(new String[]{"5", "2", "C", "D", "+"});
+        params.add(param);
+
+        param = new ArrayList<>();
+        param.add(new String[]{"5", "-2", "4", "C", "D", "9", "+", "+"});
+        params.add(param);
+
+        Utils.testStaticMethod(BaseballGame.class, params);
     }
 }

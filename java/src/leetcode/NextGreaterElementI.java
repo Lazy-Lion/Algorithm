@@ -1,5 +1,10 @@
 package leetcode;
 
+import util.Utils;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
+
 /**
  * leetcode 496: Next Greater Element I
  *
@@ -26,8 +31,59 @@ package leetcode;
  *   2. The length of both nums1 and nums2 would not exceed 1000.
  */
 public class NextGreaterElementI {
-    // todo
-    public int[] nextGreaterElement(int[] nums1, int[] nums2) {
-        return null;
+    /**
+     * stack + map
+     *
+     * time complexity: O(m + n)
+     * space complexity: O(n) - do not consider return array
+     */
+    public static int[] nextGreaterElement(int[] nums1, int[] nums2) {
+        int m = nums1.length;
+        int n = nums2.length;
+
+        assert m <= n;
+        if (m == 0) return new int[0];
+
+        Map<Integer, Integer> map = constructMap(nums2);
+        int[] result = new int[m];
+
+        for (int i = 0; i < m; i++) {
+            result[i] = map.getOrDefault(nums1[i], -1);
+        }
+
+        return result;
+    }
+
+    /**
+     * construct next greater number map: key - nums[i], value - the next greater number
+     */
+    private static Map<Integer, Integer> constructMap(int[] nums) {
+
+        Map<Integer, Integer> map = new HashMap<>();
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 0; i < nums.length; i++) {
+            while (!stack.isEmpty() && nums[i] > stack.peek()) {
+                map.put(stack.pop(), nums[i]);
+            }
+            stack.push(nums[i]);
+        }
+        return map;
+    }
+
+    public static void main(String[] args) throws InvocationTargetException, IllegalAccessException {
+        List<List<Object>> params = new ArrayList<>();
+
+        List<Object> param = new ArrayList<>();
+        param.add(new int[]{1, 3, 5, 2, 4});
+        param.add(new int[]{6, 5, 4, 3, 2, 1, 7});
+        params.add(param);
+
+        Utils.testStaticMethod(NextGreaterElementI.class
+                , new HashSet<String>() {
+                    {
+                        add("nextGreaterElement");
+                    }
+                }
+                , params);
     }
 }

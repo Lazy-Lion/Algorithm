@@ -1,4 +1,4 @@
-package recursion;
+package leetcode;
 
 import sort.Utils;
 
@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * 869. Reordered Power of 2
+ * leetcode 869: Reordered Power of 2
  *   Starting with a positive integer N, we reorder the digits in any order (including the original order) such
  * that the leading digit is not zero.
  *
@@ -31,7 +31,7 @@ import java.util.Set;
  * Note:
  *   1 <= N <= 10^9
  */
-public class ReorderedPowerOf2_869 {
+public class ReorderedPowerOf2 {
 	static Set<Integer> power;  // 记录已计算的2^power
 	static int current_max_power; // 记录已计算的2^power的最大值
 

@@ -17,30 +17,44 @@ import java.util.Stack;
  *   You may assume that all operations are valid (for example, no pop or peek operations will be called on an empty queue).
  */
 public class ImplementQueueUsingStacks {
-    // todo
+    private Stack<Integer> in;
+    private Stack<Integer> out;
 
     /** Initialize your data structure here. */
     public ImplementQueueUsingStacks() {
-
+        in = new Stack<>();
+        out = new Stack<>();
     }
 
     /** Push element x to the back of queue. */
     public void push(int x) {
-
+        in.push(x);
     }
 
     /** Removes the element from in front of queue and returns that element. */
     public int pop() {
-        return 0;
+        pushOutStack();
+        return out.pop();
     }
 
     /** Get the front element. */
     public int peek() {
-        return 0;
+        pushOutStack();
+        return out.peek();
+    }
+
+    private void pushOutStack() {
+        if (in.isEmpty() && out.isEmpty()) {
+            throw new ArrayIndexOutOfBoundsException();
+        } else if (out.isEmpty()) {
+            while (!in.isEmpty()) {
+                out.push(in.pop());
+            }
+        }
     }
 
     /** Returns whether the queue is empty. */
     public boolean empty() {
-        return false;
+        return in.isEmpty() && out.isEmpty();
     }
 }

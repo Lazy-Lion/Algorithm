@@ -6,10 +6,10 @@ import java.util.Stack;
 
 /**
  * leetcode 20: Valid Parentheses
+ *
  * Given a string containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
  *
  * An input string is valid if:
-
  * Open brackets must be closed by the same type of brackets.
  * Open brackets must be closed in the correct order.
  * Note that an empty string is also considered valid.
@@ -30,13 +30,23 @@ import java.util.Stack;
  * Output: true
  */
 public class ValidParentheses {
-    // todo
-    public static boolean isValid(String s){
-        if(s == null) return false;
-        if(s.length() % 2 != 0) return false;
+    /**
+     * stack
+     *
+     * time complexity: O(n)
+     * space complexity: O(n)
+     */
+    public static boolean isValid(String s) {
+        if (s == null || s.isEmpty()) {
+            return true;
+        }
+
+        if (s.length() % 2 != 0) {
+            return false;
+        }
 
         Stack<Character> stack = new Stack<>();
-        Map<Character, Character> map = new HashMap<Character, Character>(){  // 匿名内部类的声明方式，引用持有外部类引用
+        Map<Character, Character> map = new HashMap<Character, Character>() {  // 匿名内部类的声明方式，引用持有外部类引用
             {
                 put(')', '(');
                 put(']', '[');
@@ -44,25 +54,21 @@ public class ValidParentheses {
             }
         };
 
-        for(int i = 0; i < s.length(); i ++){
+        for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
 
-            if(map.containsValue(c)){
+            if (map.containsValue(c)) {
                 stack.push(c);
-            }else if(map.containsKey(c)){
-                if(stack.isEmpty()) return false;
+            } else if (map.containsKey(c)) {
+                if (stack.isEmpty()) return false;
 
-                char ch = stack.pop();
-                if(map.get(c) != ch) return false;
-
-            }else{
+                char top = stack.pop();
+                if (map.get(c) != top) return false;
+            } else {
                 return false;
             }
-
         }
 
-        if(!stack.isEmpty()) return false;
-
-        return true;
+        return stack.isEmpty();
     }
 }

@@ -1,5 +1,7 @@
 package recursion;
 
+import leetcode.ClimbingStairs;
+
 /**
  * test
  */
@@ -37,13 +39,7 @@ public class Main {
      */
 
     public static void main(String[] args) {
-        ClimbingStairs s = new ClimbingStairs();
-        System.out.println(s.climbStairs(2));
-        System.out.println(s.climbStairs(3));
 
-
-        System.out.println(s.climbStairsIteration(2));
-        System.out.println(s.climbStairsIteration(3));
     }
 
 }

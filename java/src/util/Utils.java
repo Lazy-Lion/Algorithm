@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 /**
  * {@link sort.Utils}存在重复实现，后续用该类替代
@@ -43,8 +44,52 @@ public class Utils {
             System.out.println("------" + method.getName() + " ------");
 
             for (List<Object> args : argsList) {
-                System.out.println(method.invoke(null, args == null ? null : args.toArray()));
+                print(method.invoke(null, args == null ? null : args.toArray()));
             }
         }
     }
+
+    public static void testStaticMethod(Class<?> clazz, Set<String> methodNameSet, List<List<Object>> argsList) throws InvocationTargetException, IllegalAccessException {
+        assert !argsList.isEmpty();
+
+        Method[] methods = clazz.getDeclaredMethods();
+
+        assert methods.length > 0;
+
+        Arrays.sort(methods, Comparator.comparing(Method::getName)); // order by name
+        for (Method method : methods) {
+            if (methodNameSet.contains(method.getName())) {
+                System.out.println("------" + method.getName() + " ------");
+
+                for (List<Object> args : argsList) {
+                    print(method.invoke(null, args == null ? null : args.toArray()));
+                }
+            }
+        }
+    }
+
+    private static void print(Object obj) {
+        if (obj.getClass().isArray()) {
+            if (obj instanceof byte[]) {
+                System.out.println(Arrays.toString((byte[]) obj));
+            } else if (obj instanceof short[]) {
+                System.out.println(Arrays.toString((short[]) obj));
+            } else if (obj instanceof char[]) {
+                System.out.println(Arrays.toString((char[]) obj));
+            } else if (obj instanceof int[]) {
+                System.out.println(Arrays.toString((int[]) obj));
+            } else if (obj instanceof long[]) {
+                System.out.println(Arrays.toString((long[]) obj));
+            } else if (obj instanceof float[]) {
+                System.out.println(Arrays.toString((float[]) obj));
+            } else if (obj instanceof double[]) {
+                System.out.println(Arrays.toString((double[]) obj));
+            } else {
+                System.out.println(Arrays.toString((Object[]) obj));
+            }
+        } else {
+            System.out.println(obj);
+        }
+    }
+
 }

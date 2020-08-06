@@ -30,25 +30,88 @@ package leetcode;
  * Constraints:
  *   Methods pop, top and getMin operations will always be called on non-empty stacks.
  */
-public class MinStack {
-    // todo
-    public MinStack() {
 
+public class MinStack {
+    private static final int DEFAULT_CAPACITY = 5;
+
+    private int[] element;
+    private int size;
+    private int min;
+
+    public MinStack() {
+        element = new int[DEFAULT_CAPACITY];
+        size = 0;
     }
 
     public void push(int x) {
+        if (size == element.length) {
+            expansion();
+        }
 
+        min = size == 0 ? x : Math.min(x, min);
+        element[size++] = x;
+    }
+
+    private void expansion() {
+        int oldCapacity = element.length;
+        int newCapacity = oldCapacity + (oldCapacity >> 1);
+
+        int[] newElement = new int[newCapacity];
+        for (int i = 0; i < element.length; i++) {
+            newElement[i] = element[i];
+        }
+        element = newElement;
     }
 
     public void pop() {
+        if (size == 0) {
+            throw new ArrayIndexOutOfBoundsException();
+        }
 
+        if (element[--size] == min) {
+            calculateMin();
+        }
+    }
+
+    private void calculateMin() {
+        if (size == 0) return;
+
+        int minVal = element[0];
+        for (int i = 1; i < size; i++) {
+            minVal = Math.min(minVal, element[i]);
+        }
+        min = minVal;
     }
 
     public int top() {
-        return 0;
+        if (size == 0) {
+            throw new ArrayIndexOutOfBoundsException();
+        }
+        return element[size - 1];
     }
 
     public int getMin() {
-        return 0;
+        if (size == 0) {
+            throw new ArrayIndexOutOfBoundsException();
+        }
+        return min;
+    }
+
+    public static void main(String[] args) {
+        MinStack minStack = new MinStack();
+        minStack.push(2);
+        minStack.push(0);
+        minStack.push(3);
+        minStack.push(0);
+        minStack.push(0);
+        minStack.push(3);
+        minStack.push(0);
+//        System.out.println(minStack.getMin());
+//        minStack.pop();
+//        System.out.println(minStack.getMin());
+//        minStack.pop();
+//        System.out.println(minStack.getMin());
+//        minStack.pop();
+//        System.out.println(minStack.getMin());
     }
 }
