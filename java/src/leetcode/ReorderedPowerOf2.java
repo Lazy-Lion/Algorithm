@@ -1,10 +1,10 @@
 package leetcode;
 
-import sort.Utils;
+import util.Utils;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Set;
 
 /**
  * leetcode 869: Reordered Power of 2
@@ -32,132 +32,226 @@ import java.util.Set;
  *   1 <= N <= 10^9
  */
 public class ReorderedPowerOf2 {
-	static Set<Integer> power;  // 记录已计算的2^power
-	static int current_max_power; // 记录已计算的2^power的最大值
+    /**
+     * way 1: 全排列问题: all permutation
+     *    recursion
+     *    依次从集合中选择一个元素作为排列的第一个元素，再对剩余的元素进行全排列
+     *
+     * time complexity: O(m! * logN),  m为整数的位数， m!为全排列个数，logN为验证一个全排列是否为2的倍数的消耗时间
+     * space complexity: O(m)
+     */
+    public static boolean reorderedPowerOf2(int n) {
+        if (n == 0) return false;
 
-	// 排列后的整数位数必然与原整数相同，且不以0开头，所以可以设置power存储的上下界，减少无效数据
-	static int upper_bound;  // power中存储数据的上界
-	static int lower_bound;  // power中存储数据的下界
+        byte[] array = int2ByteArray(n);
+        return permutations(array, 0);
+    }
 
-	/**
-	 * way 1:
-	 * 全排列问题
-	 * 时间复杂度： m! * logN , m为整数的位数， m!为全排列个数，logN为验证一个全排列是否为2的倍数的消耗时间
-	 */
-	public static boolean reorderedPowerOf2(int N) {
-		if(N <= 0) return false;
+    private static byte[] int2ByteArray(int n) {
+        assert n > 0;
 
-		int[] digits = getDigits(N);
-		power = new HashSet<>();
-		current_max_power = 1;
-		power.add(1);
+        byte[] array = new byte[10];
+        int count = 0;
+        while (n > 0) {
+            array[count++] = (byte) (n % 10);
+            n = n / 10;
+        }
 
-		// 计算上下界
-		lower_bound = 1;
-		upper_bound = 9;
-		for(int i = 0; i < digits.length - 1; i ++) {
-			lower_bound = lower_bound * 10;
-			upper_bound = upper_bound * 10 + 9;
-		}
+        byte[] result = new byte[count];
+        for (int i = 0; i < count; i++) {
+            result[count - i - 1] = array[i];
+        }
 
-		if(upper_bound < 0) upper_bound = Integer.MAX_VALUE;  // 整数越界处理
+        return result;
+    }
 
-		return permutations(digits, 0);
-	}
 
-	private static int[] getDigits(int n) {
-		int[] temp = new int[10];
-		int val, i = 0;
-		while(n > 0) {
-			val = n % 10;
-			n = n / 10;
-			temp[i ++] = val;
-		}
+    private static boolean permutations(byte[] array, int start) {
+        if (start == array.length - 1) {
+            return isPowerOfTwo(array);
+        }
 
-		int[] digits = new int[i];
-		for(int k = i - 1; k >= 0; k --) {
-			digits[i - k - 1] = temp[k];
-		}
-		return digits;
-	}
+        for (int i = start; i < array.length; i++) {
+            if (start == 0 && array[i] == 0) {
+                continue;
+            }
+            swap(array, start, i);
+            if (permutations(array, start + 1)) {
+                swap(array, start, i); // recover
+                return true;
+            }
+            swap(array, start, i); // recover
+        }
+        return false;
+    }
 
-	private static boolean permutations(int[] digits, int start) {
-		if(start == digits.length) {
-			return isPowerOf2(digits);
-		}
+    private static void swap(byte[] array, int index1, int index2) {
+        if (index1 == index2) return;
 
-		for(int i = start; i < digits.length; i ++) {
-			Utils.swap(digits, i, start);
-			if(permutations(digits, start + 1))
-				return true;
-			Utils.swap(digits, i, start);
-		}
-		return false;
-	}
+        byte temp = array[index1];
+        array[index1] = array[index2];
+        array[index2] = temp;
+    }
 
-	private static boolean isPowerOf2(int[] digits) {
-		if(digits[0] == 0) return false;
+    private static boolean isPowerOfTwo(byte[] array) {
 
-		int val = 0;
-		for(int i = 0; i < digits.length; i ++) {
-			val = val * 10 + digits[i];
-		}
+        int val = array[0];
+        for (int i = 1; i < array.length; i++) {
+            val = val * 10 + array[i];
+        }
 
-		if(val <= current_max_power) return power.contains(val);
+        int count = 0;
+        while (val > 0) {
+            if ((val & 1) == 1) count++;
+            val = val >> 1;
+        }
+        if (count > 1) return false;
+        return true;
+    }
 
-		while(current_max_power < val) {
-			current_max_power = current_max_power << 1;
-			if(current_max_power >= lower_bound && current_max_power <= upper_bound)
-				power.add(current_max_power);
-		}
+    /**
+     * way 2: 全排列问题
+     *  字典序 dictionary order (lexicographical order):
+     *   Specifically, given two partially ordered sets A and B, the lexicographical order on the Cartesian product A × B is defined as
+     *        (a,b) ≤ (a′,b′) if and only if a < a′ or (a = a′ and b ≤ b′).
+     *
+     *  time complexity: O(m! * logN)
+     *  space complexity: O(m)
+     */
+    public static boolean reorderedPowerOf2_2(int n) {
+        if (n == 0) return false;
 
-		return current_max_power == val;
-	}
+        byte[] array = int2ByteArray(n);
+        minPermutation(array);
+        if (isPowerOfTwo(array)) {
+            return true;
+        }
 
-	/**
-	 * way 2 :
-	 *  N∈ [1, 10^9],   10^9 < 2^30
-	 *  统计N中 0,1,2,3,4,5,6,7,8,9 的个数，将其与 pow(2, i)中各个数字的个数做比较 （i ∈ [0,31)）
-	 *  如果相同则存在数字的组合结果 N'，使得 N' = pow(2, i)
-	 */
-	public static boolean reorderedPowerOf2_2(int N) {
-		if(N <= 0) return false;
+        while (nextPermutation(array)) {
+            if (isPowerOfTwo(array)) {
+                return true;
+            }
+        }
 
-		int[] digits = getDigitsCount(N);
-		for(int i = 0; i < 31; i ++) {  // 使用移位运算替代 pow(2,i)
-			if(Arrays.equals(digits, getDigitsCount(1 << i)))
-				return true;
-		}
+        return false;
+    }
 
-		return false;
-	}
+    /**
+     * 字典序最小序列
+     */
+    private static void minPermutation(byte[] array) {
+        if (array.length <= 1) return;
 
-	// 统计整数中各个数字的个数
-	// 例:123521, 返回 {0,2,2,1,0,1,0,0,0,0}
-	private static int[] getDigitsCount(int n) {
-		int[] ans = new int[10];
-		while(n > 0) {
-			ans[n % 10] ++;
-			n = n / 10;
-		}
-		return ans;
-	}
+        Arrays.sort(array);
+        if (array[0] == 0) { // not start with 0
+            int i = 1;
+            while (i < array.length && array[i] == 0) {
+                i++;
+            }
+            if (i < array.length) {
+                swap(array, 0, i);
+            }
+        }
+    }
 
-	public static void main(String[] args) {
-		System.out.println(reorderedPowerOf2(1));
-		System.out.println(reorderedPowerOf2(10));
-		System.out.println(reorderedPowerOf2(16));
-		System.out.println(reorderedPowerOf2(24));
-		System.out.println(reorderedPowerOf2(46));
-		System.out.println(reorderedPowerOf2(218));
-		System.out.println(reorderedPowerOf2(100000842));
+    /**
+     * find next permutation:
+     *   1. find the last ascending pair (array[a],array[a+1]), array[a] > array[a+1]
+     *   2. find the last index k (array[k] > array[a] and array[k] is the smallest on the right of the ascending pair)
+     *   3. swap array[a] and array[k]
+     *   4. reverse set on the right of a
+     */
+    private static boolean nextPermutation(byte[] array) {
+        boolean hasNext = false;
 
-		System.out.println(reorderedPowerOf2_2(1));
-		System.out.println(reorderedPowerOf2_2(10));
-		System.out.println(reorderedPowerOf2_2(16));
-		System.out.println(reorderedPowerOf2_2(24));
-		System.out.println(reorderedPowerOf2_2(46));
-		System.out.println(reorderedPowerOf2_2(218));
-		System.out.println(reorderedPowerOf2_2(100000842));
-	}
+        // step 1
+        int i = array.length - 1;
+        while (i > 0 && !hasNext) {
+            if (array[i] > array[--i]) {
+                hasNext = true;
+            }
+        }
+
+        if (hasNext) {
+            // step 2
+            int a = i;
+            int k = array.length - 1;
+            while (k > a) {
+                if (array[k] > array[a]) {
+                    break;
+                }
+                k--;
+            }
+
+            // step 3
+            swap(array, a, k);
+
+            // step 4
+            int m = a + 1;
+            int n = array.length - 1;
+            while (m < n) {
+                swap(array, m++, n--);
+            }
+        }
+
+        return hasNext;
+    }
+
+    /**
+     * way 3 :
+     *  N∈ [1, 10^9],   10^9 < 2^30
+     *  统计N中 0,1,2,3,4,5,6,7,8,9 的个数，将其与 pow(2, i)中各个数字的个数做比较 （i ∈ [0,31)）
+     *  如果相同则存在数字的组合结果 N'，使得 N' = pow(2, i)
+     *
+     *  time complexity: O(log_base2(N) * log_base10(N)) => log_base2(N) < 30
+     *  space complexity: O(log_base2(N))
+     */
+    public static boolean reorderedPowerOf2_3(int N) {
+        if (N <= 0) return false;
+
+        int[] digits = getDigitsCount(N);
+
+        for (int i = 0; i < 30; i++) {  // 使用移位运算替代 pow(2,i)
+            if (Arrays.equals(digits, getDigitsCount(1 << i)))
+                return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * 统计整数中各个数字的个数
+     * 例:123521, 返回 {0,2,2,1,0,1,0,0,0,0}
+     */
+    private static int[] getDigitsCount(int n) {
+        int[] ans = new int[10];
+        while (n > 0) {
+            ans[n % 10]++;
+            n = n / 10;
+        }
+        return ans;
+    }
+
+    public static void main(String[] args) throws InvocationTargetException, IllegalAccessException {
+
+        Utils.testStaticMethod(ReorderedPowerOf2.class
+                , new HashSet<String>() {
+                    {
+                        add("reorderedPowerOf2");
+                        add("reorderedPowerOf2_3");
+                        add("reorderedPowerOf2_2");
+                    }
+                }
+                , Arrays.asList(
+                        Arrays.asList(1),
+                        Arrays.asList(10),
+                        Arrays.asList(16),
+                        Arrays.asList(24),
+                        Arrays.asList(46),
+                        Arrays.asList(218),
+                        Arrays.asList(100000842),
+                        Arrays.asList(4609),
+                        Arrays.asList(1892)
+                ));
+    }
 }

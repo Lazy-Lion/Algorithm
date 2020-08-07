@@ -1,5 +1,10 @@
 package leetcode;
 
+import util.Utils;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 /**
@@ -25,41 +30,87 @@ import java.util.Stack;
  *   pushed and popped have distinct values.
  */
 public class ValidateStackSequences {
-	// todo
-	/**
-	 * 时间复杂度： O(n)
-	 * 空间复杂度： O(n)
-	 */
-	public static boolean validateStackSequences(int[] pushed, int[] popped) {
-		int n = pushed.length;
-		int m = popped.length;
+    /**
+     * time complexity: O(n)
+     * space complexity: O(n)
+     *
+     * @see ValidateStackSequences#validateStackSequences_2(int[], int[])
+     */
+    @Deprecated
+    public static boolean validateStackSequences(int[] pushed, int[] popped) {
+        int n = pushed.length;
+        int m = popped.length;
 
-		if(n != m) return false;
-		if(n == 0) return true;
+        if (n != m) return false;
+        if (n == 0) return true;
 
-		Stack<Integer> stack = new Stack<>();
-		stack.push(pushed[0]);
+        Stack<Integer> stack = new Stack<>();
+        stack.push(pushed[0]);
 
-		int i = 0, j = 1, val;  // i - index of popped; j - index of pushed
-		while(!stack.isEmpty() && i < n) {
-			val = stack.peek();
-			if(val == popped[i]) {
-				i ++;
-				stack.pop();
-				if(stack.isEmpty() && j < n) stack.push(pushed[j ++]);
-			} else {
-				if(j < n) {
-					stack.push(pushed[j ++]);
-				} else {
-					break;
-				}
-			}
-		}
-		return i == n && j == n;
-	}
+        int i = 0, j = 1, val;  // i - index of popped; j - index of pushed
+        while (!stack.isEmpty() && i < n) {
+            val = stack.peek();
+            if (val == popped[i]) {
+                i++;
+                stack.pop();
+                if (stack.isEmpty() && j < n) stack.push(pushed[j++]);
+            } else {
+                if (j < n) {
+                    stack.push(pushed[j++]);
+                } else {
+                    break;
+                }
+            }
+        }
+        return i == n && j == n;
+    }
 
-	public static void main(String[] args) {
-		System.out.println(validateStackSequences(new int[] {1,2,3,4,5}, new int[] {4,5,3,2,1}));
-		System.out.println(validateStackSequences(new int[] {1,2,3,4,5}, new int[] {4,3,5,1,2}));
-	}
+    /**
+     * time complexity: O(n)
+     * space complexity: O(n)
+     */
+    public static boolean validateStackSequences_2(int[] pushed, int[] popped) {
+        int m = pushed.length;
+        int n = popped.length;
+
+        if (m == 0) return n == 0;
+        if (m != n) return false;
+
+        Stack<Integer> stack = new Stack<>();
+        int i, j;
+        i = j = 0;
+        while (j < m) { // assert m == n && i >= j
+            if (i < m) {
+                stack.push(pushed[i++]);
+            }
+
+            while (!stack.isEmpty()) {
+                if (stack.peek() == popped[j]) {
+                    stack.pop();
+                    j++;
+                } else {
+                    if (i == m) {
+                        return false;
+                    }
+                    break;
+                }
+            }
+        }
+        return true;
+    }
+
+    public static void main(String[] args) throws InvocationTargetException, IllegalAccessException {
+        List<List<Object>> params = new ArrayList<>();
+        List<Object> param = new ArrayList<>();
+        param.add(new int[]{1, 2, 3, 4, 5});
+        param.add(new int[]{4, 5, 3, 2, 1});
+        params.add(param);
+
+        param = new ArrayList<>();
+        param.add(new int[]{1, 2, 3, 4, 5});
+        param.add(new int[]{4, 3, 5, 1, 2});
+        params.add(param);
+
+        Utils.testStaticMethod(ValidateStackSequences.class, params);
+    }
 }
