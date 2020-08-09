@@ -33,7 +33,7 @@ import java.util.HashSet;
  */
 public class ReorderedPowerOf2 {
     /**
-     * way 1: 全排列问题: all permutation
+     * way 1: 全排列问题: full permutation
      *    recursion
      *    依次从集合中选择一个元素作为排列的第一个元素，再对剩余的元素进行全排列
      *

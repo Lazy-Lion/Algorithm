@@ -118,9 +118,33 @@
  * @see <a href="https://leetcode.com/problems/surrounded-regions/"></a>
  * {@link leetcode.SurroundedRegions}
  *
- * `` Reordered Power of 2 **
+ * `` Reordered Power of 2 **  (full permutation problem)
  * @see <a href="https://leetcode.com/problems/reordered-power-of-2/"></a>
  * {@link leetcode.ReorderedPowerOf2}
+ *
+ * `` Permutations II ** todo
+ * @see <a href="https://leetcode.com/problems/permutations-ii/"></a>
+ * {@link}
+ *
+ * `` Combinations **  (full combination problem)
+ * @see <a href="https://leetcode.com/problems/combinations/"></a>
+ * {@link leetcode.Combinations} todo
+ *
+ * `` Combination Sum ** todo
+ * @see <a href="https://leetcode.com/problems/combination-sum/"></a>
+ * {@link}
+ *
+ * `` Combination Sum II ** todo
+ * @see <a href="https://leetcode.com/problems/combination-sum-ii/"></a>
+ * {@link}
+ *
+ * `` Subsets ** todo
+ * @see <a href="https://leetcode.com/problems/subsets/"></a>
+ * {@link}
+ *
+ * `` Subsets II ** todo
+ * @see <a href="https://leetcode.com/problems/subsets-ii/"></a>
+ * {@link}
  *
  * `` Basic Calculator *** todo
  * @see <a href="https://leetcode.com/problems/basic-calculator/"></a>
