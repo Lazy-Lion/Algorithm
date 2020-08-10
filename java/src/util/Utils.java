@@ -14,18 +14,29 @@ import java.util.Set;
 public class Utils {
     /**
      * 数组指定index内容交换
-     * @param a
-     * @param index1
-     * @param index2
      */
     public static void swap(int[] a, int index1, int index2) {
-        if (index1 < 0 || index1 >= a.length || index2 < 0 || index2 > a.length) return;
+        if (index1 < 0 || index1 >= a.length || index2 < 0 || index2 >= a.length) return;
 
         if (index1 == index2) return;
 
         int temp = a[index1];
         a[index1] = a[index2];
         a[index2] = temp;
+    }
+
+    /**
+     * list 指定index交换
+     */
+    public static <T> void swap(List<T> list, int idx1, int idx2) {
+        assert list != null;
+        if (idx1 < 0 || idx1 >= list.size() || idx2 < 0 || idx2 >= list.size() || idx1 == idx2) {
+            return;
+        }
+
+        T temp = list.get(idx1);
+        list.set(idx1, list.get(idx2));
+        list.set(idx2, temp);
     }
 
     public static void testStaticMethod(Class<?> clazz, List<List<Object>> argsList) throws InvocationTargetException, IllegalAccessException {

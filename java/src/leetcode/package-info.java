@@ -122,25 +122,25 @@
  * @see <a href="https://leetcode.com/problems/reordered-power-of-2/"></a>
  * {@link leetcode.ReorderedPowerOf2}
  *
- * `` Permutations II ** todo
+ * `` Permutations II **
  * @see <a href="https://leetcode.com/problems/permutations-ii/"></a>
- * {@link}
+ * {@link leetcode.PermutationsII}
  *
  * `` Combinations **  (full combination problem)
  * @see <a href="https://leetcode.com/problems/combinations/"></a>
- * {@link leetcode.Combinations} todo
+ * {@link leetcode.Combinations}
  *
- * `` Combination Sum ** todo
+ * `` Combination Sum **
  * @see <a href="https://leetcode.com/problems/combination-sum/"></a>
- * {@link}
+ * {@link leetcode.CombinationSum}
  *
- * `` Combination Sum II ** todo
+ * `` Combination Sum II **
  * @see <a href="https://leetcode.com/problems/combination-sum-ii/"></a>
- * {@link}
+ * {@link leetcode.CombinationSumII}
  *
- * `` Subsets ** todo
+ * `` Subsets **
  * @see <a href="https://leetcode.com/problems/subsets/"></a>
- * {@link}
+ * {@link leetcode.Subsets}
  *
  * `` Subsets II ** todo
  * @see <a href="https://leetcode.com/problems/subsets-ii/"></a>
