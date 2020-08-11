@@ -42,11 +42,11 @@ public class Main {
 
         System.out.println("BasicCalculator: simplified version");
 
-        System.out.println(String.valueOf(BasicCalculator.calculateSubAndPlus(" 0")));
-        System.out.println(String.valueOf(BasicCalculator.calculateSubAndPlus("(1+(4+5+2)-3)+(6+8)")));
-        System.out.println(String.valueOf(BasicCalculator.calculateSubAndPlus(" 2-1 + 2 ")));
-        System.out.println(String.valueOf(BasicCalculator.calculateSubAndPlus(" 21-1 + 2 ")));
-        System.out.println(String.valueOf(BasicCalculator.calculateSubAndPlus("1-(5)")));
+//        System.out.println(String.valueOf(BasicCalculator.calculateSubAndPlus(" 0")));
+//        System.out.println(String.valueOf(BasicCalculator.calculateSubAndPlus("(1+(4+5+2)-3)+(6+8)")));
+//        System.out.println(String.valueOf(BasicCalculator.calculateSubAndPlus(" 2-1 + 2 ")));
+//        System.out.println(String.valueOf(BasicCalculator.calculateSubAndPlus(" 21-1 + 2 ")));
+//        System.out.println(String.valueOf(BasicCalculator.calculateSubAndPlus("1-(5)")));
 
     }
 }

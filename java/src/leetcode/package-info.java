@@ -146,13 +146,16 @@
  * @see <a href="https://leetcode.com/problems/subsets-ii/"></a>
  * {@link leetcode.SubsetsII}
  *
- * `` Basic Calculator *** todo
+ * `` Basic Calculator ***
  * @see <a href="https://leetcode.com/problems/basic-calculator/"></a>
  * {@link leetcode.BasicCalculator}
  *
- * `` Shortest Subarray with Sum at Least K *** todo
+ * `` Shortest Subarray with Sum at Least K ***  (Monotonic Queue)
  * @see <a href="https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/"></a>
  * {@link leetcode.ShortestSubarrayWithSumAtLeastK}
  *
+ * `` Largest Rectangle in Histogram *** todo
+ * @see <a href="https://leetcode.com/problems/largest-rectangle-in-histogram/"></a>
+ * {@link leetcode.LargestRectangleInHistogram}
  */
 package leetcode;
