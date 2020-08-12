@@ -12,58 +12,52 @@ package sort;
  *                   只会有一个函数在执行，也就是只会有一个临时的内存空间在使用，临时内存空间最大不会超过 n
  */
 public class MergeSort {
-
     /**
      * 递归：
      *  递推公式：mergeSort_recursion(l,r) = merge(mergeSort_recursion(l,m), mergeSort_recursion(m+1, r))
-     *  终止条件：r - l == 1
-     *  note: 关于数组index, 左闭右开[l,r)
-     * @param a 待排序数组
-     * @param n 数组长度
+     *  终止条件：r == l
+     *  note: 关于数组index, 左右均包含[l,r]
+     *
+     * @param array 待排序数组
+     * @param n     数组长度
      */
-    public void mergeSort(int[] a, int n){
-        if(n <= 1) return;
-
-        mergeSort_recursion(a, 0, n);
+    public static void mergeSort(int[] array, int n) {
+        recursion(array, 0, n - 1);
     }
 
-    private void mergeSort_recursion(int[] a, int left, int right){
-        if(right <= left + 1) return;
+    private static void recursion(int[] array, int start, int end) {
+        if (end <= start) {
+            return;
+        }
 
-        int middle = left + (right - 1 - left) / 2 + 1;
-
-        mergeSort_recursion(a, left, middle);
-        mergeSort_recursion(a, middle, right);
-
-        merge(a, left, middle, right);
+        int middle = start + ((end - start) >> 1);
+        recursion(array, start, middle); // left
+        recursion(array, middle + 1, end); // right
+        merge(array, start, end, middle); // merge
     }
 
-    private void merge(int[] a, int left, int middle, int right){
-        int[] temp = new int[right - left];  // 合并操作使用了额外内存
+    private static void merge(int[] array, int start, int end, int middle) {
+        int[] temp = new int[end - start + 1];  // 合并操作使用了额外内存
 
-        int i = left;
-        int j = middle;
-        int idx = 0;
-
-        while( i < middle && j < right){
-            if(a[i] > a[j]){            // 保证稳定性
-                temp[idx ++] = a[j ++];
-            }else{
-                temp[idx ++] = a[i ++];
+        int i = start;
+        int j = middle + 1;
+        int k = 0;
+        while (i <= middle || j <= end) {
+            if (i <= middle && j <= end) {
+                if (array[i] <= array[j]) { // 保证稳定性
+                    temp[k++] = array[i++];
+                } else {
+                    temp[k++] = array[j++];
+                }
+            } else if (i <= middle) {
+                temp[k++] = array[i++];
+            } else {
+                temp[k++] = array[j++];
             }
         }
 
-        while( i < middle){
-            temp[idx ++] = a[i ++];
-        }
-
-        while( j < right){
-            temp[idx ++] = a[j ++];
-        }
-
-
-        for( i = 0; i < temp.length; i ++){
-            a[left + i] = temp[i];
+        for (i = 0; i < temp.length; i++) {
+            array[start++] = temp[i];
         }
     }
 }

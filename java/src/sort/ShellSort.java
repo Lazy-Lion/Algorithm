@@ -18,43 +18,36 @@ package sort;
  *         45 27 73 25 39             25 59 94 65 82
  *         10                         45
  *
- *       希尔排序步长的选择很关键。
+ *       **希尔排序步长的选择很关键。
  *
  * 时间复杂度：不同步长时间复杂度不同, 以 step = n/(2^i)为例
- *      最坏情况： worse-case time is no worse than quadratic
+ *      最坏情况： worst-case time is no worse than quadratic
  *              time = n^2 + 2*(n/2)^2 + 4*(n/4)^2 + ... = n^2 * (1 + 1/2 + 1/4 + 1/8 + ...) <= 2 * n^2
  *      最好情况(有序)： best-case time
  *              time = n + 2*(n/2) + 4*(n/4) + ... <= nlogn
  *
- *
  * 空间复杂度：O(1)
  */
 public class ShellSort {
-
     /**
      * 以 step = n/(2^i) 为例
+     *
+     * @param array 待排序数组
+     * @param n     数组长度
      */
-    public void shellSort(int[] a, int n){
-
-        if(n <= 1) return;
-
+    public static void shellSort(int[] array, int n) {
         int step = n / 2;
 
-        while(step >= 1){
-            for(int i = step; i < n; i += 1){  // note: i += 1，如上分析，保证每列都排好序
-                int value = a[i];
-
+        while (step >= 1) {
+            for (int i = step; i < array.length; i++) {  // i++，如上分析，对每列排序 (如果写成i+=step, 排序结果没有错，但是会大大降低排序效率)
+                int temp = array[i];
                 int j = i - step;
-                for(; j >=0; j -= step){     // note: j -= step，如上分析，保证只对当前列排序
-                    if(a[j] > value) {
-                        a[j + step] = a[j];
-                    }else{
-                        break;
-                    }
+                while (j >= 0 && array[j] > temp) {
+                    array[j + step] = array[j];
+                    j -= step;   // j -= step，如上分析，只对当前列排序
                 }
-                a[j + step] = value;
+                array[j + step] = temp;
             }
-
             step /= 2;
         }
     }

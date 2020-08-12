@@ -32,7 +32,7 @@ import java.util.Map;
  *   The length of the array won't exceed 10,000.
  *   All the integers in the given input belong to the range: [-1e7, 1e7].
  */
-public class KDPIAA {
+public class KDiffPairsInAnArray {
     /**
      * time complexity: O(n^2)
      * space complexity: O(1)
@@ -57,7 +57,7 @@ public class KDPIAA {
     }
 
     /**
-     * optimize {@link KDPIAA#findPairs(int[], int)}
+     * optimize {@link KDiffPairsInAnArray#findPairs(int[], int)}
      *    import HashMap: key - nums[i]，value - the number of nums[i]
      * time complexity： O(n)
      * space complexity: O(n)
@@ -86,7 +86,7 @@ public class KDPIAA {
 
     public static void main(String[] args) throws InvocationTargetException, IllegalAccessException {
 
-        Utils.testStaticMethod(KDPIAA.class, Arrays.asList(
+        Utils.testStaticMethod(KDiffPairsInAnArray.class, Arrays.asList(
                 Arrays.asList(new int[]{3, 1, 4, 1, 5}, 2),
                 Arrays.asList(new int[]{1, 2, 3, 4, 5}, 1),
                 Arrays.asList(new int[]{1, 3, 1, 5, 4}, 0),

@@ -1,5 +1,7 @@
 package sort;
 
+import util.Utils;
+
 /**
  * 快速排序：不稳定的排序算法
  *      核心思想: Divide and Conquer, 对数组下标从l到r的数据进行排序，选择l~r之间的任一数据作为pivot,
@@ -15,59 +17,104 @@ package sort;
  *
  * 空间复杂度： O(1) ,  归并排序空间复杂度为O(n), 所以快排更为常用
  *
- *
  * JDK 8 中排序的实现: Arrays.sort() :
  *                      插入排序改进 => pair insertion sort
  *                      快速排序改进 => 双轴快排(pivot1, pivot2 =>  < pivot1, pivot1 <= && <= pivot2, >= pivot2)
  */
 public class QuickSort {
-
     /**
      * 递归：
-     *    递推公式： quickSort_recursion(l,r) = { quickSort_recursion(l, p), quickSort_recursion(p + 1, r) }
-     *    终止条件： p - l <= 1
-     *    数组index: [l,r) 左闭右开
-     * @param a 待排数组
+     *    递推公式： quickSort_recursion(l,r) = { quickSort_recursion(l, p - 1), quickSort_recursion(p + 1, r) }
+     *    终止条件： l == r
+     *    数组index: [l,r] 左右均包含
+     *
+     * @param array 待排数组
      * @param n 数组长度
      */
-    public void quickSort(int[] a, int n){
-        if(n <= 1) return;
-
-        quickSort_recursion(a, 0, n);
+    public static void quickSort(int[] array, int n) {
+        recursion(array, 0, n - 1);
     }
 
-    private void quickSort_recursion(int[] a, int left, int right){
+    private static void recursion(int[] array, int start, int end) {
+        if (start >= end) {
+            return;
+        }
 
-        if(right - left <= 1) return;
+        int index = partition(array, start, end);
 
-        int partition = partition(a, left, right);
-
-        quickSort_recursion(a, left, partition);
-        quickSort_recursion(a, partition + 1, right);
+        recursion(array, start, index - 1);
+        recursion(array, index + 1, end);
     }
 
     /**
      * 分区函数
-     * @param a
-     * @param left
-     * @param right
-     * @return 分区点所在index
      */
-    private int partition(int[] a, int left, int right){
-        int pivot = a[right - 1];
+    private static int partition(int[] array, int start, int end) {
+        int index = getPivotIndex(array, start, end);
+        int pivot = array[index];
 
-        int i = left;
-        int j = left;
-        for(; j < right - 1; j ++){       // thinking: 将数组分为两部分：已处理a[left, i]和未处理a[i, right],遍历未处理部分，
-                                          //           满足条件加入到已处理末尾(使用交换的方式)
-                                          //     pivot 可以是任意选择的，当不选择最后一个数据时，可以先与最后一个数据交换，
-                                          //     再按照此方式进行划分处理。
-            if(a[j] < pivot){
-                Utils.swap(a, i ++, j);
+        // 将数组分为两部分：已处理a[start, k)和未处理a[k, end),遍历未处理部分
+        // 满足条件加入到已处理末尾(使用交换的方式)
+        Utils.swap(array, index, end);
+        int k = start;
+        for (int i = start; i < end; i++) {
+            if (array[i] < pivot) {
+                Utils.swap(array, k++, i);
             }
         }
-        Utils.swap(a, i, j);        // pivot 放中间
+        Utils.swap(array, end, k); // pivot加到已处理部分末尾
 
+        return k;
+    }
+
+    /**
+     * 分区函数 2:
+     *   3-way-partitioning: 将数组划分成3部分 A1,A2,A3；当 a1∈ A1, a2∈A2, a3∈A3 时，a1 < a2 < a3
+     */
+    private static int three_way_partition(int[] array, int start, int end) {
+        int index = getPivotIndex(array, start, end);
+        int pivot = array[index];
+
+        int i = start, j = end;
+        for (int k = start; k <= j; ) {
+            if (array[k] > pivot) {
+                Utils.swap(array, k, j--);
+            } else if (array[k] < pivot) {
+                Utils.swap(array, k++, i++);
+            } else {
+                k++;
+            }
+        }
         return i;
     }
+
+    /**
+     * 三数取中法，可以扩展多个数
+     */
+    private static int getPivotIndex(int[] array, int start, int end) {
+        if (end - start == 1) {
+            return start;
+        }
+
+        int[] sorted = new int[3];
+
+        int middle = start + ((end - start) >> 1);
+        sorted[0] = start;
+        sorted[1] = middle;
+        sorted[2] = end;
+
+        // insertion sort
+        for (int i = 1; i < sorted.length; i++) {
+            int temp = sorted[i];
+            int j = i - 1;
+            while (j >= 0 && array[temp] < array[sorted[j]]) {
+                sorted[j + 1] = sorted[j];
+                j--;
+            }
+            sorted[j + 1] = temp;
+        }
+
+        return sorted[1];
+    }
+
 }

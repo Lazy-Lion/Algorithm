@@ -32,7 +32,7 @@
  *
  * `` K-diff Pairs in an Array *
  * @see <a href="https://leetcode.com/problems/k-diff-pairs-in-an-array/"></a>
- * {@link leetcode.KDPIAA}
+ * {@link leetcode.KDiffPairsInAnArray}
  *
  * `` Battleships in a Board **
  * @see  <a href="https://leetcode.com/problems/battleships-in-a-board/"></>

@@ -16,43 +16,43 @@ import java.util.NoSuchElementException;
  *      2.下标为 i 节点, 其父节点下标为 (i - 1) / 2
  *      3. 父节点值恒小于子节点值(最小堆，注：java中优先队列(priority queue)默认也是按照自然序，即最小堆生成的)
  */
-public class Heap<K> implements Iterable<K>{
+public class Heap<K> implements Iterable<K> {
 
-    private Object[] queue;  // store items from index 0 to size - 1
+    private Object[] items;  // store items from index 0 to size - 1
     private int size = 0;        // numbers of items
     private Comparator<K> comparator;
 
     private final static int DEFAULT_CAPACITY = 16;
+    private final static int MAX_CAPACITY = Integer.MAX_VALUE - 8;
 
     /**
      * Constructors
      */
-    public Heap(){
+    public Heap() {
         this(DEFAULT_CAPACITY);
     }
 
-    public Heap(int capacity){
-        this.queue = new Object[capacity];
+    public Heap(int capacity) {
+        this.items = new Object[capacity];
     }
 
-    public Heap(Comparator<K> comparator){
+    public Heap(Comparator<K> comparator) {
         this(DEFAULT_CAPACITY, comparator); // call this() must be first statement in constructor bod
     }
 
-    public Heap(int capacity, Comparator<K> comparator){
+    public Heap(int capacity, Comparator<K> comparator) {
         this.comparator = comparator;
-        this.queue = new Object[capacity];
+        this.items = new Object[capacity];
     }
 
-    public Heap(K[] keys){
-        int len = keys.length;
-        Object[] array = Arrays.copyOf(keys, len, Object[].class);
-        this.queue = array;
-        this.size = len;
+    public Heap(K[] keys) {
+        int length = keys.length;
+        this.items = Arrays.copyOf(keys, length, Object[].class);
+        this.size = length;
 
-        if(len > 1) {   // heapify: Time cost < O(n*logn), in fact T = O(n)
-                        // 当前节点的比较次数与节点所在高度有关，最大高度为logn
-            int k = (len - 2) >>> 1;
+        if (length > 1) {   // heapify: Time cost < O(n*logn), in fact T = O(n)
+            // 当前节点的比较次数与节点所在高度有关，最大高度为logn
+            int k = (length - 1 - 1) >>> 1; // the parent of the last node
             for (int i = k; i >= 0; i--) {
                 sink(i);
             }
@@ -62,113 +62,117 @@ public class Heap<K> implements Iterable<K>{
     /**
      * @return the number of keys on this heap
      */
-    public int size(){
+    public int size() {
         return size;
     }
 
     /**
      * @return true if heap is empty
      */
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return size == 0;
     }
 
     /**
      * add a new key to this heap
-     * @param key
      */
-    public void add(K key){
-        if(size == queue.length)
+    public void add(K key) {
+        if (size == items.length)
             grow();
 
-        queue[size++] = key;
+        items[size++] = key;
         swim(size - 1);
     }
 
     /**
      * heapify from bottom to top
      * for insert
-     * @param index
      */
-    private void swim(int index){
-        if(size <= 1) return;
+    private void swim(int index) {
+        if (size <= 1) {
+            return;
+        }
 
-        K key = (K)queue[index];
+        K key = (K) items[index];
 
-        while(index > 0){
+        while (index > 0) {
             int parent = (index - 1) >>> 1;
-            if(compare((K)queue[parent], key) <= 0)
+            if (compare((K) items[parent], key) <= 0) {
                 break;
-            queue[index] = queue[parent];
+            }
+            items[index] = items[parent];
             index = parent;
         }
-        queue[index] = key;
+        items[index] = key;
     }
 
     /**
      * heapify from top to bottom
      * for delete
-     * @param index
      */
-    private void sink(int index){
-        if(size <= 1) return;
+    private void sink(int index) {
+        if (size <= 1) {
+            return;
+        }
 
-        K key = (K)queue[index];
+        K key = (K) items[index];
         int c = (size - 1 - 1) >>> 1;  // the last index is size - 1, so parent index is (size - 2) / 2
 
-        while(index <= c){
+        while (index <= c) {
             int l = 2 * index + 1;
             int r = 2 * (index + 1);
 
-            int cmp = r >= size ? -1 : compare((K)queue[l], (K)queue[r]);
+            int cmp = r >= size ? -1 : compare((K) items[l], (K) items[r]);
             int min = cmp < 0 ? l : r;
 
-            if(compare(key, (K)queue[min]) <= 0)
+            if (compare(key, (K) items[min]) <= 0) {
                 break;
+            }
 
-            queue[index] = queue[min];
+            items[index] = items[min];
             index = min;
         }
-        queue[index] = key;
+        items[index] = key;
     }
 
-    private int compare(K k1, K k2){
-        if(comparator != null){
+    private int compare(K k1, K k2) {
+        if (comparator != null) {
             return comparator.compare(k1, k2);
-        }else{
-            return ((Comparable<K>)k1).compareTo(k2);
+        } else {
+            return ((Comparable<K>) k1).compareTo(k2);
         }
     }
 
     /**
      * double the length of the heap array
      */
-    private void grow(){
-        int oldCapacity = queue.length;
+    private void grow() {
+        int oldCapacity = items.length;
 
         int newCapacity = oldCapacity << 1;
 
-        if(newCapacity < oldCapacity){  // overflow
-            if(oldCapacity < Integer.MAX_VALUE - 8)
-                newCapacity = Integer.MAX_VALUE - 8;
-            else
+        if (newCapacity < oldCapacity) {  // overflow
+            if (oldCapacity < MAX_CAPACITY) {
+                newCapacity = MAX_CAPACITY;
+            } else {
                 throw new OutOfMemoryError();
+            }
         }
 
-        queue = Arrays.copyOf(queue, newCapacity);
+        items = Arrays.copyOf(items, newCapacity);
     }
 
     /**
      * remove and return the top element on this heap
      */
-    public K poll(){
-        if(isEmpty()) return null;
+    public K poll() {
+        if (isEmpty()) return null;
 
-        Object v = queue[0];
-        queue[0] = queue[--size];
-        queue[size] = null;
+        Object v = items[0];
+        items[0] = items[--size];
+        items[size] = null;
         sink(0);
-        return (K)v;
+        return (K) v;
     }
 
 
@@ -177,19 +181,20 @@ public class Heap<K> implements Iterable<K>{
         return new Iter();
     }
 
-    private class Iter implements Iterator<K>{
+    private class Iter implements Iterator<K> {
 
         private Heap<K> copy;
 
-        public Iter(){
-            if(comparator == null)
+        public Iter() {
+            if (comparator == null) {
                 copy = new Heap<>(size());
-            else
+            } else {
                 copy = new Heap<>(size(), comparator);
+            }
 
-            //不要使用foreach方式,会访问到queue中未被使用的位置，导致ArrayIndexOutOfBoundsException
-            for(int i = 0; i < size(); i ++){
-                copy.add((K)queue[i]);
+            //不要使用foreach方式,会访问到items中未被使用的位置，导致ArrayIndexOutOfBoundsException
+            for (int i = 0; i < size(); i++) {
+                copy.add((K) items[i]);
             }
         }
 
@@ -200,13 +205,13 @@ public class Heap<K> implements Iterable<K>{
 
         @Override
         public K next() {
-            if(!hasNext()) throw new NoSuchElementException();
+            if (!hasNext()) throw new NoSuchElementException();
             return copy.poll();
         }
     }
 
-    public static void main(String[] args){
-        Heap<Integer> h = new Heap<>(new Integer[]{8,6,21,3,2,1});
+    public static void main(String[] args) {
+        Heap<Integer> h = new Heap<>(new Integer[]{8, 6, 21, 3, 2, 1});
         h.add(10);
         h.add(-1);
         h.add(1);
@@ -218,7 +223,8 @@ public class Heap<K> implements Iterable<K>{
         System.out.println(h.poll());
         System.out.println(h.size);
 
-        for(Integer i : h){
+
+        for (Integer i : h) {
             System.out.print(i + " ");
         }
         System.out.println();

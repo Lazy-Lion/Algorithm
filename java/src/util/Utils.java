@@ -79,7 +79,10 @@ public class Utils {
         }
     }
 
-    private static void print(Object obj) {
+    /**
+     * print object
+     */
+    public static void print(Object obj) {
         if (obj.getClass().isArray()) {
             if (obj instanceof byte[]) {
                 System.out.println(Arrays.toString((byte[]) obj));
@@ -101,6 +104,30 @@ public class Utils {
         } else {
             System.out.println(obj);
         }
+    }
+
+
+    /**
+     * 生成指定长度随机整数数组
+     * @param len
+     */
+    public static int[] generateArray(int len) {
+        return generateArray(len, len);
+    }
+
+    /**
+     * 生成指定长度随机整数数组
+     * @param len 指定长度
+     * @param range 指定随机整数范围[0,range)
+     */
+    public static int[] generateArray(int len, int range) {
+        int[] result = new int[len];
+
+        for (int i = 0; i < len; i++) {
+            result[i] = (int) (Math.random() * range);  // 0 - range 随机整数
+        }
+
+        return result;
     }
 
 }
