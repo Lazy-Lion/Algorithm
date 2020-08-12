@@ -1,7 +1,7 @@
 /**
  * problem list ( easy - * , medium - **, hard - *** ):
  *
- * ----------------------------------------------------------- array
+ * ------------------------------------------------------------------------------------------------------ array
  * `` Two Sum *
  * @see <a href="https://leetcode.com/problems/two-sum/"></a>
  * {@link leetcode.TwoSum}
@@ -47,7 +47,7 @@
  * {@link leetcode.ValidSudoku}
  *
  *
- *  ----------------------------------------------------------- linked list
+ * ------------------------------------------------------------------------------------------------------ linked list
  * `` Reverse Linked List *
  * @see <a href="https://leetcode.com/problems/reverse-linked-list/"></a>
  * {@link leetcode.ReverseLinkedList}
@@ -81,7 +81,7 @@
  * {@link leetcode.MergeKSortedLists}
  *
  *
- * ----------------------------------------------------------- stack, queue, recursion
+ * ------------------------------------------------------------------------------------------------------ stack, queue, recursion
  * `` Valid Parentheses *
  * @see <a href="https://leetcode.com/problems/valid-parentheses/"></a>
  * {@link leetcode.ValidParentheses}
@@ -157,5 +157,29 @@
  * `` Largest Rectangle in Histogram *** todo
  * @see <a href="https://leetcode.com/problems/largest-rectangle-in-histogram/"></a>
  * {@link leetcode.LargestRectangleInHistogram}
+ *
+ * ------------------------------------------------------------------------------------------------------ backtrack
+ * `` N-Queens *** todo
+ * @see <a href="https://leetcode.com/problems/n-queens/"></a>
+ * {@link}
+ *
+ * ------------------------------------------------------------------------------------------------------ sort, search
+ * `` Sort Colors ** todo
+ * @see <a href="https://leetcode.com/problems/sort-colors/"></a>
+ * {@link leetcode.SortColors}
+ *
+ * `` Wiggle Sort II ** todo
+ * @see <a href="https://leetcode.com/problems/wiggle-sort-ii/"></a>
+ * {@link leetcode.WiggleSortII}
+ *
+ * `` Kth Largest Element in an Array ** todo
+ * @see <a href="https://leetcode.com/problems/kth-largest-element-in-an-array/"></a>
+ * {@link leetcode.KthLargestElementInAnArray}
+ *
+ * `` Find K-th Smallest Pair Distance ** todo
+ * @see <a href="https://leetcode.com/problems/find-k-th-smallest-pair-distance/"></a>
+ * {@link leetcode.FindKthSmallestPairDistance}
+ *
+ * ------------------------------------------------------------------------------------------------------ tree
  */
 package leetcode;

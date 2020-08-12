@@ -1,10 +1,10 @@
-package sort;
+package leetcode;
 
 import java.util.Arrays;
 import java.util.PriorityQueue;
 
 /**
- * 719. Find K-th Smallest Pair Distance
+ * leetcode 719: Find K-th Smallest Pair Distance
  *   Given an integer array, return the k-th smallest distance among all the pairs. The distance of a pair (A, B) is
  * defined as the absolute difference between A and B.
  *
@@ -24,7 +24,7 @@ import java.util.PriorityQueue;
  *   0 <= nums[i] < 1000000.
  *   1 <= k <= len(nums) * (len(nums) - 1) / 2.
  */
-public class FKSPD719 {
+public class FindKthSmallestPairDistance {
 	/**
 	 * way 1 : 利用最大堆
 	 *  时间复杂度: O(n^2 * logk)

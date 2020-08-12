@@ -1,9 +1,11 @@
-package sort;
+package leetcode;
+
+import util.Utils;
 
 import java.util.Arrays;
 
 /**
- * 75. Sort Colors
+ * leetcode 75: Sort Colors
  *   Given an array with n objects colored red, white or blue, sort them in-place so that objects of the same color are
  * adjacent, with the colors in the order red, white and blue.
  *
@@ -23,7 +25,7 @@ import java.util.Arrays;
  *
  *   Could you come up with a one-pass algorithm using only constant space?
  */
-public class SortColors75 {
+public class SortColors {
 	/**
 	 * 3-way-partitioning: 将数组划分成3部分 A1,A2,A3；当 a1∈ A1, a2∈A2, a3∈A3 时，a1 < a2 < a3
 	 *

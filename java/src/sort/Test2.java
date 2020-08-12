@@ -1,6 +1,8 @@
 package sort;
 
 import java.util.Arrays;
+
+import leetcode.KthLargestElementInAnArray;
 import util.Utils;
 
 /**
@@ -8,7 +10,7 @@ import util.Utils;
  */
 public class Test2 {
     public static void main(String[] args){
-        KthLargest kthLargest = new KthLargest();
+        KthLargestElementInAnArray kthLargest = new KthLargestElementInAnArray();
         BucketSort bucketSort = new BucketSort();
         CountingSort countingSort = new CountingSort();
 
