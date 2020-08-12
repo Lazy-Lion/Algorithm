@@ -50,7 +50,11 @@ public class Heap<K> implements Iterable<K> {
         this.items = Arrays.copyOf(keys, length, Object[].class);
         this.size = length;
 
-        if (length > 1) {   // heapify: Time cost < O(n*logn), in fact T = O(n)
+        /**
+         * heapify: Time cost < O(n*logn), in fact T = O(n)
+         *   {@link HeapSort}
+         */
+        if (length > 1) {
             // 当前节点的比较次数与节点所在高度有关，最大高度为logn
             int k = (length - 1 - 1) >>> 1; // the parent of the last node
             for (int i = k; i >= 0; i--) {

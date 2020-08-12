@@ -15,14 +15,24 @@ public class Utils {
     /**
      * 数组指定index内容交换
      */
-    public static void swap(int[] a, int index1, int index2) {
-        if (index1 < 0 || index1 >= a.length || index2 < 0 || index2 >= a.length) return;
+    public static void swap(int[] array, int idx1, int idx2) {
+        if (idx1 < 0 || idx1 >= array.length || idx2 < 0 || idx2 >= array.length) return;
 
-        if (index1 == index2) return;
+        if (idx1 != idx2) {
+            int temp = array[idx1];
+            array[idx1] = array[idx2];
+            array[idx2] = temp;
+        }
+    }
 
-        int temp = a[index1];
-        a[index1] = a[index2];
-        a[index2] = temp;
+    public static void swap(Object[] array, int idx1, int idx2) {
+        if (idx1 < 0 || idx1 >= array.length || idx2 < 0 || idx2 >= array.length) return;
+
+        if (idx1 != idx2) {
+            Object temp = array[idx1];
+            array[idx1] = array[idx2];
+            array[idx2] = temp;
+        }
     }
 
     /**

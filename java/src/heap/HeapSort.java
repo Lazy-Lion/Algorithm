@@ -1,5 +1,7 @@
 package heap;
 
+import util.Utils;
+
 /**
  * 堆排序: 待排数组为 a[0,n-1], 不稳定的排序
  *   1.建堆 ：时间复杂度 O(n), 分析如下：假设为满二叉树(h = logn)
@@ -38,7 +40,7 @@ public class HeapSort {
         buildHeap(array);
 
         while(len > 1){
-            swap(array, 0, len - 1);
+            Utils.swap(array, 0, len - 1);
             heapify(array, 0, --len);
         }
     }
@@ -51,14 +53,6 @@ public class HeapSort {
         for(int i = (len - 2) >>> 1; i >= 0; i--){
             heapify(array, i, len);
         }
-    }
-
-    private static void swap(Object[] array, int index1, int index2){
-        if(index1 == index2) return;
-
-        Object temp = array[index1];
-        array[index1] = array[index2];
-        array[index2] = temp;
     }
 
     private static void heapify(Comparable[] array, int index, int len){
