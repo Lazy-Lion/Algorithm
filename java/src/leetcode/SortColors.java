@@ -26,35 +26,34 @@ import java.util.Arrays;
  *   Could you come up with a one-pass algorithm using only constant space?
  */
 public class SortColors {
-	/**
-	 * 3-way-partitioning: 将数组划分成3部分 A1,A2,A3；当 a1∈ A1, a2∈A2, a3∈A3 时，a1 < a2 < a3
-	 *
-	 * two point: p1,p2
-	 *
-	 * 时间复杂度： O(n); 空间复杂度： O(1)
-	 */
-	public static void sortColors(int[] nums) {
-		int n = nums.length;
-		if(n <= 1) return;
+    /***
+     * 荷兰国旗问题
+     *
+     * 3-way-partitioning: 将数组划分成3部分 A1,A2,A3；当 a1∈ A1, a2∈A2, a3∈A3 时，a1 < a2 < a3
+     *   {@link sort.QuickSort#three_way_partition(int[], int, int)}
+     * two point: p1,p2
+     *
+     * time complexity: O(n)
+     * space complexity: O(1)
+     */
+    public static void sortColors(int[] nums) {
+        int i = 0;
+        int j = nums.length - 1;
+        for (int k = 0; k <= j; ) {
+            if (nums[k] == 2) {
+                Utils.swap(nums, k, j--);
+            } else if (nums[k] == 0) {
+                Utils.swap(nums, k++, i++);
+            } else {
+                k++;
+            }
+        }
+    }
 
-		int p1 = 0, p2 = n - 1;
-		for(int i = 0; i <= p2;) {
-			if(nums[i] == 0) {
-				Utils.swap(nums, i, p1);
-				p1 ++;
-				i ++;
-			} else if(nums[i] == 2) {
-				Utils.swap(nums, i, p2);
-				p2 --;
-			} else {
-				i ++;
-			}
-		}
-	}
 
-	public static void main(String[] args) {
-		int[] nums = new int[] {2,0,2,1,1,0};
-		sortColors(nums);
-		System.out.println(Arrays.toString(nums));
-	}
+    public static void main(String[] args) {
+        int[] nums = new int[]{2, 0, 2, 1, 1, 0};
+        sortColors(nums);
+        System.out.println(Arrays.toString(nums));
+    }
 }

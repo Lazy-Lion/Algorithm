@@ -22,104 +22,88 @@ public class KthLargestElementInAnArray {
      * 递归方式：
      *      快排思想
      *
-     * 时间复杂度：O(n)  : T(n) = n + n/2 + n/4 + n/8 + ... + 1 = 2*n - 1 = O(n)
-     * @param nums
-     * @param k
-     * @return
+     * time complexity: O(n)  : T(n) = n + n/2 + n/4 + n/8 + ... + 1 = 2*n - 1 = O(n)
+     * space complexity: O(1) -- ignore recursion cost O(logn)
+     *
      */
-    public int findKthLargest(int[] nums, int k) {
-
-        return  KthLargest_recursion(nums, 0, nums.length, k);
+    public static int findKthLargest(int[] nums, int k) {
+        return findKthLargest(nums, 0, nums.length - 1, k);
     }
 
     /**
      * 递归：
      *    递推公式：
-     *              KthLargest_recursion(l,r,k) = {
-     *                KthLargest_recursion(l,p,k)  if p - l + 1 > k;
-     *                KthLargest_recursion(p+1,r, k - (p-l+1))   if p - l + 1 < k;
+     *              recursion(l,r,k) = {
+     *                recursion(l,p - 1,k)  if p - l + 1 > k;
+     *                recursion(p + 1,r, k - (p-l+1))   if p - l + 1 < k;
      *              }
      *    终止条件：
      *             p - l + 1 == k
-     * @param nums
-     * @param left
-     * @param right
-     * @param k
-     * @return
      */
-    private int KthLargest_recursion(int[] nums, int left, int right, int k){
+    private static int findKthLargest(int[] array, int start, int end, int k) {
+        int partition = partitioning(array, start, end);
 
-        int partition = partition(nums, left, right);
-
-        int count = partition - left + 1;
-
-        if( count == k ){
-            return nums[partition];
-        }else if(count > k ){
-            return KthLargest_recursion(nums, left, partition, k);
-        }else{
-            return KthLargest_recursion(nums, partition + 1, right, k - count);
+        int count = partition - start + 1; // include pivot, so need plus one
+        if (count == k) {
+            return array[partition];
+        } else if (count < k) {
+            return findKthLargest(array, partition + 1, end, k - count);
+        } else {
+            return findKthLargest(array, start, partition - 1, k);
         }
     }
 
-    private int partition(int[] nums, int left, int right){
-        Utils.swap(nums, median3(nums, left, right - 1), right - 1);
+    // 3-way-partitioning
+    private static int partitioning(int[] array, int start, int end) {
+        int pivot = pivot(array, start, end);
 
-        int pivot = nums[right - 1];
-
-        int i = left;
-        int j = left;
-
-        for(; j < right - 1; j ++){
-            if(nums[j] > pivot){
-                Utils.swap(nums, i ++, j);
+        int p1 = start, p2 = end;
+        int i = start;
+        while (i <= p2) {
+            if (array[i] > pivot) {
+                Utils.swap(array, i++, p1++);
+            } else if (array[i] < pivot) {
+                Utils.swap(array, i, p2--);
+            } else {
+                i++;
             }
         }
-        Utils.swap(nums, i, j);
+        return p1;
+    }
 
-        return i;
+    // 三数中值法
+    private static int pivot(int[] array, int start, int end) {
+        int middle = start + ((end - start) >>> 1);
+
+        if (array[middle] >= array[start] && array[middle] >= array[end]) {
+            return Math.max(array[start], array[end]);
+        } else if (array[middle] <= array[start] && array[middle] <= array[end]) {
+            return Math.min(array[start], array[end]);
+        } else {
+            return array[middle];
+        }
     }
 
     /**
-     * 优化pivot的选择
-     * median3: 三数中值法，使得nums[left], nums[right], nums[middle] 按照大小顺序排列
-     * @param nums
-     * @param left
-     * @param right
-     * @return
-     */
-    private int median3(int[] nums, int left, int right){
-        int middle = left + (right - left) / 2;
-
-        if(nums[right] < nums[left]) Utils.swap(nums,left,right);
-
-        if(nums[middle] < nums[left]) Utils.swap(nums,left,right);
-
-        if(nums[right] < nums[middle]) Utils.swap(nums,middle,right);
-
-        return middle;
-    }
-
-    /**
-     * 堆方式：维护一个 k 大小的最小堆
+     * 堆方式：维护一个 大小为k的最小堆
      *
-     * 时间复杂度: O(nlogk)
+     * time complexity: O(nlogk)
+     * space complexity: O(k)
      */
-    public int findKthLargest_heap(int[] nums, int k){
-        PriorityQueue<Integer> heap = new PriorityQueue<>((n1,n2) -> n1 - n2);
+    public int findKthLargest_2(int[] nums, int k) {
+        PriorityQueue<Integer> heap = new PriorityQueue<>(); // min heap
 
-        for(int n : nums){
-            if(heap.size() < k) {
-                heap.add(n);
-            }else{
-                if(heap.peek() >= n){
-                    continue;
-                }else{
+        for (int num : nums) {
+            if (heap.size() == k) {
+                if (num > heap.peek()) {
                     heap.poll();
-                    heap.add(n);
+                    heap.offer(num);
                 }
+            } else {
+                heap.offer(num);
             }
         }
-        return heap.poll();
+
+        return heap.peek();
     }
 }

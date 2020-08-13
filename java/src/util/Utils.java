@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * {@link sort.Utils}存在重复实现，后续用该类替代
  * 工具类
  */
 public class Utils {
