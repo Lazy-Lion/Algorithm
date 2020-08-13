@@ -29,63 +29,66 @@ import java.util.Arrays;
  *              3.理想情况，每个桶的数据文件大小为 100M, 依次读入各个桶的数据并进行排序，将桶内数据写入文件中，再读取并排序下
  *                一个桶的数据。(有可能某个区间数据量特别多，需要对这个区间再进行桶划分，划分成范围更小的桶)
  */
-public class BucketSort {
-    private int[] array = new int[100];
-    private int size = 0;
+public class Bucket {
+    private static final int MAGIC_NUMBER = 100; // 每个桶存储的数据范围是100
+    private static final int DEFAULT_CAPACITY = 16; // 每个桶默认的容量
 
-    public void bucketSort(int[] a, int n){
+    private int[] items; // 存储桶的元素
+    private int size; // 桶中已存储元素的个数
 
-        int MagicNumber = 100; // 假设桶存储数据的范围是100
+    private Bucket() {
+        items = new int[DEFAULT_CAPACITY];
+        size = 0;
+    }
 
-        if(n <= 1) return;
+    public static void bucketSort(int[] array, int n) {
+        if (n <= 1) return;
 
-        int max = a[0];
-        int min = a[0];
-        for(int i = 1; i < n; i ++){
-            if(a[i] < min) min = a[i];
-            if(a[i] > max) max = a[i];
+        int max = array[0];
+        int min = array[0];
+        for (int i = 1; i < n; i++) {
+            if (array[i] < min) min = array[i];
+            if (array[i] > max) max = array[i];
         }
 
-        int count = (max - min) / MagicNumber + 1;   // 桶的数量
+        int bucket_count = (max - min) / MAGIC_NUMBER + 1;   // 桶的个数
 
-        BucketSort[] bucket = new BucketSort[count];
+        Bucket[] buckets = new Bucket[bucket_count];
 
-        for(int i = 0; i < n; i ++){   // 数据分配到桶中
-            int index = (a[i] - min) / MagicNumber;    // 数据映射到桶
+        for (int i = 0; i < n; i++) {   // 数据分配到桶中
+            int index = (array[i] - min) / MAGIC_NUMBER;    // 数据映射到桶
 
-            BucketSort obj = bucket[index];
+            Bucket bucket = buckets[index];
 
-            if(obj == null){
-                obj = new BucketSort();
-                bucket[index] = obj;
+            if (bucket == null) {
+                bucket = new Bucket();
+                buckets[index] = bucket;
             }
 
-            if(obj.size >= array.length){
-                obj.array = Arrays.copyOf(obj.array, (int)(obj.size * 1.5));  // 数组动态扩容
+            if (bucket.size >= bucket.items.length) {
+                bucket.items = Arrays.copyOf(bucket.items, bucket.size + (bucket.size >>> 1));  // 数组动态扩容
             }
-            obj.array[obj.size ++] = a[i];
+            bucket.items[bucket.size++] = array[i];
         }
 
+        for (int i = 0; i < bucket_count; i++) { // 桶内排序，使用快排
+            Bucket bucket = buckets[i];
 
-        QuickSort quickSort = new QuickSort();
-        for(int i = 0; i < count; i ++){
-            BucketSort obj = bucket[i];
+            if (bucket == null || bucket.size <= 1) continue;
 
-            if(obj == null || obj.size <= 1) continue;
-
-            quickSort.quickSort(obj.array, obj.size);   // 桶内进行快排
+            QuickSort.quickSort(bucket.items, bucket.size);
 
         }
 
         int idx = 0;
-        for(int i = 0; i < count; i ++){
+        for (int i = 0; i < bucket_count; i++) {
 
-            BucketSort obj = bucket[i];
+            Bucket bucket = buckets[i];
 
-            if(obj == null) continue;
+            if (bucket == null) continue;
 
-            for(int j = 0; j < obj.size; j ++){
-                a[idx ++] = obj.array[j];
+            for (int j = 0; j < bucket.size; j++) {
+                array[idx++] = bucket.items[j];
             }
         }
     }

@@ -13,82 +13,77 @@ package sort;
  * 空间复杂度：O(m + n) -- 桶排序或计数排序的空间复杂度
  */
 public class RadixSort {
+    /**
+     * 电话号码排序
+     */
+    public static void radixSort(String[] array, int n) {
 
-    // 实现: 电话号码排序
-    public void radixSort(String[] a, int n){
+        if (n <= 1) return;
 
-        if(a.length <= 1) return;
-
-        // assume: 每个元素的长度相同
-        for(int i = a[0].length() - 1; i >= 0; i --){
-            countSort(a, n, i);
+        // assume: each element has the same length
+        for (int i = array[0].length() - 1; i >= 0; i--) {
+            countSort(array, n, i);
         }
     }
 
 
     // assume :  '0' =< a[i].charAt(bit) <= '9'
-    private void countSort(String[] a, int n, int bit){
+    private static void countSort(String[] array, int n, int bit) {
 
-        if(a.length <= 1) return;
+        if (n <= 1) return;
 
-        int[] count= new int[10];   // 计数数组
+        int[] count = new int[10];   // count array
 
-        // 计数
-        for(int i = 0; i < n; i ++){
-            count[a[i].charAt(bit) - '0'] ++;
+        // count per bucket
+        for (int i = 0; i < n; i++) {
+            count[array[i].charAt(bit) - '0']++;
         }
 
-        // 计数数组累加
-        for(int i = 1; i < count.length; i ++){
+        // accumulation
+        for (int i = 1; i < count.length; i++) {
             count[i] = count[i - 1] + count[i];
         }
 
-        // 获得排序结果
-        String[] result = new String[a.length];
+        // get sorted result
+        String[] result = new String[n];
 
-        for(int i = n - 1; i >= 0; i --){   // 倒序遍历，保证稳定性
-
-            int position = a[i].charAt(bit) - '0';
-            result[ --count[position] ] = a[i];
+        for (int i = n - 1; i >= 0; i--) {   // for the stability of sorting, traverse from back to front
+            int position = array[i].charAt(bit) - '0';
+            result[--count[position]] = array[i];
         }
 
-        // 结果复制回原数组
-        for(int i = 0; i < n; i ++){
-            a[i] = result[i];
+        // copy result to original array
+        for (int i = 0; i < n; i++) {
+            array[i] = result[i];
         }
 
     }
 
-
-
-    public static void main(String[] args){
-
-        RadixSort radixSort = new RadixSort();
-
+    public static void main(String[] args) {
         String[] array = new String[20];
 
-        for(int i = 0; i < 20; i ++){
+        for (int i = 0; i < 20; i++) {
             array[i] = getPhoneNum();
         }
 
         System.out.println("原数组");
-        for(int i = 0; i < array.length; i ++){
+        for (int i = 0; i < array.length; i++) {
             System.out.println(array[i]);
         }
 
-        radixSort.radixSort(array, array.length);
+        RadixSort.radixSort(array, array.length);
 
         System.out.println("排序后");
-        for(int i = 0; i < array.length; i ++){
+        for (int i = 0; i < array.length; i++) {
             System.out.println(array[i]);
         }
     }
 
-    private static String getPhoneNum(){
+    private static String getPhoneNum() {
         StringBuilder builder = new StringBuilder();
 
         builder.append(1);
-        for(int i = 1; i < 11; i ++){
+        for (int i = 1; i < 11; i++) {
             builder.append((int) (Math.random() * 10));
         }
 

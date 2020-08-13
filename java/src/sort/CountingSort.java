@@ -13,48 +13,49 @@ package sort;
  *        2.从右到左遍历（为了保证稳定性）待排数组 array, 对于数组中的某个元素v, bucket[v]-1即为当前元素应该存放的位置索引；
  *          bucket[v] = bucket[v]-1，新的bucket[v]用于计算下一个值等于v的元素索引
  *
- * 时间复杂度：O(n)， 只涉及到遍历
+ * 时间复杂度：O(n + m)， 只涉及到遍历
  *
  * 空间复杂度：O(m + n) => O(n) (m - 桶数量, m <= n)
  */
 public class CountingSort {
 
-    public void countingSort(int[] a, int n){
+    public static void countingSort(int[] array, int n) {
 
-        if(n <= 1) return;
+        if (n <= 1) return;
 
-        // 确定范围
-        int max = a[0];
-        int min = a[0];
-        for(int i = 1; i < n; i ++){
-            max = Math.max(max, a[i]);
-            min = Math.min(min, a[i]);
+        // determine the scope
+        int max = array[0];
+        int min = array[0];
+        for (int i = 1; i < n; i++) {
+            max = Math.max(max, array[i]);
+            min = Math.min(min, array[i]);
         }
 
+        // calculate the number of buckets
+        int[] buckets = new int[max - min + 1];
 
-        int[] bucket = new int[max - min + 1];
-
-        // 桶计数
-        for(int i = 0; i < n; i ++){
-            bucket[ a[i] - min ] ++;
+        // count per bucket
+        for (int i = 0; i < n; i++) {
+            buckets[array[i] - min]++;
         }
 
-        // 桶计数累加
-        for(int i = 1; i < bucket.length; i ++){
-            bucket[i] = bucket[i] + bucket[i - 1];
+        // accumulation
+        for (int i = 1; i < buckets.length; i++) {
+            buckets[i] = buckets[i] + buckets[i - 1];
         }
 
-        // 获取排序结果
+        // get sorted result
         int[] result = new int[n];
-        for(int i = n - 1; i >= 0; i --){
-            int index = bucket[ a[i] ] - 1;
-            bucket[ a[i] ] --;
-            result[index] = a[i];
+        for (int i = n - 1; i >= 0; i--) { // for the stability of sorting, traverse from back to front
+            int bucketIndex = array[i] - min;
+            int index = buckets[bucketIndex] - 1;
+            buckets[bucketIndex]--;
+            result[index] = array[i];
         }
 
-        // 结果复制到原数组
-        for(int i = 0; i < n; i ++){
-            a[i] = result[i];
+        // copy result to original array
+        for (int i = 0; i < n; i++) {
+            array[i] = result[i];
         }
     }
 }

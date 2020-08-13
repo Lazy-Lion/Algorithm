@@ -31,47 +31,49 @@ import util.Utils;
  *
  */
 public class HeapSort {
-
-    public static void sort(Comparable[] array){
-        int len = array.length;
-
-        if(len <= 1) return;
-
-        buildHeap(array);
-
-        while(len > 1){
-            Utils.swap(array, 0, len - 1);
-            heapify(array, 0, --len);
+    /**
+     * @param array 待排序数组
+     * @param n     数组长度
+     */
+    public static void heapSort(int[] array, int n) {
+        if (n <= 1) {
+            return;
+        }
+        buildHeap(array, n);
+        while (n > 1) {
+            Utils.swap(array, 0, n - 1);
+            heapify(array, 0, --n);
         }
     }
 
-    private static void buildHeap(Comparable[] array){
-        int len = array.length;
-
-        if(len <= 1) return;
-
-        for(int i = (len - 2) >>> 1; i >= 0; i--){
-            heapify(array, i, len);
+    private static void buildHeap(int[] array, int n) {
+        for (int i = ((n - 2) >>> 1); i >= 0; i--) {
+            heapify(array, i, n);
         }
     }
 
-    private static void heapify(Comparable[] array, int index, int len){
-        if(len <= 1) return;
+    private static void heapify(int[] array, int index, int length) {
+        if (length <= 1) {
+            return;
+        }
 
-        Comparable key = array[index];
-        while(index <= ((len - 2) >>> 1)){
+        int key = array[index];
+        while (index <= ((length - 2) >>> 1)) {
             int l = 2 * index + 1;
             int r = 2 * index + 2;
 
-            int cmp = r >= len ? 1 : array[l].compareTo(array[r]);
-            int max = cmp >= 0 ? l : r;
-
-            if(key.compareTo(array[max]) >= 0)
+            int max = l;
+            if (r < length && array[l] < array[r]) {
+                max = r;
+            }
+            if (key >= array[max]) { // compare to key, not array[index]
                 break;
+            }
 
             array[index] = array[max];
             index = max;
         }
         array[index] = key;
     }
+
 }

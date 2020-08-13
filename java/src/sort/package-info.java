@@ -51,36 +51,36 @@
  *      space complexity: O(1)
  *
  *   7. heap sort (堆排序): {@link heap.HeapSort}
- *      stable:
+ *      stable: false
  *      time complexity:
- *        best:
- *        worst:
- *        average:
- *      space complexity:
+ *        best: O(nlogn)
+ *        worst: O(nlogn)
+ *        average: O(nlogn)
+ *      space complexity: O(1)
  *
  * Non-comparative sort (非比较类排序):
- *   8. bucket sort (桶排序): {@link sort.BucketSort}
- *      stable:
- *      time complexity:
- *        best:
- *        worst:
- *        average:
- *      space complexity:
+ *   8. bucket sort (桶排序): {@link sort.Bucket}
+ *      stable: rely on the stability of sorting in each bucket
+ *      time complexity: (use quick sort in each bucket)
+ *        best: O(n)
+ *        worst: O(n^2)
+ *        average: O( n*log(n/m) )
+ *      space complexity: O(n+m)
  *
  *   9. counting sort (计数排序): {@link sort.CountingSort}
- *      stable:
- *      time complexity:
- *        best:
- *        worst:
- *        average:
- *      space complexity:
- *
- *   10. radix sort (基数排序): {@link sort.RadixSort}
  *      stable: true
  *      time complexity:
- *        best:
- *        worst:
- *        average:
- *      space complexity:
+ *        best: O(n+m)
+ *        worst: O(n+m)
+ *        average: O(n+m)
+ *      space complexity: O(n+m)
+ *
+ *   10. radix sort (基数排序): {@link sort.RadixSort}
+ *      stable: true (using counting sort for each bit)
+ *      time complexity: (using counting sort for each bit)
+ *        best: O(k*n)
+ *        worst: O(k*n)
+ *        average: O(k*n)
+ *      space complexity: O(n+m)
  */
 package sort;

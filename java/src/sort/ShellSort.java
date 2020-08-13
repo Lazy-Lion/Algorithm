@@ -39,7 +39,7 @@ public class ShellSort {
         int step = n / 2;
 
         while (step >= 1) {
-            for (int i = step; i < array.length; i++) {  // i++，如上分析，对每列排序 (如果写成i+=step, 排序结果没有错，但是会大大降低排序效率)
+            for (int i = step; i < n; i++) {  // i++，如上分析，对每列排序 (如果写成i+=step, 排序结果没有错，但是会大大降低排序效率)
                 int temp = array[i];
                 int j = i - step;
                 while (j >= 0 && array[j] > temp) {
