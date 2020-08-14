@@ -180,6 +180,21 @@
  * @see <a href="https://leetcode.com/problems/find-k-th-smallest-pair-distance/"></a>
  * {@link leetcode.FindKthSmallestPairDistance}
  *
+ * `` Search in Rotated Sorted Array **
+ * @see <a href="https://leetcode.com/problems/search-in-rotated-sorted-array/"></a>
+ * {@link leetcode.SearchInRotatedSortedArray}
+ *
+ * `` Search a 2D Matrix II **
+ * @see <a href="https://leetcode.com/problems/search-a-2d-matrix-ii/"></a>
+ * {@link leetcode.SearchA2DMatrixII}
+ *
+ * `` Find the Duplicate Number **
+ * @see <a href="https://leetcode.com/problems/find-the-duplicate-number/"></a>
+ * {@link leetcode.FindTheDuplicateNumber}
+ *
+ * `` Find K Closest Elements **
+ * @see <a href="https://leetcode.com/problems/find-k-closest-elements/"></a>
+ * {@link }
  * ------------------------------------------------------------------------------------------------------ tree
  */
 package leetcode;

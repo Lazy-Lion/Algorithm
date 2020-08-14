@@ -1,5 +1,7 @@
 package search;
 
+import leetcode.SearchInRotatedSortedArray;
+
 import java.util.Arrays;
 import java.util.LinkedList;
 
@@ -27,15 +29,14 @@ public class Test {
         System.out.println("最后一个小于等于8的index: " + binarySearch.binarySearchLastLess(array,array.length, 8));
 
 
-        RotatedSortedArray rotatedSortedArray = new RotatedSortedArray();
         array = new int[]{4,5,6,7,0,1,2};
-        System.out.println(rotatedSortedArray.search(array,0));
-        System.out.println(rotatedSortedArray.search(array,4));
-        System.out.println(rotatedSortedArray.search(array,7));
-        System.out.println(rotatedSortedArray.search(array,3));
+        System.out.println(SearchInRotatedSortedArray.search(array,0));
+        System.out.println(SearchInRotatedSortedArray.search(array,4));
+        System.out.println(SearchInRotatedSortedArray.search(array,7));
+        System.out.println(SearchInRotatedSortedArray.search(array,3));
 
         array = new int[]{5,1,2,3,4};
-        System.out.println(rotatedSortedArray.search(array,1));
+        System.out.println(SearchInRotatedSortedArray.search(array,1));
 
 
         //skip list
