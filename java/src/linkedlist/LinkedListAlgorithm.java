@@ -17,7 +17,7 @@ import leetcode.definition.ListNode;
  * 3) 只有两个节点
  * 4) 头节点和尾节点
  */
-public abstract class LinkedListAlgo {
+public abstract class LinkedListAlgorithm {
 
     /**
      * 1)单链表反转

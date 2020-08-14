@@ -17,19 +17,19 @@ public class Test {
 
         System.out.println("约瑟夫环,JosephCircleImp:");
         System.out.println("循环方式:");
-        System.out.println(JosephCircleImp.josephCircle(7, 3));
-        System.out.println(JosephCircleImp.josephCircle(7, 1));
-        System.out.println(JosephCircleImp.josephCircle(6, 2));
+        System.out.println(JosephCircle.josephCircle(7, 3));
+        System.out.println(JosephCircle.josephCircle(7, 1));
+        System.out.println(JosephCircle.josephCircle(6, 2));
 
         System.out.println("递归方式:");
-        System.out.println(JosephCircleImp.josephCircleByRecursion(7, 3));
-        System.out.println(JosephCircleImp.josephCircleByRecursion(7, 1));
-        System.out.println(JosephCircleImp.josephCircleByRecursion(6, 2));
+        System.out.println(JosephCircle.josephCircleByRecursion(7, 3));
+        System.out.println(JosephCircle.josephCircleByRecursion(7, 1));
+        System.out.println(JosephCircle.josephCircleByRecursion(6, 2));
 
         System.out.println("链表模拟方式:");
-        System.out.println(JosephCircleImp.simulate(7, 3));
-        System.out.println(JosephCircleImp.simulate(7, 1));
-        System.out.println(JosephCircleImp.simulate(6, 2));
+        System.out.println(JosephCircle.simulate(7, 3));
+        System.out.println(JosephCircle.simulate(7, 1));
+        System.out.println(JosephCircle.simulate(6, 2));
 
     }
 }

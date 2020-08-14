@@ -4,7 +4,7 @@ package linkedlist;
  * 约瑟夫环
  * question: n个人（编号0~(n-1))，从0开始报数，报到(m-1)的退出，剩下的人继续从0开始报数。求胜利者的编号。
  */
-public class JosephCircleImp {
+public class JosephCircle {
 
 
     /**
