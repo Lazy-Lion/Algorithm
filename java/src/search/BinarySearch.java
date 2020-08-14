@@ -3,7 +3,7 @@ package search;
 
 /**
  * 二分查找
- * 简单的二分查找及其实现参照： iteration.BinarySearchImp
+ * 简单的二分查找及其实现： {@link iteration.BinarySearchImp}
  *
  * assume : ascending order
  */
@@ -37,9 +37,6 @@ public class BinarySearch {
 
     /**
      * 查找最后一个等于给定值的元素
-     * @param a
-     * @param n
-     * @param value
      * @return index of value
      */
     public static int binarySearchLast(int[] a, int n, int value){
@@ -63,9 +60,6 @@ public class BinarySearch {
 
     /**
      * 查找第一个大于等于给定值的元素
-     * @param a
-     * @param n
-     * @param value
      * @return index of value
      */
     public static int binarySearchFirstGreater(int[] a, int n, int value){
@@ -89,9 +83,6 @@ public class BinarySearch {
 
     /**
      * 查找最后一个小于等于给定值的元素
-     * @param a
-     * @param n
-     * @param value
      * @return index of value
      */
     public static int binarySearchLastLess(int[] a, int n, int value){

@@ -3,7 +3,7 @@ package tree;
 /**
  * test
  */
-public class Main2 {
+public class Test2 {
     public static void main(String[] args){
         String test = "S E A R C H E X A M P L E";
         String[] keys = test.split(" ");

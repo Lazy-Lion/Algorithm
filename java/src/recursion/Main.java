@@ -1,7 +1,5 @@
 package recursion;
 
-import leetcode.ClimbingStairs;
-
 /**
  * test
  */
@@ -35,11 +33,5 @@ public class Main {
      *  递归代码要警惕重复计算
      *  递归函数调用耗时多
      *  递归空间复杂度高
-     *
      */
-
-    public static void main(String[] args) {
-
-    }
-
 }

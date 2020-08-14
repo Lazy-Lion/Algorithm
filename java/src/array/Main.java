@@ -28,7 +28,5 @@ public class Main {
          *
          * Java 中底层使用数组的泛型容器实现，存储元素的数组用 Object[]
          */
-
-
     }
 }

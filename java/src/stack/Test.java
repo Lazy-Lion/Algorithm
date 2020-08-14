@@ -6,7 +6,7 @@ import leetcode.ValidParentheses;
 /**
  * test
  */
-public class Main {
+public class Test {
     public static void main(String[] args){
        // ArrayStack stack = new ArrayStack(3);
 

@@ -3,7 +3,7 @@ package graph;
 /**
  * test
  */
-public class Main {
+public class Test {
 	public static void main(String[] args){
 		System.out.println("拓扑排序:");
 		TopologicalSort t = new TopologicalSort(5);

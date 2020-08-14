@@ -3,7 +3,7 @@ package tree;
 /**
  * test
  */
-public class Main {
+public class Test {
 
     public static void main(String[] args){
         BinaryTree binaryTree = new BinaryTree("123456789");
