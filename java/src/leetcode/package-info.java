@@ -159,9 +159,9 @@
  * {@link leetcode.LargestRectangleInHistogram}
  *
  * ------------------------------------------------------------------------------------------------------ backtrack
- * `` N-Queens *** todo
+ * `` N-Queens ***
  * @see <a href="https://leetcode.com/problems/n-queens/"></a>
- * {@link}
+ * {@link leetcode.NQueens}
  *
  * ------------------------------------------------------------------------------------------------------ sort, search
  * `` Sort Colors **

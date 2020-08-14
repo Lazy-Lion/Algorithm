@@ -73,7 +73,7 @@ public class Test2 {
         array = new int[]{3,2,1,5,6,4};
         System.out.println(kthLargest.findKthLargest(array,2));
 
-        System.out.println(kthLargest.findKthLargest_heap(array,2));
+        System.out.println(kthLargest.findKthLargest_2(array,2));
 
 
     }
