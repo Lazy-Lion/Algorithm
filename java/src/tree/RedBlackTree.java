@@ -37,7 +37,7 @@ import java.util.NoSuchElementException;
  *    2. All leaves are at the same level.
  *    3. All data is kept in sorted order.
  *
- *   2-3 树插入数据保持特性，参考图片 https://github.com/Lazy-Lion/images/blob/master/dataStructure/2-3_insertion.svg
+ *   2-3 树插入数据保持特性，参考图片 <a href="https://github.com/Lazy-Lion/images/blob/master/dataStructure/2-3_insertion.svg"></a>
  *
  * 红黑树(Red-Black Tree):
  *   wikipedia定义：
@@ -57,7 +57,7 @@ import java.util.NoSuchElementException;
  *     5. Every path from a given node to any of its descendant NIL nodes contains the same number of black nodes.
  *
  *   红黑树实例图片(引用自wikipedia)：
- *        https://github.com/Lazy-Lion/images/blob/master/dataStructure/Red-black_tree_example.svg
+ *        <a href="https://github.com/Lazy-Lion/images/blob/master/dataStructure/Red-black_tree_example.svg"></a>
  *
  *   使用红黑树实现2-3树：
  *     1.red links : 连接两个 2-nodes 来表示一个 3-nodes (为了实现的方便，
@@ -75,43 +75,44 @@ import java.util.NoSuchElementException;
  *                                                                      a and b
  *
  *     3.颜色表示: red link 指向的节点标记为 red，black link 指向的节点标记为 black, 根节点和叶子节点(NIL)标记为 black
- *     4.新插入的节点默认是 red节点, 且都放在叶子节点上
+ *     4.新插入的节点默认是 red节点, 且都放在叶子节点上（忽略最后一层的NIL节点）
  *     5.红黑树的插入相当于在二叉查找树插入的基础上，为了维持红黑树的性质，进行修复操作(三个重要操作左旋，右旋，反色; 具体操作
- *       参考图片(引用自 https://algs4.cs.princeton.edu/33balanced/ )：
- *       https://github.com/Lazy-Lion/images/blob/master/dataStructure/redblack-left-rotate.png
- *       https://github.com/Lazy-Lion/images/blob/master/dataStructure/redblack-right-rotate.png
- *       https://github.com/Lazy-Lion/images/blob/master/dataStructure/color-flip.png
+ *       参考图片(<a href="https://algs4.cs.princeton.edu/33balanced/'></a>)：
+ *       <a href="https://github.com/Lazy-Lion/images/blob/master/dataStructure/redblack-left-rotate.png"></a>
+ *       <a href="https://github.com/Lazy-Lion/images/blob/master/dataStructure/redblack-right-rotate.png"></a>
+ *       <a href="https://github.com/Lazy-Lion/images/blob/master/dataStructure/color-flip.png"></a>
  *
  *       左旋、右旋实际上是旋转 red link
  *       反色实际上是分解 4-nodes
  *       )
  *
- *
- *
- *  阅读资料： https://www.cs.princeton.edu/~rs/talks/LLRB/RedBlack.pdf
+ *  阅读资料： <a href="https://www.cs.princeton.edu/~rs/talks/LLRB/RedBlack.pdf"></a>
  */
 public class RedBlackTree<K extends Comparable<K>, V> {
+    /**
+     * definition for color
+     */
     private static final boolean RED = true;
-    private static final boolean BLACK = false;   // 颜色定义
+    private static final boolean BLACK = false;
 
     private Node root; // 根节点
 
     /**
      * @return 红黑树的节点个数
      */
-    public int size(){
+    public int size() {
         return size(root);
     }
 
-    private int size(Node node){
-        if(node == null) return 0;
+    private int size(Node node) {
+        if (node == null) return 0;
         return node.size;
     }
 
     /**
      * @return true if red-black tree is empty
      */
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return root == null;
     }
 
@@ -120,22 +121,21 @@ public class RedBlackTree<K extends Comparable<K>, V> {
      * @return the value associated with the given key if key exists, null if key does not exist
      * @throws NullPointerException if key is null
      */
-    public V get(K key){
-        if(key == null) throw new NullPointerException();
+    public V get(K key) {
+        if (key == null) throw new NullPointerException();
         return get(root, key);
     }
 
-    private V get(Node node, K key){
-        if(node == null) return null;
-
-        while(node != null){
+    private V get(Node node, K key) {
+        while (node != null) {
             int compare = key.compareTo(node.key);
-            if( compare == 0)
+            if (compare == 0) {
                 return node.value;
-            else if( compare < 0)
+            } else if (compare < 0) {
                 node = node.left;
-            else if( compare > 0)
+            } else if (compare > 0) {
                 node = node.right;
+            }
         }
         return null;
     }
@@ -145,7 +145,7 @@ public class RedBlackTree<K extends Comparable<K>, V> {
      * @return true if key exists, false if does not exist
      * @throws NullPointerException if key is null
      */
-    public boolean contains(K key){
+    public boolean contains(K key) {
         return get(key) != null;
     }
 
@@ -153,8 +153,8 @@ public class RedBlackTree<K extends Comparable<K>, V> {
      * @return minimum key
      * @throws NoSuchElementException if red-black is empty
      */
-    public K min(){
-        if(isEmpty()) throw new NoSuchElementException("red-black tree is empty");
+    public K min() {
+        if (isEmpty()) throw new NoSuchElementException("red-black tree is empty");
 
         return min(root).key;
     }
@@ -163,10 +163,10 @@ public class RedBlackTree<K extends Comparable<K>, V> {
      * @param node
      * @return minimum key in subtree rooted at node
      */
-    private Node min(Node node){
-        if(node == null) return null;
+    private Node min(Node node) {
+        if (node == null) return null;
 
-        while(node.left != null){
+        while (node.left != null) {
             node = node.left;
         }
         return node;
@@ -176,8 +176,8 @@ public class RedBlackTree<K extends Comparable<K>, V> {
      * @return maximum key
      * @throws NoSuchElementException if red-black is empty
      */
-    public K max(){
-        if(isEmpty()) throw new NoSuchElementException("red-black tree is empty");
+    public K max() {
+        if (isEmpty()) throw new NoSuchElementException("red-black tree is empty");
 
         return max(root).key;
     }
@@ -186,24 +186,23 @@ public class RedBlackTree<K extends Comparable<K>, V> {
      * @param node
      * @return maximum key in subtree rooted at node
      */
-    private Node max(Node node){
-        if(node == null) return null;
+    private Node max(Node node) {
+        if (node == null) return null;
 
-        while(node.right != null){
+        while (node.right != null) {
             node = node.right;
         }
         return node;
     }
 
-    public Iterable<K> keys(){
-        if(isEmpty()) return new LinkedList<K>();
+    public Iterable<K> keys() {
+        if (isEmpty()) return new LinkedList<>();
 
         return keys(min(), max());
     }
 
-    private Iterable<K> keys(K key1, K key2){
-        if(key1 == null) throw new IllegalArgumentException();
-        if(key2 == null) throw new IllegalArgumentException();
+    private Iterable<K> keys(K key1, K key2) {
+        if (key1 == null || key2 == null) throw new IllegalArgumentException();
 
         List<K> list = new LinkedList<>();
 
@@ -212,29 +211,34 @@ public class RedBlackTree<K extends Comparable<K>, V> {
         return list;
     }
 
-    private void keys(K key1, K key2, List<K> list, Node node){
-        if(node == null) return;
+    private void keys(K key1, K key2, List<K> list, Node node) {
+        if (node == null) return;
 
         int cmp1 = key1.compareTo(node.key);
         int cmp2 = key2.compareTo(node.key);
 
-        if(cmp1 < 0)
-            keys(key1,key2,list,node.left);
-        if(cmp1 <= 0 && cmp2 >= 0)
+        if (cmp1 < 0) {
+            keys(key1, key2, list, node.left);
+        }
+        if (cmp1 <= 0 && cmp2 >= 0) {
             list.add(node.key);
-        if(cmp2 > 0)
-            keys(key1,key2,list,node.right);
+        }
+        if (cmp2 > 0) {
+            keys(key1, key2, list, node.right);
+        }
     }
 
 
-    public void printTree(){
+    public void printTree() {
         inOrderTraversal(root);
         System.out.println();
     }
 
-    // 中序遍历
-    private void inOrderTraversal(Node node){
-        if(node == null) return;
+    /**
+     * 中序遍历
+     */
+    private void inOrderTraversal(Node node) {
+        if (node == null) return;
 
         inOrderTraversal(node.left);
         System.out.print(node.key + "," + node.value + " ");
@@ -244,58 +248,62 @@ public class RedBlackTree<K extends Comparable<K>, V> {
     /**
      * red-black tree insertion
      *
-     * @param key
-     * @param value
+     * 新插入的节点默认是 red节点, 且都放在叶子节点上（忽略最后一层的NIL节点）
+     *
      * @throws NullPointerException if key is null
      */
-    public void put(K key, V value){
-        if(key == null) throw new NullPointerException("put(key, value), key is null");
+    public void put(K key, V value) {
+        if (key == null) throw new NullPointerException("put(key, value), key is null");
 
         root = put(root, key, value);
         root.color = BLACK;
     }
 
-    private Node put(Node r, K key, V value){
-        if(r == null)
+    private Node put(Node r, K key, V value) {
+        if (r == null)
             return new Node(key, value, RED, 1);
 
         // insert data
         int compare = key.compareTo(r.key);
-        if(compare == 0)
+        if (compare == 0) { // already exist
             r.value = value;
-        else if(compare < 0)
+        } else if (compare < 0) {
             r.left = put(r.left, key, value);
-        else
+        } else {
             r.right = put(r.right, key, value);
+        }
 
-        r = fixUp(r);
-        r.size = size(r.left) + size(r.right) + 1;
-
-        return r;
+        return fixUp(r);
     }
 
     /**
      * delete maximum key
-     * @throws  NoSuchElementException if Red-Black tree is empty
+     * @throws NoSuchElementException if Red-Black tree is empty
      */
-    public void deleteMax(){
-        if(isEmpty()) throw new NoSuchElementException("Red-Black tree is empty");
+    public void deleteMax() {
+        if (isEmpty()) throw new NoSuchElementException("Red-Black tree is empty");
 
         root = deleteMax(root);
 
-        if(root != null)
+        if (root != null)
             root.color = BLACK;
     }
 
-    private Node deleteMax(Node r){
-        if(isRed(r.left))
+    /**
+     * delete the key-value pair with the maximum key rooted at r
+     */
+    private Node deleteMax(Node r) {
+        if (isRed(r.left)) {
             r = rotateRight(r);
+        }
 
-        if(r.right == null)  // means that delete current node r
+        if (r.right == null) { // means that delete current node r
             return null;
+        }
 
-        if(!isRed(r.right) && !isRed(r.right.left))
+        if (!isRed(r.right) && !isRed(r.right.left)) {
             r = moveRedRight(r);
+        }
 
         r.right = deleteMax(r.right);
         return fixUp(r);
@@ -303,25 +311,27 @@ public class RedBlackTree<K extends Comparable<K>, V> {
 
     /**
      * delete minimum key
-     * @throws  NoSuchElementException if Red-Black tree is empty
+     * @throws NoSuchElementException if Red-Black tree is empty
      */
-    public void deleteMin(){
-        if(isEmpty()) throw new NoSuchElementException("Red-Black tree is empty");
+    public void deleteMin() {
+        if (isEmpty()) throw new NoSuchElementException("Red-Black tree is empty");
 
         root = deleteMin(root);
 
-        if(!isEmpty())
+        if (!isEmpty())
             root.color = BLACK;
     }
 
-    private Node deleteMin(Node r){
-        if(isRed(r.right))
-            r = rotateLeft(r);
+    private Node deleteMin(Node r) {
+//        if (isRed(r.right)) {
+//            r = rotateLeft(r);
+//        }
 
-        if(r.left == null)   // means that delete current node r
+        if (r.left == null) { // means that delete current node r
             return null;
+        }
 
-        if(!isRed(r.left) && !isRed(r.left.left)){
+        if (!isRed(r.left) && !isRed(r.left.left)) {
             r = moveRedLeft(r);
         }
 
@@ -329,11 +339,11 @@ public class RedBlackTree<K extends Comparable<K>, V> {
         return fixUp(r);
     }
 
-    private Node moveRedLeft(Node r){
+    private Node moveRedLeft(Node r) {
 
         flipColor(r);
 
-        if(isRed(r.right.left)){
+        if (isRed(r.right.left)) {
             r.right = rotateRight(r.right);
             r = rotateLeft(r);
             flipColor(r);
@@ -341,11 +351,11 @@ public class RedBlackTree<K extends Comparable<K>, V> {
         return r;
     }
 
-    private Node moveRedRight(Node r){
+    private Node moveRedRight(Node r) {
         flipColor(r);
 
-        if(isRed(r.left.left)){
-            r = rotateLeft(r);
+        if (isRed(r.left.left)) {
+            r = rotateRight(r);
             flipColor(r);
         }
         return r;
@@ -357,41 +367,45 @@ public class RedBlackTree<K extends Comparable<K>, V> {
      * @param key
      * @throws NullPointerException if key is null
      */
-    public void delete(K key){
-        if(key == null)
-            throw new NullPointerException("delete(key), key is null");
-        if(!contains(key)) return;
+    public void delete(K key) {
+        if (key == null) throw new NullPointerException("delete(key), key is null");
+        if (!contains(key)) return;
 
         root = delete(root, key);
 
-        if(!isEmpty())
+        if (!isEmpty())
             root.color = BLACK;
     }
 
-    private Node delete(Node r, K key){
-        if(key.compareTo(r.key) < 0){
-            if(!isRed(r.left) && !isRed(r.left.left)){
+    private Node delete(Node r, K key) {
+        if (key.compareTo(r.key) < 0) {
+            if (!isRed(r.left) && !isRed(r.left.left)) {
                 r = moveRedRight(r);
             }
             r.left = delete(r.left, key);
-        }else{
-            if(isRed(r.left))                                // push red right
+        } else {
+            if (isRed(r.left)) { // push red right
                 r = rotateRight(r);
-            if(key.compareTo(r.key) == 0 && r.right == null)  // equal and at bottom (if left is red then put it right,
-                                                              // r.right != null; if left != null && left is black,
-                                                              // r.right != null)
-                                                              // => delete node
+            }
+            if (key.compareTo(r.key) == 0 && r.right == null) {
+                // equal and at bottom (if left is red then put it right,
+                // r.right != null; if left != null && left is black,
+                // r.right != null)
+                // => delete node
                 return null;
-            if(!isRed(r.right) && !isRed(r.right.left))
+            }
+            if (!isRed(r.right) && !isRed(r.right.left)) {
                 r = moveRedRight(r);
-            if(key.compareTo(r.key) == 0){                   // equal and not at bottom => replace current node with
-                                                             // successor key,value, then delete successor
+            }
+            if (key.compareTo(r.key) == 0) {
+                // equal and not at bottom => replace current node with
+                // successor key,value, then delete successor
                 Node p = min(r.right);
                 r.key = p.key;
                 r.value = p.value;
 
                 r.right = deleteMin(r.right);
-            }else{
+            } else {
                 r.right = delete(r.right, key);
             }
         }
@@ -402,17 +416,15 @@ public class RedBlackTree<K extends Comparable<K>, V> {
      * @param node
      * @return true if node is red
      */
-    private boolean isRed(Node node){
-        if(node == null) return false;
+    private boolean isRed(Node node) {
+        if (node == null) return false;
         return node.color == RED;
     }
 
     /**
      * make a right-leaning link lean to left, do not break the order
-     * @param node
-     * @return
      */
-    private Node rotateLeft(Node node){
+    private Node rotateLeft(Node node) {
         // assert node != null && isRed(node.right)
         Node p = node.right;
         node.right = p.left;
@@ -422,17 +434,15 @@ public class RedBlackTree<K extends Comparable<K>, V> {
         node.color = RED;
 
         p.size = node.size;
-        node.size = size(node.right) + size(node.right) + 1;
+        node.size = size(node.left) + size(node.right) + 1;
 
         return p;
     }
 
     /**
      * make a left-leaning link lean to right, do not break the order
-     * @param node
-     * @return
      */
-    private Node rotateRight(Node node){
+    private Node rotateRight(Node node) {
         Node p = node.left;
         node.left = p.right;
         p.right = node;
@@ -449,9 +459,8 @@ public class RedBlackTree<K extends Comparable<K>, V> {
     /**
      * flip color
      * assert node != null && node.left != null && node.right != null
-     * @param node
      */
-    private void flipColor(Node node){
+    private void flipColor(Node node) {
         node.color = !node.color;
         node.left.color = !node.left.color;
         node.right.color = !node.right.color;
@@ -462,18 +471,23 @@ public class RedBlackTree<K extends Comparable<K>, V> {
      * @param r
      * @return root node of current subtree
      */
-    private Node fixUp(Node r){
-        if(isRed(r.right) && !isRed(r.left))  // fix right-leaning red link
+    private Node fixUp(Node r) {
+        if (isRed(r.right) && !isRed(r.left)) { // fix right-leaning red link
             r = rotateLeft(r);
-        if(isRed(r.left) && isRed(r.left.left))  // fix two red links in a row
+        }
+        if (isRed(r.left) && isRed(r.left.left)) { // fix two red links in a row
             r = rotateRight(r);
-        if(isRed(r.left) && isRed(r.right))   // split 4-nodes
+        }
+        if (isRed(r.left) && isRed(r.right)) { // split 4-nodes
             flipColor(r);
+        }
+
+        r.size = size(r.left) + size(r.right) + 1;
 
         return r;
     }
 
-    class Node { // 红黑树节点
+    class Node { // red-black tree node
         private K key;
         private V value;
         private Node left;

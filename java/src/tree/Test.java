@@ -5,7 +5,7 @@ package tree;
  */
 public class Test {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         BinaryTree binaryTree = new BinaryTree("123456789");
         binaryTree.Traversal();
 
@@ -15,16 +15,16 @@ public class Test {
 
         System.out.println("二分查找树：");
         BinarySearchTree binarySearchTree = new BinarySearchTree();
-        for(int i = 100; i > 0; i --){
+        for (int i = 100; i > 0; i--) {
             binarySearchTree.insert(i);
         }
 
         binarySearchTree.printTree();
-        System.out.println(binarySearchTree.max().getData());
-        System.out.println(binarySearchTree.min().getData());
-        System.out.println(binarySearchTree.search(39).getData());
+        System.out.println(binarySearchTree.max().val);
+        System.out.println(binarySearchTree.min().val);
+        System.out.println(binarySearchTree.search(39).val);
 
-        for(int i = 20; i < 80; i ++){
+        for (int i = 20; i < 80; i++) {
             binarySearchTree.delete(i);
         }
         binarySearchTree.printTree();
@@ -36,7 +36,7 @@ public class Test {
 
         binarySearchTree = new BinarySearchTree();
         binarySearchTree.insert(1);
-        for(int i = 0; i < 10; i ++)
+        for (int i = 0; i < 10; i++)
             binarySearchTree.insert(6);
         binarySearchTree.insert(7);
         binarySearchTree.printTree();

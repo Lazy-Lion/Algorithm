@@ -1,8 +1,6 @@
 package tree;
 
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.*;
 
 /**                               节点高度   节点深度   节点层数
  *               A                   3         0         1
@@ -34,83 +32,10 @@ import java.util.Stack;
  *     2) 基于数组的顺序存储法(适用于完全二叉树，对于非完全二叉树会浪费较多空间)
  */
 public class BinaryTree {
-    private Node root;
+    private static TreeNode root;
 
-    public BinaryTree(String tree){
+    public BinaryTree(String tree) {
         createTree(tree);
-    }
-
-    public void Traversal(){
-        System.out.print("前序遍历     ：");
-        preOrderTraversal(root);
-        System.out.println();
-
-        System.out.print("前序遍历(迭代)：");
-        preOrderTraversalIteration(root);
-        System.out.println();
-
-        System.out.print("中序遍历     ：");
-        inOrderTraversal(root);
-        System.out.println();
-
-        System.out.print("中序遍历(迭代)：");
-        inOrderTraversalIteration(root);
-        System.out.println();
-
-        System.out.print("后序遍历     ：");
-        postOrderTraversal(root);
-        System.out.println();
-
-        System.out.print("后序遍历(迭代)：");
-        postOrderTraversalIteration(root);
-        System.out.println();
-
-        System.out.print("层次遍历     ：");
-        levelTraversal(root);
-        System.out.println();
-    }
-
-    //构造二叉树
-    private void createTree(String tree){ // assume : 输入字符串符合完全二叉树层次遍历结果，' '表示空节点
-        if(tree == null || tree.length() < 1) return;
-
-        // char[] chars = tree.toCharArray();
-
-        int len = tree.length();
-        Queue<Node> queue = new LinkedList<>();
-        Node node = new Node(tree.charAt(0) - '0');
-        root = node;
-        queue.add(node);
-        int index = 0;
-        // index from 0 to len - 1, if node i, left child node 2 * i + 1; right child node 2 * i + 2
-        while (queue != null && !queue.isEmpty()){
-            node = queue.poll();
-
-            if(node == null){
-                index ++;
-                continue;
-            }
-
-            Node left, right;
-            left = right = null;
-            if(2 * index + 1 >= len) break;  // 后续节点都是叶子节点
-
-            if(2 * index + 1 < len) {
-                char lc = tree.charAt(2 * index + 1);
-                if(lc != ' ') left = new Node(lc - '0');
-            }
-            if(2 * index + 2 < len) {
-                char rc = tree.charAt(2 * index + 2);
-                if(rc != ' ') right = new Node(rc - '0');
-            }
-
-            node.left = left;
-            node.right = right;
-
-            queue.add(left);
-            queue.add(right);
-            index ++;
-        }
     }
 
     /**
@@ -122,126 +47,283 @@ public class BinaryTree {
      *   4) 层次遍历              => 广度优先搜索 (Breadth First Search, BFS)
      *
      * 遍历时间复杂度 O(n) -- n为节点数
+     *
      */
 
-    // 前序遍历
-    private void preOrderTraversal(Node node){
-        if(node == null) return;
+    /**
+     * 前序遍历
+     *   recursion
+     */
+    public static List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        if (root == null) {
+            return new ArrayList<>();
+        }
 
-        System.out.print(node.getData() + " ");
-        preOrderTraversal(node.left);
-        preOrderTraversal(node.right);
-
+        result.add(root.val);
+        result.addAll(preorderTraversal(root.left));
+        result.addAll(preorderTraversal(root.right));
+        return result;
     }
 
-    //前序遍历迭代实现
-    private void preOrderTraversalIteration(Node node){
-        if(node == null) return;
+    /**
+     * 前序遍历
+     *   iteration
+     */
+    public static List<Integer> preorderTraversal_iteration(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
 
-        Stack<Node> stack = new Stack<>();
-        while(node != null || (stack != null && !stack.isEmpty())){
-            if(node != null) {
-                System.out.print(node.getData() + " ");
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode node = root;
+        while (node != null || !stack.isEmpty()) {
+            if (node != null) {
+                result.add(node.val);
                 stack.push(node);
                 node = node.left;
-            }else{
+            } else {
                 node = stack.pop();
                 node = node.right;
             }
         }
+        return result;
     }
 
-    // 中序遍历
-    private void inOrderTraversal(Node node){
-        if(node == null) return;
+    /**
+     * 中序遍历
+     *   recursion
+     */
+    public static List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
 
-        inOrderTraversal(node.left);
-        System.out.print(node.getData() + " ");
-        inOrderTraversal(node.right);
+        result.addAll(inorderTraversal(root.left));
+        result.add(root.val);
+        result.addAll(inorderTraversal(root.right));
+        return result;
     }
 
-    // 中序遍历迭代实现
-    private void inOrderTraversalIteration(Node node){
-        if(node == null) return;
+    /**
+     * 中序遍历
+     *   iteration
+     */
+    public static List<Integer> inorderTraversal_iteration(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
 
-        Stack<Node> stack = new Stack<>();
-        while(node != null || (stack != null && !stack.isEmpty())){
-            if(node != null) {
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode node = root;
+        while (node != null || !stack.isEmpty()) {
+            if (node != null) {
                 stack.push(node);
                 node = node.left;
-            }else{
+            } else {
                 node = stack.pop();
-                System.out.print(node.getData() + " ");
+                result.add(node.val);
                 node = node.right;
             }
         }
+        return result;
     }
 
-    // 后序遍历
-    private void postOrderTraversal(Node node){
-        if(node == null) return;
 
-        postOrderTraversal(node.left);
-        postOrderTraversal(node.right);
-        System.out.print(node.getData() + " ");
+    /**
+     * 后序遍历
+     *   recursion
+     */
+    public static List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
+
+        result.addAll(postorderTraversal(root.left));
+        result.addAll(postorderTraversal(root.right));
+        result.add(root.val);
+        return result;
     }
 
-    // 后序遍历迭代实现
-    private void postOrderTraversalIteration(Node node){
-        if(node == null) return;
+    /**
+     * 后序遍历
+     *   iteration
+     */
+    public static List<Integer> postorderTraversal_iteration(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
 
-        Stack<Node> stack = new Stack<>();
-        Node pLastVisit = null;     // 标识最近一次访问的节点
-        while(node != null || (stack != null && !stack.isEmpty())){
-            if(node != null){
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode node = root;
+        TreeNode lastVisitNode = null;  // 标识最近一次访问的节点
+        while (node != null || !stack.isEmpty()) {
+            if (node != null) {
                 stack.push(node);
                 node = node.left;
-            }else{
+            } else {
                 node = stack.peek();
-                if(node.right == null || node.right == pLastVisit){  // 右子树已经访问，则输出当前节点，否则访问右子树
-                    System.out.print(node.getData() + " ");
-                    pLastVisit = node;
+                if (node.right == null || node.right == lastVisitNode) { // 右子树已经访问，则输出当前节点，否则访问右子树
                     stack.pop();
+                    result.add(node.val);
+                    lastVisitNode = node;
                     node = null;
-                }else{
+                } else {
                     node = node.right;
                 }
             }
         }
+
+        return result;
     }
 
-    // 层次遍历
-    private void levelTraversal(Node node){
-        if(node == null) return;
+    /**
+     * 层次遍历
+     */
+    private static final String LEVEL = "level";
 
-        Queue<Node> queue = new LinkedList<>();
+    /**
+     * with level mark
+     */
+    public static List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
+
+        Queue<Object> queue = new LinkedList<>();
+        queue.offer(root);
+        queue.offer(LEVEL);
+
+        List<Integer> list = new ArrayList<>();
+        TreeNode node;
+        while (!queue.isEmpty()) {
+            Object item = queue.poll();
+            if (LEVEL.equals(item)) { // next level
+                result.add(list);
+                list = new ArrayList<>();
+                if (!queue.isEmpty()) {
+                    queue.offer(LEVEL);
+                }
+            } else {
+                node = (TreeNode) item;
+                list.add(node.val);
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+            }
+
+        }
+        return result;
+    }
+
+    /**
+     * without level mark
+     */
+    public static List<List<Integer>> levelOrder_2(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+
+        List<Integer> list;
+        TreeNode node;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            list = new ArrayList<>();
+            while (size > 0) {
+                size--;
+                node = queue.poll();
+                list.add(node.val);
+
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+            }
+            result.add(list);
+        }
+
+        return result;
+    }
+
+    //construct binary tree
+    private void createTree(String tree) { // assume : 输入字符串符合完全二叉树层次遍历结果，' '表示空节点
+        if (tree == null || tree.length() < 1) return;
+
+        // char[] chars = tree.toCharArray();
+
+        int len = tree.length();
+        Queue<TreeNode> queue = new LinkedList<>();
+        TreeNode node = new TreeNode(tree.charAt(0) - '0');
+        root = node;
         queue.add(node);
-        while(queue != null && !queue.isEmpty()){
+        int index = 0;
+        // index from 0 to len - 1, if node i, left child node 2 * i + 1; right child node 2 * i + 2
+        while (queue != null && !queue.isEmpty()) {
             node = queue.poll();
-            System.out.print(node.getData() + " ");
 
-            if(node.left != null) queue.add(node.left);
-            if(node.right != null) queue.add(node.right);
+            if (node == null) {
+                index++;
+                continue;
+            }
+
+            TreeNode left, right;
+            left = right = null;
+            if (2 * index + 1 >= len) break;  // 后续节点都是叶子节点
+
+            if (2 * index + 1 < len) {
+                char lc = tree.charAt(2 * index + 1);
+                if (lc != ' ') left = new TreeNode(lc - '0');
+            }
+            if (2 * index + 2 < len) {
+                char rc = tree.charAt(2 * index + 2);
+                if (rc != ' ') right = new TreeNode(rc - '0');
+            }
+
+            node.left = left;
+            node.right = right;
+
+            queue.add(left);
+            queue.add(right);
+            index++;
         }
     }
 
-    static final class Node {
-        int data;
-        Node left;
-        Node right;
+    public void Traversal() {
+        System.out.print("前序遍历       ：");
+        System.out.println(preorderTraversal(root));
 
-        public Node(int data){
-            this.data = data;
-        }
+        System.out.print("前序遍历（迭代）：");
+        System.out.println(preorderTraversal_iteration(root));
 
-        public Node(int data, Node left, Node right) {
-            this.data = data;
-            this.left = left;
-            this.right = right;
-        }
+        System.out.print("中序遍历       ：");
+        System.out.println(inorderTraversal(root));
 
-        public int getData() {
-            return data;
-        }
+        System.out.print("中序遍历（迭代）：");
+        System.out.println(inorderTraversal_iteration(root));
+
+        System.out.print("后序遍历       ：");
+        System.out.println(postorderTraversal(root));
+
+        System.out.print("后序遍历（迭代）：");
+        System.out.println(postorderTraversal_iteration(root));
+
+        System.out.print("层次遍历       ：");
+        System.out.println(levelOrder(root));
     }
 }
