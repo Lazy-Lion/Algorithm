@@ -1,11 +1,11 @@
-package tree;
+package leetcode;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 /**
- * 987. Vertical Order Traversal of a Binary Tree
+ * leetcode 987: Vertical Order Traversal of a Binary Tree
  *
  * Given a binary tree, return the vertical order traversal of its nodes values.
  *   For each node at position (X, Y), its left and right children respectively will be at positions (X-1, Y-1)
@@ -47,7 +47,7 @@ import java.util.List;
  *   The tree will have between 1 and 1000 nodes.
  *   Each node's value will be between 0 and 1000.
  */
-public class VOTOABT987 {
+public class VerticalOrderTraversalOfABinaryTree {
 	private static List<Location> list;
 
 	/**

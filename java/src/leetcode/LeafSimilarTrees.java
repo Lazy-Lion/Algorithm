@@ -1,10 +1,10 @@
-package tree;
+package leetcode;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * leetcode 872. Leaf-Similar Trees
+ * leetcode 872: Leaf-Similar Trees
  *   Consider all the leaves of a binary tree.  From left to right order, the values of those leaves form a leaf
  * value sequence.
  *                                       3
@@ -22,7 +22,7 @@ import java.util.List;
  * Note:
  *   Both of the given trees will have between 1 and 100 nodes.
  */
-public class LeafSimilarTrees872 {
+public class LeafSimilarTrees {
 
 	public boolean leafSimilar(TreeNode root1, TreeNode root2) {
 		boolean result = false;
@@ -73,7 +73,7 @@ public class LeafSimilarTrees872 {
 	 }
 
 	 public static void main(String[] args) {
-	 	LeafSimilarTrees872 obj = new LeafSimilarTrees872();
+	 	LeafSimilarTrees obj = new LeafSimilarTrees();
 	 	TreeNode root = obj.new TreeNode(3);
 	 	root.left = obj.new TreeNode(5);
 	 	root.right = obj.new TreeNode(1);

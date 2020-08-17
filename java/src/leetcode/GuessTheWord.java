@@ -1,11 +1,11 @@
-package tree;
+package leetcode;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 /**
- * leetcode 843. Guess the Word
+ * leetcode 843: Guess the Word
  *
  *   This problem is an interactive problem new to the LeetCode platform.
  *   We are given a word list of unique words, each word is 6 letters long, and one word in this list is chosen
@@ -32,7 +32,7 @@ import java.util.Random;
  *
  * Note:  Any solutions that attempt to circumvent the judge will result in disqualification.
  */
-public class GuessTheWord843 {
+public class GuessTheWord {
 	private static final int STRING_SIZE = 6; // 每个字符串有6个字符
 
 	/**

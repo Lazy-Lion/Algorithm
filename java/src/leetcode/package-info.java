@@ -197,6 +197,66 @@
  * {@link leetcode.FindKClosestElements}
  * ------------------------------------------------------------------------------------------------------ tree
  *
+ * `` Binary Tree Level Order Traversal II * todo
+ * @see <a href="https://leetcode.com/problems/binary-tree-level-order-traversal-ii/"></a>
+ * {@link leetcode.BinaryTreeLevelOrderTraversalII}
+ *
+ * `` Leaf-Similar Trees * todo
+ * @see <a href="https://leetcode.com/problems/leaf-similar-trees/"></a>
+ * {@link leetcode.LeafSimilarTrees}
+ *
+ * `` Symmetric Tree * todo
+ * @see <a href="https://leetcode.com/problems/symmetric-tree/"></a>
+ * {@link leetcode.SymmetricTree}
+ *
+ * `` Balanced Binary Tree * todo
+ * @see <a href="https://leetcode.com/problems/balanced-binary-tree/"></a>
+ * {@link leetcode.BalancedBinaryTree}
+ *
+ * `` Path Sum *
+ * @see <a href="https://leetcode.com/problems/path-sum/"></a>
+ * {@link leetcode.PathSum}
+ *
+ * `` Binary Tree Zigzag Level Order Traversal ** todo
+ * @see <a href="https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/"></a>
+ * {@link leetcode.BinaryTreeZigzagLevelOrderTraversal}
+ *
+ * `` Unique Binary Search Trees ** todo
+ * @see <a href="https://leetcode.com/problems/unique-binary-search-trees/"></a>
+ * {@link leetcode.UniqueBinarySearchTrees}
+ *
+ * `` Unique Binary Search Trees II ** todo
+ * @see <a href="https://leetcode.com/problems/unique-binary-search-trees-ii/"></a>
+ * {@link leetcode.UniqueBinarySearchTreesII}
+ *
+ * `` Verify Preorder Serialization of a Binary Tree ** todo
+ * @see <a href="https://leetcode.com/problems/verify-preorder-serialization-of-a-binary-tree/"></a>
+ * {@link leetcode.VerifyPreorderSerializationOfABinaryTree}
+ *
+ * `` Validate Binary Search Tree ** todo
+ * @see <a href="https://leetcode.com/problems/validate-binary-search-tree/"></a>
+ * {@link leetcode.ValidateBinarySearchTree}
+ *
+ * `` Vertical Order Traversal of a Binary Tree ** todo
+ * @see <a href="https://leetcode.com/problems/vertical-order-traversal-of-a-binary-tree/"></a>
+ * {@link leetcode.VerticalOrderTraversalOfABinaryTree}
+ *
+ * `` Convert Sorted List to Binary Search Tree ** todo
+ * @see <a href="https://leetcode.com/problems/convert-sorted-list-to-binary-search-tree/"></a>
+ * {@link leetcode.ConvertSortedListToBinarySearchTree}
+ *
+ * `` Maximum Binary Tree ** todo
+ * @see <a href="https://leetcode.com/problems/maximum-binary-tree/"></a>
+ * {@link leetcode.MaximumBinaryTree}
+ *
+ * `` Find Duplicate Subtrees ** todo
+ * @see <a href="https://leetcode.com/problems/find-duplicate-subtrees/"></a>
+ * {@link leetcode.FindDuplicateSubtrees}
+ *
+ * `` Guess the Word *** todo
+ * @see <a href="https://leetcode.com/problems/guess-the-word/"></a>
+ * {@link leetcode.GuessTheWord}
+ *
  * ------------------------------------------------------------------------------------------------------ string
  *
  * ------------------------------------------------------------------------------------------------------ dynamic programming

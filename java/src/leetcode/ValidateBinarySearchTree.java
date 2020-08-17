@@ -1,11 +1,11 @@
-package tree;
+package leetcode;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
 /**
- * 98. Validate Binary Search Tree
+ * leetcode 98: Validate Binary Search Tree
  * Given a binary tree, determine if it is a valid binary search tree (BST).
  *
  * Assume a BST is defined as follows:
@@ -33,7 +33,7 @@ import java.util.Stack;
  *   Output: false
  *   Explanation: The root node's value is 5 but its right child's value is 4.
  */
-public class ValidateBinarySearchTree98 {
+public class ValidateBinarySearchTree {
 	private static List<Integer> list = new ArrayList<>();
 
 	/**

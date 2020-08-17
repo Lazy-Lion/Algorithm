@@ -1,9 +1,9 @@
-package tree;
+package leetcode;
 
 import java.util.Stack;
 
 /**
- * 331. Verify Preorder Serialization of a Binary Tree
+ * leetcode 331. Verify Preorder Serialization of a Binary Tree
  *   One way to serialize a binary tree is to use pre-order traversal. When we encounter a non-null node, we record
  * the node's value. If it is a null node, we record using a sentinel value such as #.
  *
@@ -34,7 +34,7 @@ import java.util.Stack;
  *   Input: "9,#,#,1"
  *   Output: false
  */
-public class VPSOABT331 {
+public class VerifyPreorderSerializationOfABinaryTree {
 
 	/**
 	 * 利用栈模拟过程：

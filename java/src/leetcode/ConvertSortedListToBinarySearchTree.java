@@ -1,4 +1,4 @@
-package tree;
+package leetcode;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Queue;
 
 /**
- * leetcode 109. Convert Sorted List to Binary Search Tree
+ * leetcode 109: Convert Sorted List to Binary Search Tree
  *
  * Given a singly linked list where elements are sorted in ascending order, convert it to a height balanced BST.
  *
@@ -25,7 +25,7 @@ import java.util.Queue;
  *    /   /
  *  -10  5
  */
-public class CSLTBST109 {
+public class ConvertSortedListToBinarySearchTree {
 	private static ListNode head;
 	public static TreeNode sortedListToBST(ListNode head) {
 		return formBST(head, null);
@@ -61,7 +61,7 @@ public class CSLTBST109 {
 	public static TreeNode sortedListToBST_2(ListNode head) {
 		int size = getSize(head);
 
-		CSLTBST109.head = head;
+		ConvertSortedListToBinarySearchTree.head = head;
 
 		return formBST(0, size - 1);
 	}
@@ -75,11 +75,11 @@ public class CSLTBST109 {
 		TreeNode left = formBST(l, m - 1);
 
 		// process the current node
-		TreeNode node = new TreeNode(CSLTBST109.head.val);
+		TreeNode node = new TreeNode(ConvertSortedListToBinarySearchTree.head.val);
 		node.left = left;
 
 		// point to the ListNode where index = m + 1
-		CSLTBST109.head = CSLTBST109.head.next;
+		ConvertSortedListToBinarySearchTree.head = ConvertSortedListToBinarySearchTree.head.next;
 
 		// recursively form the right child tree
 		node.right = formBST(m + 1, r);

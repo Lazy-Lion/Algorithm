@@ -1,8 +1,9 @@
-package tree;
+package leetcode;
 
 import java.util.*;
 
 /**
+ * leetcode 107: Binary Tree Level Order Traversal II
  *   Given a binary tree, return the bottom-up level order traversal of its nodes' values. (ie, from left to right,
  * level by level from leaf to root).
  *
@@ -20,7 +21,7 @@ import java.util.*;
  *   [3]
  * ]
  */
-public class BTLOTII107 {
+public class BinaryTreeLevelOrderTraversalII {
 	private static final TreeNode LEVEL_SEPERATOR = null; // 使用空指针表示层结束
 
 	public List<List<Integer>> levelOrderBottom(TreeNode root) {
@@ -56,7 +57,7 @@ public class BTLOTII107 {
 	}
 
 	public static void main(String[] args) {
-		BTLOTII107 obj = new BTLOTII107();
+		BinaryTreeLevelOrderTraversalII obj = new BinaryTreeLevelOrderTraversalII();
 		TreeNode root = obj.new TreeNode(3);
 		root.left = obj.new TreeNode(9);
 		root.right = obj.new TreeNode(20);
