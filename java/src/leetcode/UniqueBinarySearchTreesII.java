@@ -1,7 +1,12 @@
 package leetcode;
 
 import leetcode.definition.TreeNode;
+import util.Utils;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -33,7 +38,46 @@ import java.util.List;
  *   0 <= n <= 8
  */
 public class UniqueBinarySearchTreesII {
-    public List<TreeNode> generateTrees(int n) {
-        return null;
+    private static List<TreeNode> trees;
+
+    public static List<TreeNode> generateTrees(int n) {
+        trees = new ArrayList<>();
+        constructTrees(1, n, null, false);
+        return trees;
+    }
+
+    private static void constructTrees(int start, int end, TreeNode root, boolean isLeft) {
+        if (start > end) {
+            TreeNode node = trees.get(trees.size() - 1);
+            // todo copy treenode
+            return;
+        }
+
+        for (int i = start; i <= end; i++) {
+            TreeNode node = new TreeNode(i);
+            constructTrees(start, i - 1, node, true);
+            constructTrees(i + 1, end, node, false);
+            if (root == null) {
+                trees.add(node);
+            } else {
+                if (isLeft) {
+                    root.left = node;
+                } else {
+                    root.right = node;
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) throws InvocationTargetException, IllegalAccessException {
+        Utils.testStaticMethod(UniqueBinarySearchTreesII.class
+                , new HashSet<String>() {
+                    {
+                        add("generateTrees");
+                    }
+                }
+                , Arrays.asList(
+                        Arrays.asList(3)
+                ));
     }
 }

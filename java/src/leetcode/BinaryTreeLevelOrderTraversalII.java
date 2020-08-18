@@ -1,5 +1,10 @@
 package leetcode;
 
+import leetcode.definition.TreeNode;
+import util.TreeUtils;
+import util.Utils;
+
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 /**
@@ -22,61 +27,45 @@ import java.util.*;
  * ]
  */
 public class BinaryTreeLevelOrderTraversalII {
-	private static final TreeNode LEVEL_SEPERATOR = null; // 使用空指针表示层结束
+    public static List<List<Integer>> levelOrderBottom(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
 
-	public List<List<Integer>> levelOrderBottom(TreeNode root) {
-		List<List<Integer>> result = new ArrayList<>();
+        Deque<TreeNode> queue = new ArrayDeque<>();
+        queue.offer(root);
+        TreeNode node;
+        List<Integer> list;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            list = new ArrayList<>();
+            while (size > 0) {
+                size--;
+                node = queue.poll();
+                list.add(node.val);
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+            }
+            result.add(list);
+        }
+        Collections.reverse(result);
+        return result;
+    }
 
-		if(root == null) return result;
-
-		Queue<TreeNode> queue = new LinkedList<>();
-		queue.offer(root);
-		queue.offer(LEVEL_SEPERATOR);
-
-		List<Integer> list = new ArrayList<>();
-		while(!queue.isEmpty()) {
-			TreeNode node = queue.poll();
-
-			if(node == LEVEL_SEPERATOR) { // 当前行结束
-				result.add(list);
-				list = new ArrayList<>();
-
-				if(!queue.isEmpty()) queue.offer(LEVEL_SEPERATOR);
-
-				continue;
-			}
-
-			list.add(node.val);
-			if(node.left != null) queue.offer(node.left);
-			if(node.right != null) queue.offer(node.right);
-		}
-
-		Collections.reverse(result);
-
-		return result;
-	}
-
-	public static void main(String[] args) {
-		BinaryTreeLevelOrderTraversalII obj = new BinaryTreeLevelOrderTraversalII();
-		TreeNode root = obj.new TreeNode(3);
-		root.left = obj.new TreeNode(9);
-		root.right = obj.new TreeNode(20);
-		root.right.left = obj.new TreeNode(15);
-		root.right.right = obj.new TreeNode(7);
-
-		List<List<Integer>> result = obj.levelOrderBottom(root);
-		for(List<Integer> list : result) {
-			System.out.println(list.toString());
-		}
-	}
-
-	/**
-	 * Definition for a binary tree node.
-	 */
-	class TreeNode {
-		int val;
-		TreeNode left;
-		TreeNode right;
-		TreeNode(int x) { val = x; }
-	}
+    public static void main(String[] args) throws InvocationTargetException, IllegalAccessException {
+        Utils.testStaticMethod(BinaryTreeLevelOrderTraversalII.class
+                , new HashSet<String>() {
+                    {
+                        add("levelOrderBottom");
+                    }
+                }
+                , Arrays.asList(
+                        Arrays.asList(TreeUtils.constructBinaryTree(new Integer[]{3, 9, 20, null, null, 15, 7}))
+                ));
+    }
 }
