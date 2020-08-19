@@ -27,7 +27,44 @@ import leetcode.definition.TreeNode;
  *   The size of the given array will be in the range [1,1000].
  */
 public class MaximumBinaryTree {
-    public TreeNode constructMaximumBinaryTree(int[] nums) {
+    /**
+     * Cartesian Tree(笛卡尔树)：
+     *   这种方式构造出来的树是笛卡尔树
+     *   性质：
+     *     1. 中序遍历即为原数组
+     *     2. 父节点的值大于（或小于）左右子节点的值
+     */
+
+    /**
+     * recursion
+     *   time complexity: O(n^2)
+     *   space complexity: O(n)
+     */
+    public static TreeNode constructMaximumBinaryTree(int[] nums) {
+        return constructMaxTree(nums, 0, nums.length - 1);
+    }
+
+    private static TreeNode constructMaxTree(int[] nums, int start, int end) {
+        if (start > end) {
+            return null;
+        }
+
+        int maxIndex = start;
+        for (int i = start + 1; i <= end; i++) {
+            if (nums[maxIndex] < nums[i]) {
+                maxIndex = i;
+            }
+        }
+        TreeNode root = new TreeNode(nums[maxIndex]);
+        root.left = constructMaxTree(nums, start, maxIndex - 1);
+        root.right = constructMaxTree(nums, maxIndex + 1, end);
+        return root;
+    }
+
+    /**
+     * 使用单调栈构造笛卡尔树
+     */
+    public static TreeNode constructMaximumBinaryTree_2(int[] nums) {
         return null;
     }
 }
