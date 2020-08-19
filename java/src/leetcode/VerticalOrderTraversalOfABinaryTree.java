@@ -1,8 +1,11 @@
 package leetcode;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import leetcode.definition.TreeNode;
+import util.TreeUtils;
+import util.Utils;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
 
 /**
  * leetcode 987: Vertical Order Traversal of a Binary Tree
@@ -48,99 +51,149 @@ import java.util.List;
  *   Each node's value will be between 0 and 1000.
  */
 public class VerticalOrderTraversalOfABinaryTree {
-	private static List<Location> list;
+    private static List<Location> list;
+    /**
+     * steps:
+     *   1.遍历二叉树，记录每个数对应的坐标(自定义类Location)
+     *   2.对记录进行排序，排序规则
+     *     1) x坐标按照从小到大排列
+     *     2) x相同，y坐标按照从大到小排列
+     *     3) x、y相同，val值按照从小到大排列
+     *   3.依次按行输出结果
+     *
+     * 时间复杂度： 遍历二叉树 O(n), 排序 O(nlogn), 遍历节点依次输出 O(n) => 总时间复杂度: O(nlogn)
+     * 空间复杂度： O(n)
+     */
+    public static List<List<Integer>> verticalTraversal(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
 
-	/**
-	 * steps:
-	 *   1.遍历二叉树，记录每个数对应的坐标(自定义类Location)
-	 *   2.对记录进行排序，排序规则
-	 *     1) x坐标按照从小到大排列
-	 *     2) x相同，y坐标按照从大到小排列
-	 *     3) x、y相同，val值按照从小到大排列
-	 *   3.依次按行输出结果
-	 *
-	 * 时间复杂度： 遍历二叉树 O(n), 排序 O(nlogn), 遍历节点依次输出 O(n) => 总时间复杂度: O(nlogn)
-	 * 空间复杂度： O(n)
-	 */
-	public static List<List<Integer>> verticalTraversal(TreeNode root) {
-		List<List<Integer>> result = new ArrayList<>();
+        list = new ArrayList<>();
+        dfs(root, 0, 0);
 
-		list = new ArrayList<>();
-		dfs(root, 0, 0);
-		Collections.sort(list);
+        Collections.sort(list);
 
-		int rowNum = list.get(0).x;
-		List<Integer> row = new ArrayList<>();
-		result.add(row);
-		int x, val;
-		for(Location l : list) {
-			x = l.x;
-			val = l.val;
-			if(x == rowNum) {
-				row.add(val);
-			} else {
-				row = new ArrayList<>();
-				result.add(row);
-				row.add(val);
-				rowNum = x;
-			}
-		}
+        int rowNum = list.get(0).x;
+        List<Integer> row = new ArrayList<>();
+        result.add(row);
+        int x, val;
+        for (Location l : list) {
+            x = l.x;
+            val = l.val;
+            if (x == rowNum) {
+                row.add(val);
+            } else {
+                row = new ArrayList<>();
+                result.add(row);
+                row.add(val);
+                rowNum = x;
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	private static void dfs(TreeNode node, int x, int y) {
-		if(node == null) return;
+    private static void dfs(TreeNode node, int x, int y) {
+        if (node == null) {
+            return;
+        }
+        dfs(node.left, x - 1, y - 1);
+        list.add(new Location(x, y, node.val));
+        dfs(node.right, x + 1, y - 1);
+    }
 
-		list.add(new Location(x, y, node.val));
-		dfs(node.left, x - 1, y - 1);
-		dfs(node.right, x + 1, y - 1);
-	}
+    private static class Location implements Comparable<Location> {
+        int x, y, val;
 
-	private static class Location implements Comparable<Location>{
-		int x, y, val;
+        public Location(int x, int y, int val) {
+            this.x = x;
+            this.y = y;
+            this.val = val;
+        }
 
-		Location(int x, int y, int val) {
-			this.x = x;
-			this.y = y;
-			this.val = val;
-		}
+        @Override
+        public int compareTo(Location o) {
+            if (this.x != o.x) {
+                return this.x - o.x;
+            } else if (this.y != o.y) {
+                return o.y - this.y;
+            } else {
+                return this.val - o.val;
+            }
+        }
+    }
 
-		@Override
-		public int compareTo(Location o) {
-			if(this.x != o.x)
-				return this.x - o.x;
-			else if (this.y != o.y)
-				return o.y - this.y;
-			else
-				return this.val - o.val;
-		}
-	}
-	/**
-	 * Definition for a binary tree node.
-	 */
-	private static class TreeNode {
-		int val;
-		TreeNode left;
-		TreeNode right;
-		TreeNode(int x) { val = x; }
-	}
+    /**
+     * level traversal + min heap
+     */
+    public static List<List<Integer>> verticalTraversal_2(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
 
-	public static void main(String[] args) {
-		TreeNode root = new TreeNode(3);
-		root.left = new TreeNode(9);
-		root.right = new TreeNode(20);
-		root.right.left = new TreeNode(15);
-		root.right.right = new TreeNode(7);
-		System.out.println(verticalTraversal(root));
+        Deque<TreeNode> queue = new ArrayDeque<>();
+        Deque<Location> locationQueue = new ArrayDeque<>();
+        PriorityQueue<Location> minHeap = new PriorityQueue<>();
 
-		root = new TreeNode(1);
-		root.left = new TreeNode(2);
-		root.right = new TreeNode(3);
-		root.left.left = new TreeNode(4);
-		root.left.right = new TreeNode(5);
-		root.right.left = new TreeNode(6);
-		root.right.right = new TreeNode(7);
-		System.out.println(verticalTraversal(root));
-	}
+        queue.offer(root);
+        Location start = new Location(0, 0, root.val);
+        locationQueue.offer(start);
+        minHeap.add(start);
+
+        TreeNode node;
+        Location location, temp;
+        while (!queue.isEmpty()) {
+            node = queue.poll();
+            location = locationQueue.poll();
+
+            if (node.left != null) {
+                queue.offer(node.left);
+
+                temp = new Location(location.x - 1, location.y - 1, node.left.val);
+                locationQueue.offer(temp);
+                minHeap.add(temp);
+            }
+
+            if (node.right != null) {
+                queue.offer(node.right);
+
+                temp = new Location(location.x + 1, location.y - 1, node.right.val);
+                locationQueue.offer(temp);
+                minHeap.add(temp);
+            }
+        }
+
+        List<Integer> list = new ArrayList<>();
+        Integer currentRow = null;
+        while (!minHeap.isEmpty()) {
+            location = minHeap.poll();
+            if (currentRow == null) {
+                currentRow = location.x;
+            } else if (currentRow != null && currentRow != location.x) {
+                result.add(list);
+                list = new ArrayList<>();
+                currentRow = location.x;
+            }
+            list.add(location.val);
+        }
+        if (!list.isEmpty()) {
+            result.add(list);
+        }
+
+        return result;
+    }
+
+    public static void main(String[] args) throws InvocationTargetException, IllegalAccessException {
+        Utils.testStaticMethod(VerticalOrderTraversalOfABinaryTree.class
+                , new HashSet<String>() {
+                    {
+                        add("verticalTraversal");
+                        add("verticalTraversal_2");
+                    }
+                }, Arrays.asList(
+                        Arrays.asList(TreeUtils.constructBinaryTree(new Integer[]{3, 9, 20, null, null, 15, 7})),
+                        Arrays.asList(TreeUtils.constructBinaryTree(new Integer[]{1, 2, 3, 4, 5, 6, 7})),
+                        Arrays.asList(TreeUtils.constructBinaryTree(new Integer[]{0, null, 1, null, null, 2, 3, null, null, null, null, null, null, 4, 5}))
+                ));
+    }
 }

@@ -6,11 +6,15 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class TreeUtils {
-    private static final Integer SPACE = null;
+    private static final Integer NULL = null;
 
     /**
+     * input : complete binary tree level traversal
+     *
+     * @see tree.BinaryTree#createTree(String)
+     *
      * @param tree consist of numbers and spaces
-     *             the input string conforms to the traversal result of binary tree hierarchy, ' ' indicates an empty node
+     *             the input string conforms to the traversal result of *complete* binary tree hierarchy, ' ' indicates an empty node
      * @return the root of binary tree
      */
     public static TreeNode constructBinaryTree(Integer[] tree) {
@@ -26,13 +30,9 @@ public class TreeUtils {
 
         int idx = 0;
         int size = tree.length;
-        while (!queue.isEmpty()) {
-            TreeNode node = queue.poll();
 
-            if (node == null) {
-                idx++;
-                continue;
-            }
+        while (idx < size) {
+            TreeNode node = queue.poll();
 
             int leftIdx = 2 * idx + 1;
 
@@ -42,18 +42,19 @@ public class TreeUtils {
 
             int rightIdx = 2 * idx + 2;
 
-
             TreeNode left = null, right = null;
-            if (leftIdx < size && tree[leftIdx] != SPACE) {
+            if (leftIdx < size && tree[leftIdx] != NULL) {
                 left = new TreeNode(tree[leftIdx]);
             }
 
-            if (rightIdx < size && tree[rightIdx] != SPACE) {
+            if (rightIdx < size && tree[rightIdx] != NULL) {
                 right = new TreeNode(tree[rightIdx]);
             }
 
-            node.left = left;
-            node.right = right;
+            if (node != null) {
+                node.left = left;
+                node.right = right;
+            }
             queue.offer(left);
             queue.offer(right);
 

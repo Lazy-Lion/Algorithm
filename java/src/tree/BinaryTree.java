@@ -261,7 +261,10 @@ public class BinaryTree {
         return result;
     }
 
-    //construct binary tree
+    /**
+     * construct binary tree
+     * 输入字符串必须符合完全二叉树层次遍历结果，' '表示空节点
+     */
     private void createTree(String tree) { // assume : 输入字符串符合完全二叉树层次遍历结果，' '表示空节点
         if (tree == null || tree.length() < 1) return;
 
@@ -274,29 +277,26 @@ public class BinaryTree {
         queue.add(node);
         int index = 0;
         // index from 0 to len - 1, if node i, left child node 2 * i + 1; right child node 2 * i + 2
-        while (queue != null && !queue.isEmpty()) {
+        while (index < len) {
             node = queue.poll();
 
-            if (node == null) {
-                index++;
-                continue;
+            TreeNode left = null, right = null;
+
+            int leftIndex = 2 * index + 1;
+            if (leftIndex >= len) break;  // 后续节点都是叶子节点
+
+            int rightIndex = 2 * index + 2;
+            if (leftIndex < len && tree.charAt(leftIndex) != ' ') {
+                left = new TreeNode(tree.charAt(leftIndex) - '0');
+            }
+            if (rightIndex < len && tree.charAt(rightIndex) != ' ') {
+                right = new TreeNode(tree.charAt(rightIndex) - '0');
             }
 
-            TreeNode left, right;
-            left = right = null;
-            if (2 * index + 1 >= len) break;  // 后续节点都是叶子节点
-
-            if (2 * index + 1 < len) {
-                char lc = tree.charAt(2 * index + 1);
-                if (lc != ' ') left = new TreeNode(lc - '0');
+            if (node != null) {
+                node.left = left;
+                node.right = right;
             }
-            if (2 * index + 2 < len) {
-                char rc = tree.charAt(2 * index + 2);
-                if (rc != ' ') right = new TreeNode(rc - '0');
-            }
-
-            node.left = left;
-            node.right = right;
 
             queue.add(left);
             queue.add(right);

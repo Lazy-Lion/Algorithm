@@ -38,35 +38,85 @@ import java.util.List;
  *   0 <= n <= 8
  */
 public class UniqueBinarySearchTreesII {
-    private static List<TreeNode> trees;
-
+    /**
+     * 自底向上递归
+     * @see UniqueBinarySearchTrees#numTrees(int)
+     * （自顶向下递归：当一个根节点有多种子树时，新增一条记录较为复杂）
+     */
     public static List<TreeNode> generateTrees(int n) {
-        trees = new ArrayList<>();
-        constructTrees(1, n, null, false);
-        return trees;
+        return constructTrees(1, n);
     }
 
-    private static void constructTrees(int start, int end, TreeNode root, boolean isLeft) {
+    private static List<TreeNode> constructTrees(int start, int end) {
+        List<TreeNode> result = new ArrayList<>();
+
         if (start > end) {
-            TreeNode node = trees.get(trees.size() - 1);
-            // todo copy treenode
-            return;
+            return result;
         }
 
         for (int i = start; i <= end; i++) {
-            TreeNode node = new TreeNode(i);
-            constructTrees(start, i - 1, node, true);
-            constructTrees(i + 1, end, node, false);
-            if (root == null) {
-                trees.add(node);
+            List<TreeNode> leftList = constructTrees(start, i - 1);
+            List<TreeNode> rightList = constructTrees(i + 1, end);
+
+            // add root
+            if (leftList.size() > 0 && rightList.size() > 0) {
+                for (int x = 0; x < leftList.size(); x++) {
+                    TreeNode left = leftList.get(x);
+                    for (int y = 0; y < rightList.size(); y++) {
+                        TreeNode right = rightList.get(y);
+
+                        TreeNode root = new TreeNode(i);
+                        root.left = left;
+                        root.right = right;
+                        result.add(root);
+                    }
+                }
+            } else if (leftList.size() > 0) {
+                for (int x = 0; x < leftList.size(); x++) {
+                    TreeNode root = new TreeNode(i);
+                    root.left = leftList.get(x);
+                    result.add(root);
+                }
+            } else if (rightList.size() > 0) {
+                for (int y = 0; y < rightList.size(); y++) {
+                    TreeNode root = new TreeNode(i);
+                    root.right = rightList.get(y);
+                    result.add(root);
+                }
             } else {
-                if (isLeft) {
-                    root.left = node;
-                } else {
-                    root.right = node;
+                TreeNode root = new TreeNode(i);
+                result.add(root);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * optimize {@link #constructTrees(int, int)}
+     */
+    private static List<TreeNode> constructTrees_2(int start, int end) {
+        List<TreeNode> result = new ArrayList<>();
+
+        if (start > end) {
+            result.add(null); // simplify adding root
+            return result;
+        }
+
+        for (int i = start; i <= end; i++) {
+            List<TreeNode> leftList = constructTrees(start, i - 1);
+            List<TreeNode> rightList = constructTrees(i + 1, end);
+
+            // add root
+            for (TreeNode left : leftList) {
+                for (TreeNode right : rightList) {
+                    TreeNode root = new TreeNode(i);
+                    root.left = left;
+                    root.right = right;
+                    result.add(root);
                 }
             }
         }
+        return result;
     }
 
     public static void main(String[] args) throws InvocationTargetException, IllegalAccessException {
