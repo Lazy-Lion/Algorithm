@@ -63,6 +63,7 @@ public class MaximumBinaryTree {
 
     /**
      * 使用单调栈构造笛卡尔树
+     * @see <a href="https://oi-wiki.org/ds/cartesian-tree/"></a>
      */
     public static TreeNode constructMaximumBinaryTree_2(int[] nums) {
         return null;
