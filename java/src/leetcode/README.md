@@ -53,3 +53,17 @@
   > 递归是种数据结构，回溯是一种算法思想，回溯可以用递归实现。
   
 - 单调栈应用
+
+  - leetcode.MaximumBinaryTree
+  - leetcode.LargestRectangleInHistogram
+  
+- 并查集
+  
+- 最近公共祖先问题解法 (LCA, Least Common Ancestor)：
+
+  - 倍增
+  - ST
+  - Tarjan
+  
+- 最小生成树问题
+

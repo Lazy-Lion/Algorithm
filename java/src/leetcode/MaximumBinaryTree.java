@@ -2,6 +2,9 @@ package leetcode;
 
 import leetcode.definition.TreeNode;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 /**
  * leetcode 654: Maximum Binary Tree
  *
@@ -64,8 +67,51 @@ public class MaximumBinaryTree {
     /**
      * 使用单调栈构造笛卡尔树
      * @see <a href="https://oi-wiki.org/ds/cartesian-tree/"></a>
+     *
+     * 维护一个单调递减的单调栈
+     *   从左向右遍历数组：
+     *    1. 当前元素小于栈顶元素，则当前元素应为栈顶元素的右子节点，当前节点入栈
+     *    2. 当前元素大于栈顶元素，出栈，直到当前元素小于栈顶元素，则栈顶元素的右子节点为当前元素，当前元素的左子节点为上一个栈顶元素
+     *
+     * time complexity: O(n)
+     * space complexity: O(n)
      */
     public static TreeNode constructMaximumBinaryTree_2(int[] nums) {
-        return null;
+        if (nums.length == 0) {
+            return null;
+        }
+
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        stack.push(new TreeNode(nums[0]));
+        for (int i = 1; i < nums.length; i++) {
+            TreeNode topNode = stack.peek();
+            TreeNode node = new TreeNode(nums[i]);
+            if (nums[i] < topNode.val) {
+                stack.push(node);
+                if (topNode != null) {
+                    topNode.right = node;
+                }
+            } else { // nums[i] > topNode.val (array with no duplicates)
+                TreeNode prev = null;
+                while (topNode != null && nums[i] > topNode.val) {
+                    prev = stack.pop();
+                    topNode = stack.peek();
+                }
+
+                if (topNode != null) {
+                    node.left = topNode.right;
+                    topNode.right = node;
+                } else {
+                    node.left = prev;
+                }
+                stack.push(node);
+            }
+        }
+
+        return stack.removeLast();
+    }
+
+    public static void main(String[] args) {
+        constructMaximumBinaryTree_2(new int[]{3, 2, 1, 6, 0, 5});
     }
 }

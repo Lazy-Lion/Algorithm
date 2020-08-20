@@ -3,8 +3,7 @@ package leetcode;
 import util.Utils;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * leetcode 84: Largest Rectangle in Histogram
@@ -54,6 +53,43 @@ public class LargestRectangleInHistogram {
         return max;
     }
 
+    /**
+     * 对于一个柱体，向左扩展直到左侧的柱体高低小于当前，向右扩展直到右侧的柱体高度小于当前
+     * 维护一个单调递增栈，栈内存储数组下标值
+     * time complexity: O(n)
+     * space complexity: O(n)
+     */
+    public static int largestRectangleArea_2(int[] heights) {
+        Deque<Integer> stack = new ArrayDeque<>();
+        int max = 0;
+        int size = heights.length;
+        for (int i = 0; i < size; i++) {
+            if (stack.isEmpty() || heights[stack.peek()] <= heights[i]) {
+                stack.push(i);
+            } else {
+                while (!stack.isEmpty() && heights[stack.peek()] > heights[i]) {
+                    int index = stack.pop();
+                    if (stack.isEmpty()) {
+                        max = Math.max(i * heights[index], max);
+                    } else {
+                        max = Math.max((i - stack.peek() - 1) * heights[index], max);
+                    }
+                }
+                stack.push(i);
+            }
+        }
+
+        while (!stack.isEmpty()) {
+            int index = stack.pop();
+            if (stack.isEmpty()) {
+                max = Math.max(size * heights[index], max);
+            } else {
+                max = Math.max((size - stack.peek() - 1) * heights[index], max);
+            }
+        }
+        return max;
+    }
+
     public static void main(String[] args) throws InvocationTargetException, IllegalAccessException {
         List<List<Object>> params = new ArrayList<>();
         List<Object> param = new ArrayList<>();
@@ -76,6 +112,20 @@ public class LargestRectangleInHistogram {
         param.add(new int[]{4, 2, 0, 3, 2, 5});  // 0 0 0 2 2 5
         params.add(param);
 
-        Utils.testStaticMethod(LargestRectangleInHistogram.class, params);
+        param = new ArrayList<>();
+        param.add(new int[]{5, 4, 1, 2});
+        params.add(param);
+
+        param = new ArrayList<>();
+        param.add(new int[]{2, 1, 5, 6, 2, 3});
+        params.add(param);
+
+        Utils.testStaticMethod(LargestRectangleInHistogram.class
+                , new HashSet<String>() {
+                    {
+                        add("largestRectangleArea");
+                        add("largestRectangleArea_2");
+                    }
+                }, params);
     }
 }
