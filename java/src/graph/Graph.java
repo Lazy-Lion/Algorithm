@@ -325,7 +325,7 @@ public class Graph {
     }
 
     /**
-     * BFS,迭代方式：使用栈
+     * DFS,迭代方式：使用栈
      */
     public void dfsIteration(int s, int t){
         if(s == t) return;

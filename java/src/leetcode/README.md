@@ -30,34 +30,14 @@
     4. 递归代码使用到系统自带的栈，空间复杂度会有这部分消耗
     
   > 理论上递归代码都可以使用自定义的栈进行迭代改写，这种改写与实际的递归方式本质上没有区别。某些递归代码的迭代改写也可以不引入栈来实现。
-  
-- 全排列问题解法：参考 leetcode.ReorderedPowerOf2
-  
-  - 递归解法
-  - 字典序解法
-
-- 组合问题解法：参考 leetcode.Combinations
- 
-  - 递归解法
-  - 字典序解法
-  
-  
-- 子集问题：参考 leetcode.Subsets
-
-  - 递归解法
-  - 级联解法
-  - 位图解法
 
 - 递归和回溯
   
   > 递归是种数据结构，回溯是一种算法思想，回溯可以用递归实现。
   
-- 单调栈应用
-
-  - leetcode.MaximumBinaryTree
-  - leetcode.LargestRectangleInHistogram
-  
 - 并查集
+
+  > 并查集可求解区域连通问题
   
 - 最近公共祖先问题解法 (LCA, Least Common Ancestor)：
 
