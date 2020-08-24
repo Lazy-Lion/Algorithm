@@ -1,5 +1,7 @@
 package dynamicprogramming;
 
+import dynamicprogramming.definition.Item;
+
 import java.util.ArrayList;
 import java.util.List;
 

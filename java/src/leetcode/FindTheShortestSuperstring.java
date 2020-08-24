@@ -1,4 +1,4 @@
-package dynamicprogramming;
+package leetcode;
 
 /**
  * leetcode 943. Find the Shortest Superstring
@@ -17,11 +17,11 @@ package dynamicprogramming;
  *   1 <= A.length <= 12
  *   1 <= A[i].length <= 20
  */
-public class FindTheShortestSuperstring943 {
-	/**
-	 * TODO: 旅行商问题
-	 */
-	public String shortestSuperstring(String[] A) {
-		return null;
-	}
+public class FindTheShortestSuperstring {
+    /**
+     * TODO: 旅行商问题
+     */
+    public String shortestSuperstring(String[] A) {
+        return null;
+    }
 }

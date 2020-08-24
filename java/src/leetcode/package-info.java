@@ -267,6 +267,49 @@
  * ------------------------------------------------------------------------------------------------------ string
  *
  * ------------------------------------------------------------------------------------------------------ dynamic programming
+ * `` Longest Increasing Subsequence ** todo
+ * @see <a href="https://leetcode.com/problems/longest-increasing-subsequence/"></a>
+ * {@link leetcode.LongestIncreasingSubsequence}
+ *
+ * `` Minimum Swaps To Make Sequences Increasing ** todo
+ * @see <a href="https://leetcode.com/problems/minimum-swaps-to-make-sequences-increasing/"></a>
+ * {@link leetcode.MinimumSwapsToMakeSequencesIncreasing}
+ *
+ * `` Unique Paths ** todo
+ * @see <a href="https://leetcode.com/problems/unique-paths/"></a>
+ * {@link leetcode.UniquePaths}
+ *
+ * `` Unique Paths II ** todo
+ * @see <a href="https://leetcode.com/problems/unique-paths-ii/"></a>
+ * {@link leetcode.UniquePathsII}
+ *
+ * `` Wiggle Subsequence ** todo
+ * @see <a href="https://leetcode.com/problems/wiggle-subsequence/"></a>
+ * {@link leetcode.WiggleSubsequence}
+ *
+ * `` Word Break ** todo
+ * @see <a href="https://leetcode.com/problems/word-break/"></a>
+ * {@link leetcode.WordBreak}
+ *
+ * `` Word Break II *** todo
+ * @see <a href="https://leetcode.com/problems/word-break-ii/"></a>
+ * {@link leetcode.WordBreakII}
+ *
+ * `` Count The Repetitions *** todo
+ * @see <a href="https://leetcode.com/problems/count-the-repetitions/"></a>
+ * {@link leetcode.CountTheRepetitions}
+ *
+ * `` Find the Shortest Superstring *** todo
+ * @see <a href="https://leetcode.com/problems/find-the-shortest-superstring/"></a>
+ * {@link leetcode.FindTheShortestSuperstring}
+ *
+ * `` Smallest Sufficient Team *** todo
+ * @see <a href="https://leetcode.com/problems/smallest-sufficient-team/"></a>
+ * {@link leetcode.SmallestSufficientTeam}
+ *
+ * `` Wildcard Matching *** todo
+ * @see <a href="https://leetcode.com/problems/wildcard-matching/"></a>
+ * {@link leetcode.WildcardMatching}
  *
  * ------------------------------------------------------------------------------------------------------ graph
  *

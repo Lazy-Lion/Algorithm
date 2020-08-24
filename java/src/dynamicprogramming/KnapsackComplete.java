@@ -1,5 +1,7 @@
 package dynamicprogramming;
 
+import dynamicprogramming.definition.Item;
+
 /**
  * 完全背包问题：
  *   问题描述：
