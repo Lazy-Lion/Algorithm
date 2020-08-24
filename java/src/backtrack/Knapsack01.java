@@ -9,36 +9,46 @@ package backtrack;
  *    max weight that the knapsack can hold
  */
 public class Knapsack01 {
-	private int maxWeight = 0;
+    private int capacity;
+    private int[] item;
+    private int maxWeight;
 
-	/**
-	 * 0/1背包 回溯法求解
-	 * 时间复杂度 : O(2^n)  -- 每个item有两种状态(放入，不放入), 共 2^n种情况
-	 * @param i 处理 item的 index, [0,n)
-	 * @param cw 当前背包的总负重
-	 * @param items
-	 * @param n items.length
-	 * @param W 背包容量
-	 */
-	public void knapsack(int i, int cw, int[] items, int n, int W){
-		if(cw == W || i == n){
-			if(cw > maxWeight)
-				maxWeight = cw;
-			return;
-		}
+    public Knapsack01(int capacity, int[] item) {
+        this.capacity = capacity;
+        this.item = item;
+    }
 
-		knapsack(i + 1, cw, items, n, W);  // 不装入 item[i]
+    public int knapsack() {
+        maxWeight = 0;
+        knapsack(0, 0, item, item.length, capacity);
+        return maxWeight;
+    }
 
-		if(cw + items[i] <= W){
-			knapsack(i + 1, cw + items[i], items, n, W);  // 装入 item[i]
-		}
-	}
+    /**
+     * 0/1背包 回溯法求解
+     * 时间复杂度 : O(2^n)  -- 每个item有两种状态(放入，不放入), 共 2^n种情况
+     * @param i 处理 item的 index, [0,n)
+     * @param cw 当前背包的总负重
+     * @param items
+     * @param n items.length
+     * @param W 背包容量
+     */
+    private void knapsack(int i, int cw, int[] items, int n, int W) {
+        if (cw == W || i == n) {
+            if (cw > maxWeight)
+                maxWeight = cw;
+            return;
+        }
 
-	public static void main(String[] args){
-		Knapsack01 k = new Knapsack01();
+        knapsack(i + 1, cw, items, n, W);  // 不装入 item[i]
 
-		int[] items = new int[]{1,2,5,6};
-		k.knapsack(0, 0, items, items.length, 10);
-		System.out.println(k.maxWeight);
-	}
+        if (cw + items[i] <= W) {
+            knapsack(i + 1, cw + items[i], items, n, W);  // 装入 item[i]
+        }
+    }
+
+    public static void main(String[] args) {
+        Knapsack01 k = new Knapsack01(10, new int[]{1, 2, 5, 6});
+        System.out.println(k.knapsack());
+    }
 }

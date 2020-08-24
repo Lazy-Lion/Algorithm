@@ -25,7 +25,7 @@ public class KnapsackComplete {
 	 * @param v 背包容量
 	 * @return 背包可达最大价值
 	 */
-	public int knapsack(Item[] items, int n, int v){
+	public static int knapsack(Item[] items, int n, int v){
 		int[] dp = new int[v + 1];
 
 		for(int i = 0; i < v + 1; i ++){
@@ -33,9 +33,9 @@ public class KnapsackComplete {
 		}
 
 		for(int i = 0; i < n; i ++){
-			int cost = items[i].c;
+			int cost = items[i].cost;
 			for(int j = cost; j < v + 1;j ++){
-				dp[j] = Math.max(dp[j], dp[j - items[i].c] + items[i].w);
+				dp[j] = Math.max(dp[j], dp[j - items[i].cost] + items[i].weight);
 			}
 		}
 
@@ -43,9 +43,8 @@ public class KnapsackComplete {
 	}
 
 	public static void main(String[] args){
-		KnapsackComplete k = new KnapsackComplete();
-
 		Item[] items = new Item[]{new Item(1,0), new Item(3,1), new Item(5,3), new Item(6,4)};
-		System.out.println(k.knapsack(items, 4, 10));
+
+		System.out.println(knapsack(items, 4, 10));
 	}
 }

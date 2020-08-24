@@ -38,20 +38,20 @@ public class KnapsackMultiple {
 		// 转换成 0/1 背包问题
 		for(int i = 0; i < n; i ++){
 			int k = 1;
-			while(k * 2 - 1 <= items[i].m){
-				list.add(new Item(k * items[i].c, k * items[i].w));
+			while(k * 2 - 1 <= items[i].count){
+				list.add(new Item(k * items[i].cost, k * items[i].weight));
 				k = k * 2;
 			}
-			int temp = items[i].m + 1 - k;
+			int temp = items[i].count + 1 - k;
 			if(temp > 0){
-				list.add(new Item(temp * items[i].c, temp * items[i].w));
+				list.add(new Item(temp * items[i].cost, temp * items[i].weight));
 			}
 		}
 
 		for(int i = 0; i < list.size(); i ++){
-			int cv = list.get(i).c;
+			int cv = list.get(i).cost;
 			for(int j = v; j >= cv; j --){
-				dp[j] = Math.max(dp[j], dp[j - cv] + list.get(i).w);
+				dp[j] = Math.max(dp[j], dp[j - cv] + list.get(i).weight);
 			}
 		}
 

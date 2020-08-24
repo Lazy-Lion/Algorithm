@@ -267,6 +267,18 @@
  * ------------------------------------------------------------------------------------------------------ string
  *
  * ------------------------------------------------------------------------------------------------------ dynamic programming
+ * `` Partition Equal Subset Sum **
+ * @see <a href="https://leetcode.com/problems/partition-equal-subset-sum/"></a>
+ * {@link leetcode.PartitionEqualSubsetSum}
+ *
+ * `` Ones and Zeroes **
+ * @see <a href="https://leetcode.com/problems/ones-and-zeroes/"></a>
+ * {@link leetcode.OnesAndZeroes}
+ *
+ * `` Target Sum **
+ * @see <a href="https://leetcode.com/problems/target-sum/"></a>
+ * {@link leetcode.TargetSum}
+ *
  * `` Longest Increasing Subsequence ** todo
  * @see <a href="https://leetcode.com/problems/longest-increasing-subsequence/"></a>
  * {@link leetcode.LongestIncreasingSubsequence}
@@ -312,6 +324,9 @@
  * {@link leetcode.WildcardMatching}
  *
  * ------------------------------------------------------------------------------------------------------ graph
+ * `` Shortest Path Visiting All Nodes *** todo
+ * @see <a href="https://leetcode.com/problems/shortest-path-visiting-all-nodes/"></a>
+ * {@link leetcode.ShortestPathVisitingAllNodes}
  *
  * `` Regions Cut By Slashes ** todo
  * @see <a href=""></a>
