@@ -31,8 +31,8 @@ public class LongestIncreasingSubsequence {
      *   f(i) = max { nums[j] < nums[i] ? f(j) : 0 } + 1  j ∈ [0,i)
      *     f(i)  -- 包含 nums[i]的最长递增子序列长度
      *
-     * 时间复杂度: O(n^2)
-     * 空间复杂度: O(n)
+     * time complexity: O(n^2)
+     * space complexity: O(n)
      */
     public static int lengthOfLIS(int[] nums) {
         int n = nums.length;
@@ -79,30 +79,28 @@ public class LongestIncreasingSubsequence {
         if (n <= 1) return n;
 
         int[] dp = new int[n + 1];
-        int len = 1;
+        int size = 1;
         dp[1] = nums[0];
         for (int i = 1; i < n; i++) {
-            if (nums[i] > dp[len]) {
-                dp[++len] = nums[i];
-            } else if (nums[i] < dp[len]) {
+            if (nums[i] > dp[size]) {
+                dp[++size] = nums[i];
+            } else {
                 int l = 0;
-                int r = len;
+                int r = size;
                 while (l < r) {
-                    int m = l + (r - l) / 2;
-                    if (dp[m] >= nums[i])
-                        r = m;
-                    else
-                        l = m + 1;
+                    int m = l + ((r - l) >>> 1);
+                    if (dp[m] >= nums[i]) r = m;
+                    else l = m + 1;
                 }
                 dp[l] = nums[i];
             }
         }
 
-        for (int i = 1; i < len + 1; i++) {  // 输出最长递增子序列
+        for (int i = 1; i < size + 1; i++) {  // 输出最长递增子序列
             System.out.print(dp[i] + " ");
         }
         System.out.println();
-        return len;
+        return size;
     }
 
     public static void main(String[] args) throws InvocationTargetException, IllegalAccessException {

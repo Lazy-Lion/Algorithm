@@ -36,6 +36,16 @@
  *   最近公共祖先问题(LCA, Least Common Ancestor):
  *     {@link leetcode.LowestCommonAncestorOfABinaryTree}
  *
+ *   最长递增子序列：
+ *     {@link leetcode.LongestIncreasingSubsequence}
+ *
+ *   最长公共子序列(LCS, longest common subsequence):
+ *     {@link leetcode.LongestCommonSubsequence}
+ *
+ *   最长公共子串:
+ *     {@link leetcode.MaximumLengthOfRepeatedSubarray}
+ *
+ *
  *   最短路径问题：
  *
  *   最小生成树(Minimum Spanning Tree):

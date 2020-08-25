@@ -18,33 +18,33 @@ import dynamicprogramming.definition.Item;
  *   优化3: f(i, v) = max{ f(i - 1, v),f(i, v - ci) + wi } ;时间复杂度 O(N*V)
  */
 public class KnapsackComplete {
-	/**
-	 * 基于优化3的实现
-	 * @param items 物品种类列表
-	 * @param n 种类数
-	 * @param v 背包容量
-	 * @return 背包可达最大价值
-	 */
-	public static int knapsack(Item[] items, int n, int v){
-		int[] dp = new int[v + 1];
+    /**
+     * 基于优化3的实现
+     * @param items 物品种类列表
+     * @param n 种类数
+     * @param v 背包容量
+     * @return 背包可达最大价值
+     */
+    public static int knapsack(Item[] items, int n, int v) {
+        int[] dp = new int[v + 1];
 
-		for(int i = 0; i < v + 1; i ++){
-			dp[i] = 0;
-		}
+        for (int i = 0; i < v + 1; i++) {
+            dp[i] = 0;
+        }
 
-		for(int i = 0; i < n; i ++){
-			int cost = items[i].cost;
-			for(int j = cost; j < v + 1;j ++){
-				dp[j] = Math.max(dp[j], dp[j - items[i].cost] + items[i].weight);
-			}
-		}
+        for (int i = 0; i < n; i++) {
+            int cost = items[i].cost;
+            for (int j = cost; j < v + 1; j++) {
+                dp[j] = Math.max(dp[j], dp[j - items[i].cost] + items[i].weight);
+            }
+        }
 
-		return dp[v];
-	}
+        return dp[v];
+    }
 
-	public static void main(String[] args){
-		Item[] items = new Item[]{new Item(1,0), new Item(3,1), new Item(5,3), new Item(6,4)};
+    public static void main(String[] args) {
+        Item[] items = new Item[]{new Item(1, 0), new Item(3, 1), new Item(5, 3), new Item(6, 4)};
 
-		System.out.println(knapsack(items, 4, 10));
-	}
+        System.out.println(knapsack(items, 4, 10));
+    }
 }

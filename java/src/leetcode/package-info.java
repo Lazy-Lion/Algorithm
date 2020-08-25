@@ -266,6 +266,11 @@
  *
  * ------------------------------------------------------------------------------------------------------ string
  *
+ * ------------------------------------------------------------------------------------------------------ divide and conquer
+ * `` Beautiful Array ** todo
+ * @see <a href="https://leetcode.com/problems/beautiful-array/"></a>
+ * {@link }
+ *
  * ------------------------------------------------------------------------------------------------------ dynamic programming
  * `` Partition Equal Subset Sum **
  * @see <a href="https://leetcode.com/problems/partition-equal-subset-sum/"></a>
@@ -279,9 +284,21 @@
  * @see <a href="https://leetcode.com/problems/target-sum/"></a>
  * {@link leetcode.TargetSum}
  *
- * `` Longest Increasing Subsequence ** todo
+ * `` Longest Increasing Subsequence **
  * @see <a href="https://leetcode.com/problems/longest-increasing-subsequence/"></a>
  * {@link leetcode.LongestIncreasingSubsequence}
+ *
+ * `` Longest Common Subsequence **
+ * @see <a href="https://leetcode.com/problems/longest-common-subsequence/"></a>
+ * {@link leetcode.LongestCommonSubsequence}
+ *
+ * `` Maximum Length of Repeated Subarray ** todo
+ * @see <a href="https://leetcode.com/problems/maximum-length-of-repeated-subarray/"></a>
+ * {@link leetcode.MaximumLengthOfRepeatedSubarray}
+ *
+ * `` Shortest Common Supersequence ** todo
+ * @see <a href="https://leetcode.com/problems/shortest-common-supersequence/"></a>
+ * {@link leetcode.ShortestCommonSupersequence}
  *
  * `` Minimum Swaps To Make Sequences Increasing ** todo
  * @see <a href="https://leetcode.com/problems/minimum-swaps-to-make-sequences-increasing/"></a>
