@@ -1,7 +1,7 @@
-package string;
+package leetcode;
 
 /**
- * 468. Validate IP Address
+ * leetcode 468. Validate IP Address
  * Write a function to check whether an input string is a valid IPv4 address or IPv6 address or neither.
  *
  *   IPv4 addresses are canonically represented in dot-decimal notation, which consists of four decimal numbers, each
@@ -36,7 +36,7 @@ package string;
  *   Output: "Neither"
  *   Explanation: This is neither a IPv4 address nor a IPv6 address.
  */
-public class ValidateIPAddress468 {
+public class ValidateIPAddress {
 	private static final String IPv4 = "IPv4";
 	private static final String IPv6 = "IPv6";
 	private static final String NEITHER = "Neither";

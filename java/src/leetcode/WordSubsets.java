@@ -1,4 +1,4 @@
-package string;
+package leetcode;
 
 import java.util.*;
 
@@ -34,7 +34,7 @@ import java.util.*;
  *   A[i] and B[i] consist only of lowercase letters.
  *   All words in A[i] are unique: there isn't i != j with A[i] == A[j].
  */
-public class WordSubsets916 {
+public class WordSubsets {
 	public static List<String> wordSubsets(String[] A, String[] B) {
 		List<String> result = new ArrayList<>();
 

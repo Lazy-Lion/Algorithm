@@ -125,6 +125,7 @@ public class MaximumLengthOfRepeatedSubarray {
 
     /**
      * 二分查找 + hash map
+     * todo
      */
     public static int findLength_3(int[] array1, int[] array2) {
         int m, n;

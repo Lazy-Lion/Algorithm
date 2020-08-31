@@ -1,4 +1,5 @@
 package string;
+
 /**
  * Rabin-Karp 算法, 由两位发明者名字命名。
  * 思路： 引入哈希算法
@@ -17,20 +18,22 @@ package string;
  *     a*hash(i) =                      c1*a^m     + c2*a^(m-1) + ... + cm*a^1
  *     hash(i+1) = a*(hash(i) - c1*a^(m-1)) + c(m+1)
  *
- * 时间复杂度：
+ * time complexity:
  *    预处理：O(m) - step 1
  *    匹配： 最好情况O(n), 如果哈希冲突较多会退化成 O(n*m)  - step 2,3
+ *
+ * space complexity: O(1)
  */
 public class RK {
     private static final int DEFAULT_NUMBER = 26;
     private int alphNumber;   //numbers of characters in the alphabet
     private int pow;   // a^(m-1)
 
-    public RK(){
+    public RK() {
         this.alphNumber = DEFAULT_NUMBER;
     }
 
-    public RK(int charNumber){
+    public RK(int charNumber) {
         this.alphNumber = charNumber;
     }
 
@@ -39,57 +42,60 @@ public class RK {
      * @param pattern 模式串
      * @return -1 if no match, or index of the first matching char
      */
-    public int match(String text, String pattern){
+    public int match(String text, String pattern) {
         int n = text.length();
         int m = pattern.length();
 
-        if(n < 0 || m < 0 || n < m) return -1;
-        if(m == 0) return 0;
+        if (n < 0 || m < 0 || n < m) return -1;
+        if (m == 0) return 0;
 
-        this.pow = (int)Math.pow(alphNumber, m-1);
+        this.pow = (int) Math.pow(alphNumber, m - 1);
 
         int pHash = hash(pattern, 0, m);
         int tHash = 0;
-        for(int i = 0; i < n - m + 1; i ++){
-            if(i == 0)
+        for (int i = 0; i < n - m + 1; i++) {
+            if (i == 0) {
                 tHash = hash(text, 0, m);
-            else
+            } else {
                 tHash = hash(text, tHash, i - 1, m);
+            }
 
-            if(tHash == pHash && validate(text, pattern, i, m))
+            if (tHash == pHash && validate(text, pattern, i, m)) { // There may be a hash collision
                 return i;
+            }
         }
         return -1;
     }
 
 
-    private int hash(String text, int start, int m){
+    private int hash(String text, int start, int m) {
         assert m > 0;
         assert text.length() >= start + m;
 
         int hash = 0;
-        for(int i = start; i < start + m - 1; i ++){
+        for (int i = start; i < start + m - 1; i++) {
             hash = (hash + (text.charAt(i) - 'a')) * alphNumber;
         }
         hash += (text.charAt(start + m - 1) - 'a');
         return hash;
     }
 
-    private int hash(String text, int oldHash, int oldStart, int m){
+    private int hash(String text, int oldHash, int oldStart, int m) {
         assert m > 0;
         assert text.length() >= oldStart + m;
+
         int hash;
-        hash = this.alphNumber * (oldHash - (text.charAt(oldStart) - 'a')*this.pow)
-                + ( text.charAt(oldStart + m) - 'a');
+        hash = this.alphNumber * (oldHash - (text.charAt(oldStart) - 'a') * this.pow)
+                + (text.charAt(oldStart + m) - 'a');
         return hash;
 
     }
 
-    private boolean validate(String text, String pattern, int start, int m){
-        assert  text.length() >= start + m;
+    private boolean validate(String text, String pattern, int start, int m) {
+        assert text.length() >= start + m;
 
-        for(int i = 0; i < m; i ++){
-            if(text.charAt(start + i) != pattern.charAt(i))
+        for (int i = 0; i < m; i++) {
+            if (text.charAt(start + i) != pattern.charAt(i))
                 return false;
         }
         return true;

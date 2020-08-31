@@ -1,4 +1,4 @@
-package string;
+package leetcode;
 
 import javafx.util.Pair;
 
@@ -42,7 +42,7 @@ import java.util.*;
  *   1 <= queries[i].length <= 7
  *   All strings in wordlist and queries consist only of english letters.
  */
-public class VowelSpellchecker966 {
+public class VowelSpellchecker {
 	private static final Set<Character> VOWEL_CHAR =
 			new HashSet<>(Arrays.asList('a', 'e', 'i', 'o', 'u'));
 	private static final String WILDCARD = "*";

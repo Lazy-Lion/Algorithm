@@ -264,8 +264,6 @@
  * @see <a href="https://leetcode.com/problems/guess-the-word/"></a>
  * {@link leetcode.GuessTheWord}
  *
- * ------------------------------------------------------------------------------------------------------ string
- *
  * ------------------------------------------------------------------------------------------------------ divide and conquer
  * `` Beautiful Array ** todo
  * @see <a href="https://leetcode.com/problems/beautiful-array/"></a>
@@ -339,6 +337,27 @@
  * `` Wildcard Matching *** todo
  * @see <a href="https://leetcode.com/problems/wildcard-matching/"></a>
  * {@link leetcode.WildcardMatching}
+ *
+ * ------------------------------------------------------------------------------------------------------ string
+ * `` Longest Palindromic Substring ** todo
+ * @see <a href="https://leetcode.com/problems/longest-palindromic-substring/"></a>
+ * {@link leetcode.LongestPalindromicSubstring}
+ *
+ * `` Validate IP Address todo
+ * @see <a href="https://leetcode.com/problems/validate-ip-address/"></a>
+ * {@link leetcode.ValidateIPAddress}
+ *
+ * `` Vowel Spellchecker todo
+ * @see <a href="https://leetcode.com/problems/vowel-spellchecker/"></a>
+ * {@link leetcode.VowelSpellchecker}
+ *
+ * `` Word Subsets todo
+ * @see <a href="https://leetcode.com/problems/word-subsets/"></a>
+ * {@link leetcode.WordSubsets}
+ *
+ * `` ZigZag Conversion todo
+ * @see <a href="https://leetcode.com/problems/zigzag-conversion/"></a>
+ * {@link leetcode.ZigZagConversion}
  *
  * ------------------------------------------------------------------------------------------------------ graph
  * `` Shortest Path Visiting All Nodes *** todo

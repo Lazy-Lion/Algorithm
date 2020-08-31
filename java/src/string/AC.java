@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Queue;
 
 /**
- * AC自动机算法：Aho–Corasick算法是由Alfred V. Aho和Margaret J.Corasick 发明的字符串搜索算法。
+ * AC自动机算法：Aho–Corasick算法是由 Alfred V. Aho和 Margaret J.Corasick 发明的字符串搜索算法。
  *
  * BF、RK、BM、KMP算法都是单模式串匹配算法，AC自动机算法是多模式串匹配算法。
  *

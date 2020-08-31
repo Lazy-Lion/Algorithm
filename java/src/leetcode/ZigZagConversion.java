@@ -1,4 +1,4 @@
-package string;
+package leetcode;
 
 /**
  * leetcode 6 ZigZag Conversion
@@ -26,7 +26,7 @@ package string;
  *   Y A   H R
  *   P     I
  */
-public class ZigZagConversion6 {
+public class ZigZagConversion {
 	/**
 	 * way 1 : 模拟数据格式转换过程，将String中的字符按条件放入二维数组指定位置中
 	 * 时间空间复杂度：O(n * r) : n - 字符串长度；r - 行数
