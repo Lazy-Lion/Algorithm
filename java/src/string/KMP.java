@@ -45,6 +45,8 @@ public class KMP {
          *   a b a d e f a b c
          *       a b a e f
          *   移动之后 j' = j - k = next[2] + 1 = 1, i' = i
+         *   next[v] >= -1 => next[v] + 1 >= 0, 不需要考虑 j为负数的情况
+         *   由于next[]的特性，移动之后可以确保 j之前的字符必然和主串匹配（这部分匹配的跳过，是KMP算法使用next[]优化的核心），只需要从 j开始比较即可
          */
         int j = 0;
         for (int i = 0; i < n; i++) {
@@ -130,6 +132,10 @@ public class KMP {
      *        => 可以转换成前缀 p[0, k]的最长匹配，即 next[k]
      */
     private int[] getNext(String pattern, int m) {
+        if (m <= 1) {
+            return new int[0];
+        }
+
         int[] next = new int[m - 1];
         next[0] = -1;
 

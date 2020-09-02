@@ -1,8 +1,8 @@
-package backtrack;
+package leetcode;
 import java.util.*;
 
 /**
- * 212. Word Search II
+ * leetcode 212. Word Search II
  * Given a 2D board and a list of words from the dictionary, find all words in the board.
  *
  *   Each word must be constructed from letters of sequentially adjacent cell, where "adjacent" cells are those
@@ -22,7 +22,7 @@ import java.util.*;
  *   All inputs are consist of lowercase letters a-z.
  *   The values of words are distinct.
  */
-public class WordSearchII212 {
+public class WordSearchII {
 	private static char[][] input;
 	private static int n;
 	private static int m;

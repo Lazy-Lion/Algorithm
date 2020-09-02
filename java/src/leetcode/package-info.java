@@ -339,25 +339,49 @@
  * {@link leetcode.WildcardMatching}
  *
  * ------------------------------------------------------------------------------------------------------ string
+ * `` Longest Word in Dictionary * todo
+ * @see <a href="https://leetcode.com/problems/longest-word-in-dictionary/"></a>
+ * {@link leetcode.LongestWordInDictionary}
+ *
+ * `` Top K Frequent Words ** todo
+ * @see <a href="https://leetcode.com/problems/top-k-frequent-words/"></a>
+ * {@link leetcode.TopKFrequentWords}
+ *
+ * `` Word Search ** todo
+ * @see <a href=""></a>
+ * {@link leetcode.WordSearch}
+ *
+ * `` Word Search II ** todo
+ * @see <a href=""></a>
+ * {@link leetcode.WordSearchII}
+ *
  * `` Longest Palindromic Substring ** todo
  * @see <a href="https://leetcode.com/problems/longest-palindromic-substring/"></a>
  * {@link leetcode.LongestPalindromicSubstring}
  *
- * `` Validate IP Address todo
+ * `` Validate IP Address ** todo
  * @see <a href="https://leetcode.com/problems/validate-ip-address/"></a>
  * {@link leetcode.ValidateIPAddress}
  *
- * `` Vowel Spellchecker todo
+ * `` Vowel Spellchecker ** todo
  * @see <a href="https://leetcode.com/problems/vowel-spellchecker/"></a>
  * {@link leetcode.VowelSpellchecker}
  *
- * `` Word Subsets todo
+ * `` Word Subsets ** todo
  * @see <a href="https://leetcode.com/problems/word-subsets/"></a>
  * {@link leetcode.WordSubsets}
  *
- * `` ZigZag Conversion todo
+ * `` ZigZag Conversion ** todo
  * @see <a href="https://leetcode.com/problems/zigzag-conversion/"></a>
  * {@link leetcode.ZigZagConversion}
+ *
+ * `` Palindrome Pairs *** todo
+ * @see <a href="https://leetcode.com/problems/palindrome-pairs/"></a>
+ * {@link leetcode.PalindromePairs}
+ *
+ * `` Prefix and Suffix Search *** todo
+ * @see <a href="https://leetcode.com/problems/prefix-and-suffix-search/"></a>
+ * {@link leetcode.PrefixAndSuffixSearch}
  *
  * ------------------------------------------------------------------------------------------------------ graph
  * `` Shortest Path Visiting All Nodes *** todo

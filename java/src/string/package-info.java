@@ -6,6 +6,7 @@
  * @see string.RK
  * @see string.BM
  * @see string.KMP
+ * @see string.Sunday
  *
  * 多模式串匹配：
  * @see string.Trie

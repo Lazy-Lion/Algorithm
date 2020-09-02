@@ -1,4 +1,4 @@
-package backtrack;
+package leetcode;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -25,7 +25,7 @@ import java.util.Set;
  * Given word = "SEE", return true.
  * Given word = "ABCB", return false.
  */
-public class WordSearch79 {
+public class WordSearch {
 	private static final String SEPARATOR = "/";
 	private static final int[] UPPER = {-1, 0};
 	private static final int[] DOWN = {1, 0};
