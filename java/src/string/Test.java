@@ -6,7 +6,7 @@ import java.util.List;
  * test
  */
 public class Test {
-    public static void main(String[] args){
+    public static void main(String[] args) {
         String s1 = "";
         String s2 = " ";
         System.out.println(s1.isEmpty());
@@ -14,22 +14,34 @@ public class Test {
 
 
         BF b = new BF();
-        System.out.println("BF: " + b.match("abcdemfjgk","mfj"));
+        System.out.println("BF: " + b.match("abcdemfjgk", "mfj"));
 
         RK r = new RK();
-        System.out.println("RK: " + r.match("abcdemfjgk","mfj"));
+        System.out.println("RK: " + r.match("abcdemfjgk", "mfj"));
 
         BM m = new BM();
-        System.out.println("BM: " );
-        System.out.println(m.match("abcdemfjgk","mfj"));
-        System.out.println(m.match("aaaaaaaaaaaaaaaa","baaa"));
+        System.out.println("BM: ");
+        System.out.println(m.match("a", "a"));
+        System.out.println(m.match("abcdemfjgk", "mfj"));
+        System.out.println(m.match("aaaaaaaaaaaaaaaa", "baaa"));
 
         KMP k = new KMP();
         System.out.println("KMP: ");
-        System.out.println(k.match("abcdemfjgk","mfj"));
-        System.out.println(k.match("aaaaaaaaaaaaaaaa","baaa"));
-        System.out.println(k.match("abadfeababacdadf","ababacd"));
+        System.out.println(k.match("a", "a"));
+        System.out.println(k.match("abcdemfjgk", "mfj"));
+        System.out.println(k.match("aaaaaaaaaaaaaaaa", "baaa"));
+        System.out.println(k.match("abadfeababacdadf", "ababacd"));
+        System.out.println(k.match("mississippi", "issipi"));
 
+        Sunday sunday = new Sunday();
+        System.out.println("Sunday: ");
+        System.out.println(sunday.match("a", "a"));
+        System.out.println(sunday.match("abcdemfjgk", "mfj"));
+        System.out.println(sunday.match("aaaaaaaaaaaaaaaa", "baaa"));
+        System.out.println(sunday.match("abadfeababacdadf", "ababacd"));
+        System.out.println(sunday.match("mississippi", "issipi"));
+
+        System.out.println();
         System.out.println(get());  // 0
         System.out.println(get(""));  // 1
 
@@ -51,35 +63,42 @@ public class Test {
         System.out.println(t.size());
 
         System.out.print("trie树所有字符串：");
-        for(String s : t.getAllWithPrefix("")){
+        for (String s : t.getAllWithPrefix("")) {
             System.out.print(s + " ");
         }
         System.out.println();
 
         System.out.print("tr为前缀的字符串：");
-        for(String s : t.getAllWithPrefix("tr")){
+        for (String s : t.getAllWithPrefix("tr")) {
             System.out.print(s + " ");
         }
         System.out.println();
 
         System.out.print("p为前缀的字符串：");
-        for(String s : t.getAllWithPrefix("p")){
+        for (String s : t.getAllWithPrefix("p")) {
             System.out.print(s + " ");
         }
         System.out.println();
 
 
         // AC自动机
-        System.out.println("AC自动机");
-        AC ac = new AC(new String[]{"to", "tea", "ted", "ten", "a", "inn","aa"});
+        System.out.println("AC自动机：");
+        AC ac = new AC(new String[]{"to", "tea", "ted", "ten", "a", "inn", "aa"});
         List<String> result = ac.match("tesdedtesinntestenteaa");
-        for(String s : result){
+        for (String s : result) {
+            System.out.print(s + " ");
+        }
+        System.out.println();
+
+        ac = new AC(new String[]{"abd", "b", "bc", "c"});
+        result = ac.match("abc");
+        for (String s : result) {
             System.out.print(s + " ");
         }
         System.out.println();
     }
 
-    public static int get(String... array){    // java把可变参数当做数组处理, 只能有一个可变参数并位于参数列表最后
+    public static int get(String... array) {    // java把可变参数当做数组处理, 只能有一个可变参数并位于参数列表最后
         return array.length;
     }
 }
