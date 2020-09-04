@@ -383,12 +383,21 @@
  * @see <a href="https://leetcode.com/problems/prefix-and-suffix-search/"></a>
  * {@link leetcode.PrefixAndSuffixSearch}
  *
+ * ------------------------------------------------------------------------------------------------------ union find set
+ * `` Regions Cut By Slashes **
+ * @see <a href="https://leetcode.com/problems/regions-cut-by-slashes/"></a>
+ * {@link leetcode.RegionsCutBySlashes}
+ *
+ * `` Number of Islands **
+ * @see <a href="https://leetcode.com/problems/number-of-islands/"></a>
+ * {@link leetcode.NumberOfIslands}
+ *
  * ------------------------------------------------------------------------------------------------------ graph
  * `` Course Schedule II ** todo
  * @see <a href="https://leetcode.com/problems/course-schedule-ii/"></a>
  * {@link leetcode.CourseScheduleII}
  *
- * `` Network Delay Time ** todo
+ * `` Network Delay Time **
  * @see <a href="https://leetcode.com/problems/network-delay-time/"></a>
  * {@link leetcode.NetworkDelayTime}
  *
@@ -396,17 +405,13 @@
  * @see <a href="https://leetcode.com/problems/shortest-path-visiting-all-nodes/"></a>
  * {@link leetcode.ShortestPathVisitingAllNodes}
  *
- * `` Regions Cut By Slashes ** todo
- * @see <a href=""></a>
- * {@link leetcode.RegionsCutBySlashes}
- *
- * `` Redundant Connection ** todo
+ * `` Redundant Connection **
  * @see <a href="https://leetcode.com/problems/redundant-connection/"></a>
  * {@link leetcode.RedundantConnection}
  *
  * `` Minimize Malware Spread *** todo
  * @see <a href="https://leetcode.com/problems/minimize-malware-spread/"></a>
- * {@link }
+ * {@link leetcode.MinimizeMalwareSpread}
  *
  */
 package leetcode;

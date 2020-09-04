@@ -76,10 +76,14 @@ public class Dijkstra {
 
                 int distance = vertex.distance + edge.w;
                 if (distance < vertices[v].distance) {
+                    /**
+                     * 顶点v可能之前已经加入优先队列，需要更新distance。
+                     * 优先队列没有提供update操作，所以先删除，再添加，以维持最小堆特性。
+                     */
                     queue.remove(vertices[v]);
                     vertices[v].distance = distance;
                     vertices[v].predecessor = vertex.v;
-                    queue.add(vertices[v]);  // 优先队列没有提供update操作，所以先删除，再添加
+                    queue.add(vertices[v]);
                 }
             }
             vertex.visited = true;
