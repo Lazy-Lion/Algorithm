@@ -384,6 +384,14 @@
  * {@link leetcode.PrefixAndSuffixSearch}
  *
  * ------------------------------------------------------------------------------------------------------ graph
+ * `` Course Schedule II ** todo
+ * @see <a href="https://leetcode.com/problems/course-schedule-ii/"></a>
+ * {@link leetcode.CourseScheduleII}
+ *
+ * `` Network Delay Time ** todo
+ * @see <a href="https://leetcode.com/problems/network-delay-time/"></a>
+ * {@link leetcode.NetworkDelayTime}
+ *
  * `` Shortest Path Visiting All Nodes *** todo
  * @see <a href="https://leetcode.com/problems/shortest-path-visiting-all-nodes/"></a>
  * {@link leetcode.ShortestPathVisitingAllNodes}
@@ -391,6 +399,14 @@
  * `` Regions Cut By Slashes ** todo
  * @see <a href=""></a>
  * {@link leetcode.RegionsCutBySlashes}
+ *
+ * `` Redundant Connection ** todo
+ * @see <a href="https://leetcode.com/problems/redundant-connection/"></a>
+ * {@link leetcode.RedundantConnection}
+ *
+ * `` Minimize Malware Spread *** todo
+ * @see <a href="https://leetcode.com/problems/minimize-malware-spread/"></a>
+ * {@link }
  *
  */
 package leetcode;

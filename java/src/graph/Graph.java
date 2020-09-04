@@ -56,17 +56,16 @@ import java.util.*;
  *
  *
  * 二、图的存储方式：
- *    1. 邻接矩阵 (Adjacency Matrix): 二维数组形式: A[i][j] == 1 表示存在边从顶点 i 指向顶点 j; 否则 A[i][j] = 0. 对于带权图
+ *    1. 邻接矩阵 (Adjacency Matrix): 二维数组形式: 如果存在从顶点 i 指向顶点 j的边，则 A[i][j] == 1; 否则 A[i][j] = 0. 对于带权图
  *                                   使用权重作为 A[i][j]的值
  *          较为浪费空间 (特别对于稀疏图 (Sparse Matrix)), 但是计算方便
  *    2. 邻接表 (Adjacency list): 类似散列表, 数组 + 链表实现；
- *                 如图 (引用自 https://algs4.cs.princeton.edu/41graph/ )：
- *               https://github.com/Lazy-Lion/images/blob/master/dataStructure/adjacency-lists.png
+ *                 如图 (引用自 <a href="https://algs4.cs.princeton.edu/41graph/"></a> )：
+ *               <a href="https://github.com/Lazy-Lion/images/blob/master/dataStructure/adjacency-lists.png'></a>
  *          节省空间，但是使用起来较为麻烦
  *    3. 将图持久化到数据库表中
  *
- *
- * Graph 类基于邻接表方式实现有向图
+ * Graph类基于邻接表的方式实现有向图
  */
 public class Graph {
     private final int v; //numbers of vertices in this digraph, from 0 to v-1
@@ -79,10 +78,10 @@ public class Graph {
 
     private boolean found = false;   // for dfs
 
-    public Graph(int v){
+    public Graph(int v) {
         this.v = v;
         e = 0;
-        table = (Node<Integer>[])new Node[v];
+        table = (Node<Integer>[]) new Node[v];
         indegree = new int[v];
     }
 
@@ -94,7 +93,7 @@ public class Graph {
         private K item;
         private Node<K> next;
 
-        public Node(K item){
+        public Node(K item) {
             this.item = item;
             this.next = null;
         }
@@ -104,11 +103,11 @@ public class Graph {
             return new Iter(item, next);
         }
 
-        private static class Iter<K> implements Iterator<K>{
+        private static class Iter<K> implements Iterator<K> {
             private Node<K> current;
             private Node<K> n;
 
-            private Iter(K item, Node<K> next){
+            private Iter(K item, Node<K> next) {
                 this.current = new Node<>(item);
                 this.current.next = next;
                 n = next;
@@ -121,7 +120,7 @@ public class Graph {
 
             @Override
             public K next() {
-                if(!hasNext())
+                if (!hasNext())
                     throw new NoSuchElementException();
 
                 K r = current.item;
@@ -135,14 +134,14 @@ public class Graph {
     /**
      * @return the number of vertices in this digraph
      */
-    public int vertex(){
+    public int vertex() {
         return this.v;
     }
 
     /**
      * @return the number of edges in this digraph
      */
-    public int edge(){
+    public int edge() {
         return this.e;
     }
 
@@ -150,7 +149,7 @@ public class Graph {
      * @param v
      * @return the indegree of vertex v
      */
-    public int indegree(int v){
+    public int indegree(int v) {
         validateVertex(v);
         return indegree[v];
     }
@@ -159,29 +158,32 @@ public class Graph {
      * @param v
      * @return the outdegree of vertex v
      */
-    public int outdegree(int v){
+    public int outdegree(int v) {
 
         int c = 0;
         Node<Integer> l = table[v];
-        while(l != null){
-            c ++;
+        while (l != null) {
+            c++;
             l = l.next;
         }
         return c;
     }
 
-    public void addEdge(int v, int w){
+    public void addEdge(int v, int w) {
         validateVertex(v);
         validateVertex(w);
 
         Node<Integer> l = table[v];
         boolean hasEdge = false;
 
-        if(l == null)
+        if (l == null) {
             table[v] = new Node<>(w);
-        else {
-            if(l.item == w) return; // note: 1.java中Integer与int的比较:先将Integer转换成int，再进行值比较
-                                    //       2.Integer类中 -128~127 有cache
+        } else {
+            /**
+             *  1. java中Integer与int的比较:先将Integer转换成int，再进行值比较
+             *  2. Integer类中 -128~127 有cache
+             */
+            if (l.item == w) return;
 
             while (l.next != null) {
                 if (l.next.item == w) {
@@ -192,8 +194,8 @@ public class Graph {
             }
         }
 
-        if(!hasEdge) {
-            if(l != null) l.next = new Node<>(w);
+        if (!hasEdge) {
+            if (l != null) l.next = new Node<>(w);
             e++;
             indegree[w]++;
         }
@@ -201,23 +203,21 @@ public class Graph {
 
     /**
      * throw an IllegalArgumentException unless 0 <= v < this.v
-     * @param v
      */
-    private void validateVertex(int v){
-        if(v < 0 || v >= this.v)
+    private void validateVertex(int v) {
+        if (v < 0 || v >= this.v)
             throw new IllegalArgumentException("vertex " + v + " does not exist");
     }
 
     /**
      * reverse the digraph
-     * @return
      */
-    public Graph reverse(){
+    public Graph reverse() {
         Graph graph = new Graph(this.v);
-        for(int i = 0; i < this.v; i ++){
-            if(table[i] == null) continue;
+        for (int i = 0; i < this.v; i++) {
+            if (table[i] == null) continue;
 
-            for(Integer w : table[i]){
+            for (Integer w : table[i]) {
                 graph.addEdge(w, i);
             }
         }
@@ -227,19 +227,20 @@ public class Graph {
     /**
      * Breadth First Search (BFS, 广度优先搜索)
      *   shortest path from source vertex s to destination vertex t
-     *  assert graph is connected
-     *  时间复杂度：O(e + v)  // e = edge(), v = vertex()
-     *  空间复杂度：O(v)      // e = edge()
+     *   assert graph is connected
+     *
+     *  time complexity：O(e + v)  // e = edge(), v = vertex()
+     *  space complexity：O(v)      // e = edge()
      */
-    public int bfs(int s, int t){
+    public int bfs(int s, int t) {
 
         validateVertex(s);
         validateVertex(t);
 
-        if(s == t) return 0;
+        if (s == t) return 0;
 
         int[] path = new int[this.v];    // 记录搜索路径 (最短路径)
-        for(int i = 0; i < this.v; i ++)
+        for (int i = 0; i < this.v; i++)
             path[i] = -1;
 
         boolean[] visited = new boolean[this.v];    // 标记顶点是否已被访问
@@ -247,13 +248,13 @@ public class Graph {
         queue.add(s);
         visited[s] = true;
 
-        while(!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             int v = queue.poll();
-            if(table[v] == null) continue;
-            for(Integer i : table[v]){
-                if(visited[i]) continue;
+            if (table[v] == null) continue;
+            for (Integer i : table[v]) {
+                if (visited[i]) continue;
                 path[i] = v;
-                if(i == t){
+                if (i == t) {
                     return getPath(path, s, t);
                 }
                 queue.add(i);
@@ -268,29 +269,29 @@ public class Graph {
      * print path and return path length
      * assert path exists
      */
-    private int getPath(int[] path, int s,int t){
-        if(s == t){
+    private int getPath(int[] path, int s, int t) {
+        if (s == t) {
             return 0;
         }
 
-        int c = 0;
-        c = getPath(path, s, path[t]) + 1;
+        int c = getPath(path, s, path[t]) + 1;
         System.out.print(path[t] + " → " + t + "; ");
         return c;
     }
 
     /**
      * Depth First Search (DFS, 深度优先搜索)
-     * assert graph is connected
-     * 时间复杂度： O(e)   - e = edge(),每条边最多访问两次，一次遍历，一次回溯
-     * 空间复杂度: O(v)   - v = vertex()
+     *   assert graph is connected
+     *
+     * time complexity： O(e)   - e = edge(),每条边最多访问两次，一次遍历，一次回溯
+     * space complexity: O(v)   - v = vertex()
      *
      * Application of DFS:
      *   1. check connectivity of the graph (if not connected, find number of connected components)
      *   2. check a cyclicity of the graph
      */
-    public void dfs(int s, int t){
-        if(s == t) return;
+    public void dfs(int s, int t) {
+        if (s == t) return;
         validateVertex(s);
         validateVertex(t);
 
@@ -301,34 +302,33 @@ public class Graph {
         getPath(prev, s, t);
     }
 
-    private void dfs(boolean[] visited, int s, int t, int[] prev){
-        if(found) return;
+    private void dfs(boolean[] visited, int s, int t, int[] prev) {
+        if (found) return;
 
-        if(!visited[s]) {
+        if (!visited[s]) {
             visited[s] = true;
         }
 
-        if(s == t)
-        {
-            found = true; return;
+        if (s == t) {
+            found = true;
+            return;
         }
 
-        if(table[s] == null) return;
-        for(Integer i : table[s]){
-            if(found) return;
-            if(!visited[i]) {
+        if (table[s] == null) return;
+        for (Integer i : table[s]) {
+            if (!visited[i]) {
                 prev[i] = s;
                 dfs(visited, i, t, prev);
             }
         }
-
     }
 
     /**
      * DFS,迭代方式：使用栈
+     *   代码和 bfs类似，只是 bfs使用 queue, dfs使用 stack，遍历结果类似于树的前序遍历
      */
-    public void dfsIteration(int s, int t){
-        if(s == t) return;
+    public void dfsIteration(int s, int t) {
+        if (s == t) return;
         validateVertex(s);
         validateVertex(t);
 
@@ -337,54 +337,59 @@ public class Graph {
         int[] prev = new int[this.v];
 
         stack.push(s);
-        while(!stack.isEmpty()){
+        while (!stack.isEmpty()) {
             int v = stack.pop();
 
-            if(!visited[v]){
-                visited[v] = true;
-                if(v == t){
-                    getPath(prev, s, t);
-                    return;
+            if (visited[v]) continue;
+
+            visited[v] = true;
+            if (v == t) {
+                getPath(prev, s, t);
+                return;
+            }
+
+            if (table[v] == null) continue;
+            List<Integer> vertices = new ArrayList<>();
+            for (Integer i : table[v]) {
+                if (!visited[i]) {
+                    prev[i] = v;
+                    vertices.add(i);
                 }
             }
 
-            if(table[v] == null) continue;
-            for(Integer i : table[v]){
-                if(!visited[i]) {
-                    prev[i] = v;
-                    stack.push(i);
-                }
+            for (int i = vertices.size() - 1; i >= 0; i--) { // push stack in reverse order
+                stack.push(vertices.get(i));
             }
         }
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         StringBuilder s = new StringBuilder();
         s.append(v + " vertices, " + e + " edges " + LINE_SEPARATOR);
 
-        for(int i = 0; i < this.v; i ++){
-            if(this.table[i] == null) continue;
+        for (int i = 0; i < this.v; i++) {
+            if (this.table[i] == null) continue;
 
-            for(Integer w : this.table[i]){
+            for (Integer w : this.table[i]) {
                 s.append(i + " → " + w + LINE_SEPARATOR);
             }
         }
         return s.toString();
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         Graph g = new Graph(5);
-        g.addEdge(0,1);
-        g.addEdge(0,1);
-        g.addEdge(0,2);
-        g.addEdge(0,3);
-        g.addEdge(0,4);
-        g.addEdge(1,3);
-        g.addEdge(1,0);
-        g.addEdge(3,0);
-        g.addEdge(3,2);
-        g.addEdge(4,0);
+        g.addEdge(0, 1);
+        g.addEdge(0, 1);
+        g.addEdge(0, 2);
+        g.addEdge(0, 3);
+        g.addEdge(0, 4);
+        g.addEdge(1, 3);
+        g.addEdge(1, 0);
+        g.addEdge(3, 0);
+        g.addEdge(3, 2);
+        g.addEdge(4, 0);
 
         System.out.println(g.toString());
         System.out.println(g.indegree(0));
@@ -396,39 +401,48 @@ public class Graph {
         System.out.println(reverse.outdegree(0));
 
         System.out.println("Breadth-First Search:");
-        System.out.println(g.bfs(0,3));
+        System.out.println(g.bfs(0, 3));
 
         g = new Graph(5);
-        g.addEdge(0,1);
-        g.addEdge(1,2);
-        g.addEdge(2,3);
-        g.addEdge(2,4);
-        g.addEdge(3,4);
-        g.addEdge(3,0);
-        g.addEdge(4,0);
+        g.addEdge(0, 1);
+        g.addEdge(1, 2);
+        g.addEdge(2, 3);
+        g.addEdge(2, 4);
+        g.addEdge(3, 4);
+        g.addEdge(3, 0);
+        g.addEdge(4, 0);
 
-        System.out.println(g.bfs(0,4));
-        System.out.println(g.bfs(3,1));
+        System.out.println(g.bfs(0, 4));
+        System.out.println(g.bfs(3, 1));
 
-        System.out.println("Depth-First Search:");
-        g.dfs(0,4);
+        System.out.println("Depth-First Search(recursion):");
+        g.dfs(0, 4);
         System.out.println();
-        g.dfs(3,0);
+        g.dfs(3, 0);
         System.out.println();
 
-        g.dfsIteration(0,4);
+        System.out.println("Depth-First Search(iteration):");
+        g.dfsIteration(0, 4);
         System.out.println();
-        g.dfsIteration(3,0);
+        g.dfsIteration(3, 0);
+        System.out.println();
+
+        System.out.println("Breadth-First Search:");
+        g.bfs(0, 4);
+        System.out.println();
+        g.bfs(3, 0);
         System.out.println();
 
         g = new Graph(5);
-        g.addEdge(0,1);
-        g.addEdge(0,2);
-        g.addEdge(1,3);
-        g.addEdge(1,4);
-        g.dfs(0,4);
+        g.addEdge(0, 1);
+        g.addEdge(0, 2);
+        g.addEdge(1, 3);
+        g.addEdge(1, 4);
+        System.out.println("Depth-First Search(recursion):");
+        g.dfs(0, 4);
         System.out.println();
-        g.dfsIteration(0,4);
+        System.out.println("Depth-First Search(iteration):");
+        g.dfsIteration(0, 4);
     }
 }
 

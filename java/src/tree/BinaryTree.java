@@ -92,6 +92,32 @@ public class BinaryTree {
     }
 
     /**
+     * 前序遍历
+     *   参考 {@link graph.Graph#dfsIteration(int, int)}的思想，前序遍历的另一种迭代写法
+     */
+    public static List<Integer> preorderTraversal_iteration2(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
+
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            result.add(node.val);
+
+            if (node.right != null) {
+                stack.push(node.right);
+            }
+            if (node.left != null) {
+                stack.push(node.left);
+            }
+        }
+        return result;
+    }
+
+    /**
      * 中序遍历
      *   recursion
      */
@@ -305,25 +331,28 @@ public class BinaryTree {
     }
 
     public void Traversal() {
-        System.out.print("前序遍历       ：");
+        System.out.print("前序遍历        ：");
         System.out.println(preorderTraversal(root));
 
-        System.out.print("前序遍历（迭代）：");
+        System.out.print("前序遍历（迭代） ：");
         System.out.println(preorderTraversal_iteration(root));
 
-        System.out.print("中序遍历       ：");
+        System.out.print("前序遍历（迭代2）：");
+        System.out.println(preorderTraversal_iteration2(root));
+
+        System.out.print("中序遍历        ：");
         System.out.println(inorderTraversal(root));
 
-        System.out.print("中序遍历（迭代）：");
+        System.out.print("中序遍历（迭代） ：");
         System.out.println(inorderTraversal_iteration(root));
 
-        System.out.print("后序遍历       ：");
+        System.out.print("后序遍历        ：");
         System.out.println(postorderTraversal(root));
 
-        System.out.print("后序遍历（迭代）：");
+        System.out.print("后序遍历（迭代） ：");
         System.out.println(postorderTraversal_iteration(root));
 
-        System.out.print("层次遍历       ：");
+        System.out.print("层次遍历        ：");
         System.out.println(levelOrder(root));
     }
 }

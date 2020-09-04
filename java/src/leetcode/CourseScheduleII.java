@@ -1,9 +1,9 @@
-package graph;
+package leetcode;
 
 import java.util.*;
 
 /**
- * 210. Course Schedule II
+ * leetcode 210. Course Schedule II
  * There are a total of n courses you have to take, labeled from 0 to n-1.
  *
  *   Some courses may have prerequisites, for example to take course 0 you have to first take course 1, which is
@@ -31,7 +31,7 @@ import java.util.*;
  * a graph is represented.
  *   You may assume that there are no duplicate edges in the input prerequisites.
  */
-public class CourseScheduleII210 {
+public class CourseScheduleII {
 	/**
 	 * 拓扑排序
 	 */

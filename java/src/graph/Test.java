@@ -14,8 +14,8 @@ public class Test {
 		t.addEdge(2,3);
 		t.addEdge(4,1);
 
-		System.out.println(t.topologicalSort1());
-		System.out.println(t.topologicalSort2());
+		System.out.println(t.topologicalSort_1());
+		System.out.println(t.topologicalSort_2());
 
 
 		System.out.println("Dijkstra Algorithm");
