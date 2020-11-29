@@ -1,4 +1,4 @@
-package array;
+package temp;
 
 import greedy.Candy;
 
