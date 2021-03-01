@@ -187,14 +187,16 @@ public class BinaryTree {
 
         Stack<TreeNode> stack = new Stack<>();
         TreeNode node = root;
-        TreeNode lastVisitNode = null;  // 标识最近一次访问的节点
+        // 标识最近一次访问的节点
+        TreeNode lastVisitNode = null;
         while (node != null || !stack.isEmpty()) {
             if (node != null) {
                 stack.push(node);
                 node = node.left;
             } else {
                 node = stack.peek();
-                if (node.right == null || node.right == lastVisitNode) { // 右子树已经访问，则输出当前节点，否则访问右子树
+                // 右子树已经访问，则输出当前节点，否则访问右子树
+                if (node.right == null || node.right == lastVisitNode) {
                     stack.pop();
                     result.add(node.val);
                     lastVisitNode = node;
@@ -230,7 +232,8 @@ public class BinaryTree {
         TreeNode node;
         while (!queue.isEmpty()) {
             Object item = queue.poll();
-            if (LEVEL.equals(item)) { // next level
+            // next level
+            if (LEVEL.equals(item)) {
                 result.add(list);
                 list = new ArrayList<>();
                 if (!queue.isEmpty()) {
@@ -276,7 +279,6 @@ public class BinaryTree {
                 if (node.left != null) {
                     queue.offer(node.left);
                 }
-
                 if (node.right != null) {
                     queue.offer(node.right);
                 }

@@ -29,7 +29,8 @@ import java.util.Map;
  *   1 <= n <= 19
  */
 public class UniqueBinarySearchTrees {
-    private static Map<String, Integer> map = new HashMap<>(); // for pruning
+    // for pruning
+    private static Map<String, Integer> map = new HashMap<>();
 
     /**
      * recursion + prune
@@ -73,12 +74,12 @@ public class UniqueBinarySearchTrees {
      *    count(3) = count(0) * count(2) + count(1) * count(1) + count(2) * count(0)
      * => count(n) = sum(count(i - 1) * count(n - i))   i from 1 to n
      */
-    private static final Map<Integer, Integer> map2 = new HashMap<>();
-
-    {
-        map2.put(0, 1);
-        map2.put(1, 1);
-    }
+    private static final Map<Integer, Integer> map2 = new HashMap<Integer, Integer>() {
+        {
+            put(0, 1);
+            put(1, 1);
+        }
+    };
 
     public static int numTrees_2(int n) {
         if (n == 0 || n == 1) {
@@ -86,11 +87,12 @@ public class UniqueBinarySearchTrees {
         }
 
         int sum = 0;
-        for (int i = 1; i <= n; i++) {
-            int temp1 = map2.containsKey(i - 1) ? map2.get(i - 1) : numTrees_2(i - 1);
-            int temp2 = map2.containsKey(n - i) ? map2.get(n - i) : numTrees_2(n - i);
+        int v1, v2;
+        for (int i = 0; i < n; i++) {
+            v1 = map2.containsKey(i) ? map2.get(i) : numTrees_2(i);
+            v2 = map2.containsKey(n - i - 1) ? map2.get(n - i - 1) : numTrees_2(n - i - 1);
 
-            sum += temp1 * temp2;
+            sum += v1 * v2;
         }
         map2.put(n, sum);
         return sum;
@@ -101,11 +103,11 @@ public class UniqueBinarySearchTrees {
      */
     public static int numTrees_3(int n) {
         int[] count = new int[n + 1];
-        count[0] = 1;
-        count[1] = 1;
+        count[0] = count[1] = 1;
+
         for (int i = 2; i <= n; i++) {
-            for (int j = 1; j <= i; j++) {
-                count[i] += count[j - 1] * count[i - j];
+            for (int j = 0; j < i; j++) {
+                count[i] += count[j] * count[i - j - 1];
             }
         }
         return count[n];
@@ -117,9 +119,11 @@ public class UniqueBinarySearchTrees {
      *     C(0) = 1, C(n+1) = (2*(2*n + 1) / (n+2)) * C(n)
      */
     public static int numTrees_4(int n) {
-        long count = 1; // 防止计算逸出
+        // 防止计算逸出
+        long count = 1;
         for (int i = 0; i < n; i++) {
-            count = count * 2 * (2 * i + 1) / (i + 2); // 先计算乘法，再计算除数，防止小数舍去引起的结果错误
+            // 先计算乘法，再计算除数，防止小数舍去引起的结果错误
+            count = count * 2 * (2 * i + 1) / (i + 2);
         }
         return (int) count;
     }

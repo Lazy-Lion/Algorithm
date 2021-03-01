@@ -98,7 +98,8 @@ public class UniqueBinarySearchTreesII {
         List<TreeNode> result = new ArrayList<>();
 
         if (start > end) {
-            result.add(null); // simplify adding root
+            // simplify adding root
+            result.add(null);
             return result;
         }
 
