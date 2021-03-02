@@ -75,6 +75,53 @@ public class BinaryTreeZigzagLevelOrderTraversal {
         return result;
     }
 
+    /**
+     * 双端队列
+     * time complexity: O(n)
+     * space complexity: O(n)
+     */
+    public static List<List<Integer>> zigzagLevelOrder_2(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
+
+        Deque<TreeNode> deque = new ArrayDeque<>();
+        deque.addFirst(root);
+
+        TreeNode node;
+        List<Integer> list;
+        int size;
+        boolean isAddFirst = true;
+        while (!deque.isEmpty()) {
+            size = deque.size();
+            list = new ArrayList<>(size);
+            while (size-- > 0) {
+                node = isAddFirst ? deque.pollLast() : deque.pollFirst();
+                list.add(node.val);
+
+                if (isAddFirst) {
+                    if (node.left != null) {
+                        deque.addFirst(node.left);
+                    }
+                    if (node.right != null) {
+                        deque.addFirst(node.right);
+                    }
+                } else {
+                    if (node.right != null) {
+                        deque.addLast(node.right);
+                    }
+                    if (node.left != null) {
+                        deque.addLast(node.left);
+                    }
+                }
+            }
+            isAddFirst = !isAddFirst;
+            result.add(list);
+        }
+        return result;
+    }
+
     public static void main(String[] args) throws InvocationTargetException, IllegalAccessException {
         Utils.testStaticMethod(BinaryTreeZigzagLevelOrderTraversal.class
                 , new HashSet<String>() {
