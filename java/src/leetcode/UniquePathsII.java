@@ -33,36 +33,67 @@ import java.util.List;
  *   2. Down -> Down -> Right -> Right
  */
 public class UniquePathsII {
+    /**
+     * 状态方程：
+     *     if grid[i][j] == 1, dp[i][j] = 0
+     *     if grid[i][j] == 0, dp[i][j] = dp[i-1][j] + dp[i][j-1]
+     *
+     * 时间复杂度：O(n * m)
+     * 空间复杂度：O(n * m)
+     */
     public static int uniquePathsWithObstacles(int[][] obstacleGrid) {
-        int m = obstacleGrid.length;
-        if (m <= 0) return 0;
+        int n = obstacleGrid.length;
+        int m = obstacleGrid[0].length;
 
-        int n = obstacleGrid[0].length;
-        if (n <= 0) return 0;
-
-        int[][] dp = new int[m][n];
-
-        boolean obstacle = false;
-        for (int i = 0; i < m; i++) {
-            if (!obstacle && obstacleGrid[i][0] == 1)
-                obstacle = true;
-            dp[i][0] = obstacle ? 0 : 1;
+        // 起点就有障碍物，直接返回
+        if (obstacleGrid[0][0] == 1) {
+            return 0;
         }
 
-        obstacle = false;
-        for (int j = 0; j < n; j++) {
-            if (!obstacle && obstacleGrid[0][j] == 1)
-                obstacle = true;
-            dp[0][j] = obstacle ? 0 : 1;
-        }
-
-        for (int i = 1; i < m; i++) {
-            for (int j = 1; j < n; j++) {
-                dp[i][j] = obstacleGrid[i][j] == 1 ? 0 : dp[i - 1][j] + dp[i][j - 1];
+        int[][] dp = new int[n][m];
+        dp[0][0] = 1;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (obstacleGrid[i][j] == 0) {
+                    if (i > 0) {
+                        dp[i][j] = dp[i - 1][j];
+                    }
+                    if (j > 0) {
+                        dp[i][j] += dp[i][j - 1];
+                    }
+                }
             }
         }
+        return dp[n - 1][m - 1];
+    }
 
-        return dp[m - 1][n - 1];
+    /**
+     * 空间优化：滚动数组
+     *
+     * 时间复杂度：O(n * m)
+     * 空间复杂度：O(m)
+     */
+    public static int uniquePathsWithObstacles_2(int[][] obstacleGrid) {
+        int n = obstacleGrid.length;
+        int m = obstacleGrid[0].length;
+
+        if (obstacleGrid[0][0] == 1) {
+            return 0;
+        }
+        int[] dp = new int[m];
+        dp[0] = 1;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (obstacleGrid[i][j] == 0) {
+                    if (j > 0) {
+                        dp[j] += dp[j - 1];
+                    }
+                } else {
+                    dp[j] = 0;
+                }
+            }
+        }
+        return dp[m - 1];
     }
 
     public static void main(String[] args) throws InvocationTargetException, IllegalAccessException {
@@ -75,6 +106,12 @@ public class UniquePathsII {
         param.add(new int[][]{{1, 0}});
         params.add(param);
 
+        param = new ArrayList<>();
+        param.add(new int[][]{{0, 1}});
+        params.add(param);
+
         Utils.testStaticMethod(UniquePathsII.class, params);
     }
+
+
 }
