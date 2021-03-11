@@ -85,8 +85,9 @@ public class LongestIncreasingSubsequence {
             if (nums[i] > dp[size]) {
                 dp[++size] = nums[i];
             } else {
-                int l = 0;
+                int l = 1;
                 int r = size;
+                // 找第一个比nums[i]大的位置
                 while (l < r) {
                     int m = l + ((r - l) >>> 1);
                     if (dp[m] >= nums[i]) {
