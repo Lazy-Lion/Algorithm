@@ -89,14 +89,18 @@ public class LongestIncreasingSubsequence {
                 int r = size;
                 while (l < r) {
                     int m = l + ((r - l) >>> 1);
-                    if (dp[m] >= nums[i]) r = m;
-                    else l = m + 1;
+                    if (dp[m] >= nums[i]) {
+                        r = m;
+                    } else {
+                        l = m + 1;
+                    }
                 }
                 dp[l] = nums[i];
             }
         }
 
-        for (int i = 1; i < size + 1; i++) {  // 输出最长递增子序列
+        // 输出最长递增子序列
+        for (int i = 1; i < size + 1; i++) {
             System.out.print(dp[i] + " ");
         }
         System.out.println();
