@@ -98,12 +98,6 @@ public class LongestIncreasingSubsequence {
                 dp[l] = nums[i];
             }
         }
-
-        // 输出最长递增子序列
-        for (int i = 1; i < size + 1; i++) {
-            System.out.print(dp[i] + " ");
-        }
-        System.out.println();
         return size;
     }
 
