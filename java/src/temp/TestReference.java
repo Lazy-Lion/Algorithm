@@ -1,6 +1,6 @@
 package temp;
 
-import greedy.Candy;
+//import greedy.Candy;
 
 import java.lang.ref.SoftReference;
 import java.lang.ref.WeakReference;
